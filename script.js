@@ -2,10 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // 1. Initialize AOS Animation Library with "Insane" Settings
   AOS.init({
-    once: false, // Set to false to trigger animations every time you scroll up and down
+    once: true, 
     offset: 50,
-    duration: 600, // Faster, snappier duration
-    easing: 'ease-out-cubic', // More explosive easing than default
+    duration: 600,
+    easing: 'ease-out-cubic',
+    disable: 'mobile' // Disable heavy AOS animations on mobile to save CPU
   });
 
   // 2. Sticky header on scroll
@@ -158,9 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
       trigger: card,
       start: "top 60%", // Toggles when the individual card enters the view center
       onEnter: () => card.classList.add("is-black"),
-      onLeaveBack: () => card.classList.remove("is-black"),
-      // Refresh logic for mobile
-      onUpdate: () => { if(window.innerWidth < 768) AOS.refresh(); }
+      onLeaveBack: () => card.classList.remove("is-black")
     });
   });
   

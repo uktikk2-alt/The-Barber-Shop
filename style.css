@@ -681,8 +681,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 768px) {
-  .review-card-clean { width: 300px; padding: 25px; }
-  .ticker-track { gap: 20px; }
+  .review-card-clean { 
+    width: 300px; 
+    padding: 25px; 
+    backdrop-filter: none !important; /* Disable blurs on mobile for 60fps scrolling */
+    background: rgba(20, 20, 20, 0.95); 
+  }
+  .ticker-track { gap: 20px; will-change: transform; }
   .track-1 { animation-duration: 25s; }
   .track-2 { animation-duration: 30s; }
 }
@@ -847,6 +852,7 @@ h1, h2, h3, h4, h5, h6 {
     background-repeat: no-repeat;
     /* The "Window" - inset by 10% on all sides */
     clip-path: inset(10% round 20px); 
+    will-change: clip-path, opacity;
 }
 
 /* The Dotted Border Overlay */
