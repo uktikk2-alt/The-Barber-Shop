@@ -165,6 +165,7 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     display: inline-block;
     width: auto;
+    isolation: isolate; /* Ensures underline stays above background but below text */
 }
 
 .accent-line::after {
