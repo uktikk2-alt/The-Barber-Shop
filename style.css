@@ -162,6 +162,27 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-light);
   font-size: clamp(15px, 3vw, 18px);
 }
+
+.accent-line {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.accent-line::after {
+    content: '';
+    position: absolute;
+    left: -5%;
+    bottom: -15px;
+    width: 110%;
+    height: 15px;
+    background-image: url("data:image/svg+xml,%3Csvg width='300' height='30' viewBox='0 0 300 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 20C50 15 150 15 295 25' stroke='%23D0FF3A' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M10 24C60 20 160 20 290 28' stroke='%23D0FF3A' stroke-width='2' stroke-linecap='round' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    z-index: -1;
+    transform: rotate(-1deg);
+    opacity: 0.9;
+}
 .banner-info-section .text-white { text-shadow: 0 1px 3px rgba(0,0,0,0.2); }
 
 /* Reviews */
