@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     offset: 50,
     duration: 600,
     easing: 'ease-out-cubic',
-    disable: 'mobile' // Disable heavy AOS animations on mobile to save CPU
+    disable: false // Enabled AOS animations on mobile 
   });
 
   // 2. Sticky header on scroll
