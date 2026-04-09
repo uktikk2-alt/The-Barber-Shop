@@ -166,22 +166,31 @@ h1, h2, h3, h4, h5, h6 {
 .accent-line {
     position: relative;
     display: inline-block;
-    white-space: nowrap;
+    width: auto;
 }
 
 .accent-line::after {
     content: '';
     position: absolute;
-    left: -5%;
-    bottom: -15px;
-    width: 110%;
-    height: 15px;
+    left: 0;
+    width: 100%;
+    bottom: -6px; /* Moved DOWN from 2px so it sits just below the text baseline */
+    height: 12px;
     background-image: url("data:image/svg+xml,%3Csvg width='300' height='30' viewBox='0 0 300 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 20C50 15 150 15 295 25' stroke='%23D0FF3A' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M10 24C60 20 160 20 290 28' stroke='%23D0FF3A' stroke-width='2' stroke-linecap='round' opacity='0.5'/%3E%3C/svg%3E");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     z-index: -1;
     transform: rotate(-1deg);
-    opacity: 0.9;
+    opacity: 0.95;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .accent-line::after {
+        bottom: -4px;
+        height: 8px;
+        opacity: 1;
+    }
 }
 .banner-info-section .text-white { text-shadow: 0 1px 3px rgba(0,0,0,0.2); }
 
@@ -468,10 +477,32 @@ h1, h2, h3, h4, h5, h6 {
 /* About */
 .about-container { display: flex; align-items: center; gap: var(--container-gap); }
 .about-images { flex: 1.2; position: relative; width: 100%; display: flex; align-items: center; justify-content: center; }
-.img-wrap-1 { width: 75%; position: absolute; top: 0; left: 0; z-index: 1; border-radius: 5px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-.img-wrap-2 { width: 60%; position: absolute; bottom: 0; right: 0; z-index: 2; border: 15px solid var(--dark); border-radius: 5px; overflow: hidden; box-shadow: -10px -10px 40px rgba(0,0,0,0.5); transition: transform 0.5s; }
+.img-wrap-1 { 
+    width: 75%; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    z-index: 1; 
+    border-radius: 5px; 
+    overflow: hidden; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    aspect-ratio: 1 / 1; 
+}
+.img-wrap-2 { 
+    width: 60%; 
+    position: absolute; 
+    bottom: 0; 
+    right: 0; 
+    z-index: 2; 
+    border: 15px solid var(--dark); 
+    border-radius: 5px; 
+    overflow: hidden; 
+    box-shadow: -10px -10px 40px rgba(0,0,0,0.5); 
+    transition: transform 0.5s;
+    aspect-ratio: 1 / 1;
+}
 .img-wrap-2:hover { transform: scale(1.05) rotate(2deg); }
-.about-images img { width: 100%; height: auto; display: block; }
+.about-images img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .about-text { flex: 1; }
 .about-text p { margin-bottom: var(--header-margin-md); font-size: 17px; color: var(--text-light); line-height: 1.8; }
 
@@ -516,7 +547,13 @@ h1, h2, h3, h4, h5, h6 {
 .highlight-glow { position: relative; z-index: 1; }
 .highlight-glow::before { content: ''; position: absolute; top: -30px; left: -30px; right: -30px; bottom: -30px; background: radial-gradient(circle, rgba(208,255,90,0.15) 0%, rgba(255,255,255,0) 70%); z-index: -1; animation: pulseGlow 4s infinite alternate; }
 @keyframes pulseGlow { 0% { transform: scale(0.9); opacity: 0.5; } 100% { transform: scale(1.1); opacity: 1; } }
-.features-image img { border-radius: 15px; box-shadow: 0 40px 80px rgba(0,0,0,0.2); width: 100%; }
+.features-image img { 
+    border-radius: 15px; 
+    box-shadow: 0 40px 80px rgba(0,0,0,0.2); 
+    width: 100%; 
+    aspect-ratio: 1 / 1; 
+    object-fit: cover; 
+}
 
 /* NEW SERVICES ACCORDION */
 .btn-badge { border: 1px solid var(--text-light); border-radius: 30px; display: inline-block; padding: 5px 20px; font-size: 12px; font-family: var(--font-heading); letter-spacing: 2px; color: var(--text-light); margin-bottom: 30px; }
@@ -871,19 +908,19 @@ h1, h2, h3, h4, h5, h6 {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    /* The "Window" - inset by 10% on all sides */
-    clip-path: inset(10% round 20px); 
+    /* Adjusted Window: 15% smaller, shifted Up/Right but kept within safe margins */
+    clip-path: inset(5% 5% 27% 27% round 20px); 
     will-change: clip-path, opacity;
 }
 
-/* The Dotted Border Overlay */
+/* The Dotted Border Overlay - MUST match the clip-path above exactly */
 .color-reveal-box::after {
     content: '';
     position: absolute;
-    top: 10%;
-    left: 10%;
-    right: 10%;
-    bottom: 10%;
+    top: 5%;
+    right: 5%;
+    bottom: 27%;
+    left: 27%;
     border: 2px dashed rgba(255, 255, 255, 0.8);
     border-radius: 20px;
     pointer-events: none;
