@@ -33,9 +33,7 @@
 }
 
 html {
-  scroll-behavior: auto; /* Let GSAP / JS handle smooth scroll if needed, or keep auto for standard */
-  /* Actually smooth scroll is good, but GSAP sometimes fights it if using ScrollTrigger pinning. Here we don't pin. */
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Let GSAP / JS handle smooth scroll to prevent double-scroll traps */
 }
 
 body {
@@ -80,7 +78,7 @@ ul { list-style: none; }
 .bg-black { background-color: #000000; color: var(--white); }
 .bg-primary { background: var(--primary-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(208, 255, 58, 0.5); border-bottom: 1px solid rgba(208, 255, 58, 0.5); box-shadow: 0 10px 30px rgba(208, 255, 58, 0.2); }
 
-.section-padding { padding: var(--section-padding); overflow-x: hidden; }
+.section-padding { padding: var(--section-padding); }
 .mt-4 { margin-top: 40px; }
 
 /* Typography */
@@ -476,7 +474,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* About */
 .about-container { display: flex; align-items: center; gap: var(--container-gap); }
-.about-images { flex: 1.2; position: relative; width: 100%; display: flex; align-items: center; justify-content: center; }
+.about-images { 
+    flex: 1.2; 
+    position: relative; 
+    width: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    min-height: 500px; /* Ensure container doesn't collapse with absolute children */
+}
 .img-wrap-1 { 
     width: 75%; 
     position: absolute; 
