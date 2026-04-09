@@ -1,0 +1,12 @@
+# Directory listing
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDES
+.vscode/
+.idea/
+
+# Temp
+*.tmp
+*.log
