@@ -810,6 +810,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Media Queries */
 @media (max-width: 1024px) {
+  .header { padding: 15px 0; } /* Further reduced from 20px */
+  .header.sticky { padding: 10px 0; } /* Further reduced from 12px */
   .about-container, .experience-container, .services-interactive-wrapper { flex-direction: column; text-align: center; gap: var(--header-margin-md); }
   .features-container { flex-direction: column; text-align: center; gap: var(--section-padding-v); }
   .hero-content { text-align: center; padding-top: 150px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
