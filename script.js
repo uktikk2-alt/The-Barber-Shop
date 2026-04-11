@@ -247,4 +247,109 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // 11. Interactive Price Estimator Logic
+  const priceData = {
+    services: {
+      'deep-clean': { 
+        base: 120, 
+        title: 'Deep Clean', 
+        desc: 'Thorough exterior hand wash, wheel cleaning, and interior vacuuming with surface wipe down. Ideal for regular maintenance of vehicles in relatively good condition.' 
+      },
+      'signature-deep-clean': { 
+        base: 175, 
+        title: 'Signature Deep Clean', 
+        desc: 'Our definitive deep cleaning process including full decontamination, steam cleaning of carpets, and a high-grade sealant application for lasting protection.' 
+      },
+      'enhancement-polish': { 
+        base: 180, 
+        title: 'Enhancement Polish', 
+        desc: 'A single-stage machine polish designed to drastically increase gloss and remove minor swirl marks, revitalizing tired paintwork in a single session.' 
+      },
+      'paint-correction': { 
+        base: 300, 
+        title: 'Paint Correction', 
+        desc: 'Multi-stage machine polishing to remove deeper defects — heavy swirl marks, scratches, water spots and oxidation. Restores paint to a true mirror finish.' 
+      },
+      'ceramic-coating': { 
+        base: 250, 
+        title: 'Ceramic Coating', 
+        desc: 'Ultra-durable nanotech protection that creates a permanent chemical bond with your paint. Provides extreme hydrophobicity and high-gloss armor.' 
+      }
+    },
+    sizes: {
+      'small': { multiplier: 1, label: 'Small' },
+      'medium': { multiplier: 1.15, label: 'Medium' },
+      'large': { multiplier: 1.42, label: 'Large' },
+      'commercial': { multiplier: 1.7, label: 'Commercial / Van' }
+    }
+  };
+
+  const serviceItems = document.querySelectorAll('#service-choices .choice-item');
+  const sizeItems = document.querySelectorAll('#size-choices .choice-item');
+  const priceDisplay = document.getElementById('total-price');
+  const summaryDisplay = document.getElementById('price-summary');
+  const infoTitle = document.getElementById('info-title');
+  const infoText = document.getElementById('info-text');
+
+  let currentService = 'deep-clean';
+  let currentSize = 'small';
+
+  function updateEstimator() {
+    const service = priceData.services[currentService];
+    const size = priceData.sizes[currentSize];
+    
+    // Calculate price based on multiplier
+    const total = Math.round(service.base * size.multiplier);
+    
+    // Update Price with GSAP for smooth number ticking
+    if (priceDisplay) {
+      gsap.to(priceDisplay, {
+        innerHTML: total,
+        duration: 0.6,
+        snap: { innerHTML: 1 },
+        ease: "power2.out",
+        onUpdate: function() {
+          priceDisplay.innerHTML = '£' + Math.ceil(this.targets()[0].innerHTML);
+        }
+      });
+    }
+
+    // Update Meta Summary
+    if (summaryDisplay) {
+      summaryDisplay.textContent = `${service.title} — ${size.label} vehicle`;
+    }
+
+    // Update Info Box with Fade Effect
+    if (infoTitle && infoText) {
+      gsap.to('#estimator-info', {
+        opacity: 0,
+        y: 10,
+        duration: 0.15,
+        onComplete: () => {
+          infoTitle.textContent = `WHAT IS ${service.title.toUpperCase()}?`;
+          infoText.textContent = service.desc;
+          gsap.to('#estimator-info', { opacity: 1, y: 0, duration: 0.3 });
+        }
+      });
+    }
+  }
+
+  // Event Listeners
+  serviceItems.forEach(item => {
+    item.addEventListener('click', () => {
+      serviceItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      currentService = item.getAttribute('data-service');
+      updateEstimator();
+    });
+  });
+
+  sizeItems.forEach(item => {
+    item.addEventListener('click', () => {
+      sizeItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      currentSize = item.getAttribute('data-size');
+      updateEstimator();
+    });
+  });
 });
