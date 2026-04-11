@@ -34,7 +34,6 @@
 
 html {
   scroll-behavior: smooth;
-  overscroll-behavior-y: none; /* Prevents mobile 'bounce' conflicts with scroll script */
 }
 
 body {
