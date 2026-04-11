@@ -6,21 +6,64 @@ document.addEventListener("DOMContentLoaded", () => {
     offset: 50,
     duration: 600,
     easing: 'ease-out-cubic',
-    disable: false // Enabled AOS animations on mobile 
+    disable: false 
   });
 
-  // 2. Sticky header on scroll
+  // Global Scroll State & Offsets to prevent Layout Thrashing
+  let sectionOffsets = [];
+  const sections = document.querySelectorAll("section[id], body[id]");
+  const navLinks = document.querySelectorAll(".nav ul li a");
   const header = document.querySelector(".header");
+
+  const calculateOffsets = () => {
+    sectionOffsets = Array.from(sections).map(section => ({
+      id: section.getAttribute("id"),
+      offset: section.offsetTop - 250
+    }));
+  };
+  calculateOffsets();
+  window.addEventListener('resize', calculateOffsets, { passive: true });
+
+  // 2. Optimized Scroll Engine (Passive & Throttled)
+  let isScrolling = false;
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
+    if (!isScrolling) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        isScrolling = false;
+      });
+      isScrolling = true;
+    }
+  }, { passive: true });
+
+  const handleScroll = () => {
+    const scrollPos = window.scrollY;
+
+    // Sticky Header Logic
+    if (scrollPos > 50) {
       header.classList.add("sticky");
     } else {
       header.classList.remove("sticky");
     }
-  });
-  if (window.scrollY > 50) {
-    header.classList.add("sticky");
-  }
+
+    // Active Navigation Highlight Logic
+    let current = "";
+    for (const sec of sectionOffsets) {
+      if (scrollPos >= sec.offset) {
+        current = sec.id;
+      }
+    }
+
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === `#${current}`) {
+        link.classList.add("active");
+      }
+    });
+  };
+
+  // Initial call
+  handleScroll();
 
   // 3. Mobile Menu Toggle
   const mobileToggle = document.getElementById("mobile-toggle");
@@ -51,25 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
           top: targetElement.offsetTop - 80,
           behavior: 'smooth'
         });
-      }
-    });
-  });
-
-  // 5. Active navigation highlight
-  const sections = document.querySelectorAll("section[id], body[id]");
-  const navLinks = document.querySelectorAll(".nav ul li a");
-  window.addEventListener("scroll", () => {
-    let current = "";
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      if (window.scrollY >= (sectionTop - 250)) {
-        current = section.getAttribute("id");
-      }
-    });
-    navLinks.forEach(link => {
-      link.classList.remove("active");
-      if (link.getAttribute("href") === `#${current}`) {
-        link.classList.add("active");
       }
     });
   });
