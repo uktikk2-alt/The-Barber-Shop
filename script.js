@@ -109,33 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, {passive: true});
   });
 
-  // 7. Gallery Filter interactions
-  const filterBtns = document.querySelectorAll(".filter-btn");
-  const galleryItems = document.querySelectorAll(".gallery-item");
-  filterBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      filterBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const filterValue = btn.getAttribute('data-filter');
-      
-      galleryItems.forEach(item => {
-        item.style.opacity = '0';
-        item.style.transform = 'scale(0.8)';
-        setTimeout(() => {
-          if (filterValue === 'all' || item.getAttribute('data-category').includes(filterValue)) {
-            item.classList.remove('hide');
-            setTimeout(() => {
-              item.style.opacity = '1';
-              item.style.transform = 'scale(1)';
-            }, 50);
-          } else {
-            item.classList.add('hide');
-          }
-          setTimeout(() => { AOS.refresh(); }, 100);
-        }, 300);
-      });
-    });
-  });
 
   // 8. GSAP Insane Counter Animation
   // Register ScrollTrigger
@@ -376,4 +349,68 @@ document.addEventListener("DOMContentLoaded", () => {
       updateEstimator();
     });
   });
+
+  // 13. Portfolio Drag-to-Scroll & Dots Pagination Integration
+  const gallery = document.getElementById('gallery-container');
+  const dotsContainer = document.getElementById('gallery-dots');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  if (gallery && dotsContainer && galleryItems.length > 0) {
+    // 1. Create Dots Dynamically
+    galleryItems.forEach((_, index) => {
+      const dot = document.createElement('div');
+      dot.classList.add('gallery-dot');
+      if (index === 0) dot.classList.add('active');
+      
+      dot.addEventListener('click', () => {
+        const itemWidth = galleryItems[0].offsetWidth + 20; // Width + Gap
+        gallery.scrollTo({ left: index * itemWidth, behavior: 'smooth' });
+      });
+      
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.gallery-dot');
+
+    // 2. Sync Active Dot with Scroll
+    gallery.onscroll = () => {
+      const itemWidth = galleryItems[0].offsetWidth + 20;
+      const index = Math.round(gallery.scrollLeft / itemWidth);
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    };
+
+    // 3. Drag Logic with Smooth Interaction
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    gallery.addEventListener('mousedown', (e) => {
+      isDown = true;
+      gallery.classList.add('grabbing');
+      startX = e.pageX - gallery.offsetLeft;
+      scrollLeft = gallery.scrollLeft;
+      gallery.style.scrollBehavior = 'auto';
+    });
+
+    gallery.addEventListener('mouseleave', () => {
+      isDown = false;
+      gallery.classList.remove('grabbing');
+    });
+
+    gallery.addEventListener('mouseup', () => {
+      isDown = false;
+      gallery.classList.remove('grabbing');
+      gallery.style.scrollBehavior = 'smooth';
+    });
+
+    gallery.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - gallery.offsetLeft;
+      const walk = (x - startX) * 2;
+      gallery.scrollLeft = scrollLeft - walk;
+    });
+  }
 });

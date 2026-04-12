@@ -188,6 +188,22 @@ const BookingManager = {
                 // Critical: Stop the jump/scroll to the footer
                 e.preventDefault();
                 e.stopPropagation();
+
+                // Special handling for the Price Estimator "Get Quote" button
+                const isEstimatorBtn = btn.closest('.estimator-btns');
+                if (isEstimatorBtn) {
+                    const activeService = document.querySelector('#service-choices .choice-item.active');
+                    const activeSize = document.querySelector('#size-choices .choice-item.active');
+                    
+                    if (activeService && activeSize) {
+                        const serviceId = activeService.getAttribute('data-service');
+                        const sizeLabel = activeSize.querySelector('.size-name').innerText;
+                        this.startWithService(serviceId, sizeLabel);
+                        return;
+                    }
+                }
+
+                // Standard opening for all other booking buttons
                 this.openModal();
             }
         }, true); // Use capture phase to ensure we intercept before other listeners
@@ -265,6 +281,41 @@ const BookingManager = {
         // Show AI Chat Widget back
         const alexWidget = document.getElementById('alex-widget');
         if (alexWidget) alexWidget.style.setProperty('display', 'flex', 'important');
+    },
+
+    startWithService(serviceId, sizeLabel) {
+        // Find the service in our list
+        const service = this.services.find(s => s.id === serviceId);
+        if (!service) {
+            console.error("BookingManager: Service ID not found", serviceId);
+            this.openModal();
+            return;
+        }
+
+        // 1. Open the modal
+        this.openModal();
+
+        // 2. Set the data
+        this.bookingData.service = service;
+        this.bookingData.vehicle.model = sizeLabel || '';
+
+        // 3. Sync UI (Small delay to ensure HTML is rendered if first open)
+        setTimeout(() => {
+            // Select the card in Step 1
+            const cards = document.querySelectorAll('.service-select-card');
+            cards.forEach(c => {
+                c.classList.remove('selected');
+                if (c.dataset.id === serviceId) c.classList.add('selected');
+            });
+
+            // Fill Model input in Step 2
+            const modelInput = document.getElementById('car-model');
+            if (modelInput) modelInput.value = sizeLabel || '';
+
+            // 4. Jump to Step 2
+            this.currentStep = 2;
+            this.updateUI();
+        }, 50);
     },
 
     navigate(dir) {
