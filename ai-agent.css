@@ -12,6 +12,12 @@
     --agent-red: #ff3a3a;
 }
 
+/* Scroll Lock */
+body.ai-no-scroll {
+    overflow: hidden !important;
+    height: 100vh !important;
+}
+
 /* FAB Toggle */
 .ai-widget-container {
     position: fixed;

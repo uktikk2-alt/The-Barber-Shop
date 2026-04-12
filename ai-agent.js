@@ -1,5 +1,5 @@
 /**
- * Alex AI Agent - Call UI Overhaul (v22)
+ * Alex AI Agent - Scroll Lock & Final Polish (v23)
  * Warner & Spencer Car Detailing
  */
 
@@ -104,9 +104,13 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             document.getElementById('btn-chat').onclick = () => {
                 document.getElementById('alex-widget').classList.remove('open');
                 document.getElementById('alex-chat').classList.add('active');
+                document.body.classList.add('ai-no-scroll');
             };
             document.getElementById('btn-voice').onclick = () => this.startVoice();
-            document.getElementById('close-chat').onclick = () => document.getElementById('alex-chat').classList.remove('active');
+            document.getElementById('close-chat').onclick = () => {
+                document.getElementById('alex-chat').classList.remove('active');
+                document.body.classList.remove('ai-no-scroll');
+            };
             document.getElementById('btn-hangup').onclick = () => this.stopVoice();
             document.getElementById('btn-mute').onclick = () => this.toggleMute();
             document.getElementById('send-chat').onclick = () => this.handleSend();
@@ -156,6 +160,7 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
         startVoice() {
             document.getElementById('alex-widget').classList.remove('open');
             document.getElementById('voice-overlay').classList.add('active');
+            document.body.classList.add('ai-no-scroll');
             document.getElementById('call-status').innerText = "Live";
             this.voiceMode = true;
             this.isMuted = false;
@@ -164,6 +169,7 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
 
         stopVoice() {
             document.getElementById('voice-overlay').classList.remove('active');
+            document.body.classList.remove('ai-no-scroll');
             this.voiceMode = false;
             this.isAgentSpeaking = false;
             this.synth.cancel();
