@@ -1,0 +1,419 @@
+/**
+ * PREMIUM MULTI-STEP BOOKING MODAL LOGIC
+ * Powered by James' Detailing Experience
+ */
+
+const BookingManager = {
+    currentStep: 1,
+    totalSteps: 5,
+    bookingData: {
+        service: null,
+        vehicle: {
+            make: '',
+            model: ''
+        },
+        schedule: {
+            date: null,
+            time: '09:00',
+            timezone: 'GMT+0 (London)'
+        },
+        contact: {
+            name: '',
+            phone: '',
+            email: '',
+            address: ''
+        }
+    },
+
+    services: [
+        { id: 'deep-clean', name: 'Deep Clean', price: 120 },
+        { id: 'signature-deep-clean', name: 'Signature Deep Clean', price: 175 },
+        { id: 'enhancement-polish', name: 'Enhancement Polish', price: 180 },
+        { id: 'paint-correction', name: 'Paint Correction', price: 300 },
+        { id: 'ceramic-coating', name: 'Ceramic Coating', price: 250 },
+        { id: 'headlight-restoration', name: 'Headlight Restoration', price: 45 },
+        { id: 'engine-detailing', name: 'Engine Bay Detailing', price: 50 },
+        { id: 'odor-removal', name: 'Odor Removal', price: 40 }
+    ],
+
+    viewDate: new Date(),
+
+    init() {
+        if (document.getElementById('booking-modal')) return;
+        this.createModalHTML();
+        this.attachListeners();
+        this.renderCalendar();
+        this.updateUI();
+    },
+
+    createModalHTML() {
+        const modalHTML = `
+            <div class="booking-modal-overlay" id="booking-modal">
+                <div class="booking-modal-container">
+                    <button class="modal-close" id="close-booking">&times;</button>
+                    
+                    <div class="modal-header">
+                        <h3 id="step-title" style="text-transform: uppercase; letter-spacing: 2px;">Select Service</h3>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- Step 1: Services -->
+                        <div class="step-content active" data-step="1">
+                            <p style="color: rgba(255,255,255,0.5); font-size: 14px;">Please select one of our premium treatments.</p>
+                            <div class="services-selection-grid">
+                                ${this.services.map(s => `
+                                    <div class="service-select-card" data-id="${s.id}" data-price="${s.price}">
+                                        <h4>${s.name}</h4>
+                                        <span>£${s.price}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Vehicle -->
+                        <div class="step-content" data-step="2">
+                            <p style="color: rgba(255,255,255,0.5); font-size: 14px;">Tell us about your vehicle.</p>
+                            <div class="form-step">
+                                <div class="booking-input-group">
+                                    <label>Vehicle Make</label>
+                                    <input type="text" class="booking-input" id="car-make" placeholder="e.g. BMW, Mercedes, Tesla">
+                                </div>
+                                <div class="booking-input-group">
+                                    <label>Vehicle Model</label>
+                                    <input type="text" class="booking-input" id="car-model" placeholder="e.g. M3, C-Class, Model S">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Schedule -->
+                        <div class="step-content" data-step="3">
+                            <div class="calendar-step-wrap">
+                                <div class="calendar-header">
+                                    <h4 id="cal-month-year">April 2026</h4>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button class="cal-nav-btn" id="prev-month" style="background: none; border: none; color: #fff; cursor: pointer;"><i class="fa-solid fa-chevron-left"></i></button>
+                                        <button class="cal-nav-btn" id="next-month" style="background: none; border: none; color: #fff; cursor: pointer;"><i class="fa-solid fa-chevron-right"></i></button>
+                                    </div>
+                                </div>
+                                <div class="calendar-grid" id="calendar-days">
+                                    <!-- Days injected by JS -->
+                                </div>
+                                
+                                <div style="margin-top: 25px;">
+                                    <label style="display: block; font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 8px;">SELECT PREFERRED TIME</label>
+                                    <select class="booking-input" id="booking-time">
+                                        <option value="09:00">09:00 AM</option>
+                                        <option value="10:00">10:00 AM</option>
+                                        <option value="11:00" selected>11:00 AM</option>
+                                        <option value="12:00">12:00 PM</option>
+                                        <option value="13:00">01:00 PM</option>
+                                        <option value="14:00">02:00 PM</option>
+                                        <option value="15:00">03:00 PM</option>
+                                        <option value="16:00">04:00 PM</option>
+                                    </select>
+                                </div>
+
+                                <div class="timezone-wrap">
+                                    <i class="fa-solid fa-globe"></i>
+                                    <span>Timezone:</span>
+                                    <select>
+                                        <option>GMT+0 (London)</option>
+                                        <option>GMT+1 (Paris)</option>
+                                        <option>EST (New York)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Contact -->
+                        <div class="step-content" data-step="4">
+                            <div class="form-step">
+                                <div class="booking-input-group">
+                                    <label>Full Name</label>
+                                    <input type="text" class="booking-input" id="cust-name" placeholder="Enter your name">
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                    <div class="booking-input-group">
+                                        <label>Phone Number</label>
+                                        <input type="tel" class="booking-input" id="cust-phone" placeholder="Your mobile">
+                                    </div>
+                                    <div class="booking-input-group">
+                                        <label>Email Address</label>
+                                        <input type="email" class="booking-input" id="cust-email" placeholder="Your email">
+                                    </div>
+                                </div>
+                                <div class="booking-input-group">
+                                    <label>ADDRESS / POSTCODE</label>
+                                    <input type="text" class="booking-input" id="cust-address" placeholder="Where is the vehicle located?">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Confirm -->
+                        <div class="step-content" data-step="5">
+                            <div class="summary-box" id="booking-summary">
+                                <!-- Summary injected by JS -->
+                            </div>
+                            <div style="margin-top: 20px; display: flex; align-items: flex-start; gap: 10px;">
+                                <input type="checkbox" id="terms" style="margin-top: 4px;">
+                                <label for="terms" style="font-size: 13px; color: rgba(255,255,255,0.6);">I agree to the terms of service and confirm that all information provided is accurate.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="modal-btn btn-prev" id="btn-prev" style="display: none;">Back</button>
+                        <button class="modal-btn btn-next" id="btn-next">Next</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    },
+
+    attachListeners() {
+        // Open Modal
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('a[href="#booking-section"], .btn-outline, .btn-primary, .sc-btn');
+            if (btn && (btn.innerText.toUpperCase().includes('BOOK') || btn.classList.contains('sc-btn'))) {
+                e.preventDefault();
+                this.openModal();
+            }
+        });
+
+        // Close Modal
+        document.getElementById('close-booking').onclick = () => this.closeModal();
+        document.getElementById('booking-modal').onclick = (e) => {
+            if (e.target.id === 'booking-modal') this.closeModal();
+        };
+
+        // Service Selection (Using delegation)
+        const servicesGrid = document.querySelector('.services-selection-grid');
+        if (servicesGrid) {
+            servicesGrid.onclick = (e) => {
+                const card = e.target.closest('.service-select-card');
+                if (card) {
+                    document.querySelectorAll('.service-select-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    this.bookingData.service = {
+                        id: card.dataset.id,
+                        name: card.querySelector('h4').innerText,
+                        price: card.dataset.price
+                    };
+                    console.log("Selected service:", this.bookingData.service);
+                    this.validate();
+                }
+            };
+        }
+
+        // Next / Prev Buttons
+        const nextBtn = document.getElementById('btn-next');
+        const prevBtn = document.getElementById('btn-prev');
+        
+        if (nextBtn) nextBtn.onclick = () => this.navigate(1);
+        if (prevBtn) prevBtn.onclick = () => this.navigate(-1);
+
+        // Input data binding
+        const inputs = {
+            'car-make': (val) => this.bookingData.vehicle.make = val,
+            'car-model': (val) => this.bookingData.vehicle.model = val,
+            'cust-name': (val) => this.bookingData.contact.name = val,
+            'cust-phone': (val) => this.bookingData.contact.phone = val,
+            'cust-email': (val) => this.bookingData.contact.email = val,
+            'cust-address': (val) => this.bookingData.contact.address = val,
+            'booking-time': (val) => this.bookingData.schedule.time = val
+        };
+
+        Object.keys(inputs).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+                el.addEventListener(eventType, (e) => {
+                    inputs[id](e.target.value);
+                    this.validate();
+                });
+            }
+        });
+    },
+
+    openModal() {
+        const modal = document.getElementById('booking-modal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    },
+
+    closeModal() {
+        const modal = document.getElementById('booking-modal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    },
+
+    navigate(dir) {
+        try {
+            console.log(`BookingManager: Navigating ${dir === 1 ? 'Forward' : 'Backward'} from step ${this.currentStep}`);
+            
+            if (dir === 1 && !this.validate()) {
+                console.warn("BookingManager: Validation failed for current step.");
+                return;
+            }
+
+            if (this.currentStep === this.totalSteps && dir === 1) {
+                this.finishBooking();
+                return;
+            }
+
+            this.currentStep += dir;
+            this.updateUI();
+            
+            // Scroll to top of modal body on step change
+            document.querySelector('.booking-modal-container').scrollTop = 0;
+            
+        } catch (error) {
+            console.error("BookingManager Error in navigate:", error);
+        }
+    },
+
+    validate() {
+        try {
+            const nextBtn = document.getElementById('btn-next');
+            if (!nextBtn) return false;
+
+            let isValid = false;
+            switch(parseInt(this.currentStep)) {
+                case 1: isValid = !!this.bookingData.service; break;
+                case 2: isValid = !!this.bookingData.vehicle.make && !!this.bookingData.vehicle.model; break;
+                case 3: isValid = !!this.bookingData.schedule.date; break;
+                case 4: isValid = !!this.bookingData.contact.name && !!this.bookingData.contact.phone; break;
+                case 5: isValid = document.getElementById('terms').checked; break;
+                default: isValid = true;
+            }
+
+            nextBtn.disabled = !isValid;
+            nextBtn.style.opacity = isValid ? '1' : '0.3';
+            nextBtn.style.pointerEvents = isValid ? 'auto' : 'none';
+            
+            return isValid;
+        } catch (error) {
+            console.error("BookingManager Error in validate:", error);
+            return false;
+        }
+    },
+
+    updateUI() {
+        // Toggle Steps
+        document.querySelectorAll('.step-content').forEach(s => {
+            s.classList.toggle('active', s.dataset.step == this.currentStep);
+        });
+
+        // Progress Bar
+        const progress = (this.currentStep / this.totalSteps) * 100;
+        document.getElementById('progress-fill').style.width = `${progress}%`;
+
+        // Footer Buttons
+        document.getElementById('btn-prev').style.display = this.currentStep === 1 ? 'none' : 'block';
+        document.getElementById('btn-next').innerText = this.currentStep === this.totalSteps ? 'Confirm Booking' : 'Next Step';
+
+        // Step Title
+        const titles = ["", "Select Service", "Vehicle Details", "Preferred Time", "Contact Info", "Confirmation"];
+        document.getElementById('step-title').innerText = titles[this.currentStep];
+
+        // If summary step, render it
+        if (this.currentStep === 5) this.renderSummary();
+        
+        this.validate();
+    },
+
+    renderCalendar() {
+        const daysContainer = document.getElementById('calendar-days');
+        if (!daysContainer) return;
+
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        let daysHTML = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(d => `<div class="cal-day-name">${d}</div>`).join('');
+
+        // Empty slots for prev month
+        for (let i = 0; i < (firstDay === 0 ? 0 : firstDay); i++) {
+            daysHTML += `<div class="cal-day disabled"></div>`;
+        }
+
+        // Current Month Days
+        for (let day = 1; day <= daysInMonth; day++) {
+            const isToday = day === date.getDate();
+            const isSelected = this.bookingData.schedule.date === `${day}/${month+1}`;
+            daysHTML += `
+                <div class="cal-day ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}" data-day="${day}">
+                    ${day}
+                </div>
+            `;
+        }
+
+        daysContainer.innerHTML = daysHTML;
+
+        // Day click listeners
+        daysContainer.querySelectorAll('.cal-day:not(.disabled)').forEach(el => {
+            el.onclick = () => {
+                this.bookingData.schedule.date = `${el.dataset.day}/${month + 1}`;
+                this.renderCalendar();
+                this.validate();
+            };
+        });
+    },
+
+    renderSummary() {
+        const box = document.getElementById('booking-summary');
+        const d = this.bookingData;
+        box.innerHTML = `
+            <div class="summary-row">
+                <span class="summary-label">SERVICE</span>
+                <span class="summary-value highlight">${d.service.name}</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">VEHICLE</span>
+                <span class="summary-value">${d.vehicle.make} ${d.vehicle.model}</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">DATE & TIME</span>
+                <span class="summary-value">${d.schedule.date} @ ${d.schedule.time}</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">LOCATION</span>
+                <span class="summary-value">${d.contact.address}</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">PRICE (ESTIMATE)</span>
+                <span class="summary-value highlight" style="font-size: 20px;">£${d.service.price}</span>
+            </div>
+        `;
+
+        document.getElementById('terms').onchange = () => this.validate();
+    },
+
+    finishBooking() {
+        const modalContainer = document.querySelector('.booking-modal-container');
+        modalContainer.innerHTML = `
+            <div style="padding: 60px 40px; text-align: center;">
+                <div style="width: 80px; height: 80px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; font-size: 30px; color: #000;">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h2 style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">Booking Confirmed!</h2>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 30px;">Thank you ${this.bookingData.contact.name}. James will contact you shortly at ${this.bookingData.contact.phone} to finalize the details.</p>
+                <button class="modal-btn btn-next" onclick="location.reload()">Return Home</button>
+            </div>
+        `;
+    }
+};
+
+// Robust initialization
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => BookingManager.init());
+} else {
+    BookingManager.init();
+}

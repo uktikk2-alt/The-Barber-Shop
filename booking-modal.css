@@ -1,0 +1,398 @@
+/* PREMIUM BOOKING MODAL STYLES */
+
+:root {
+    --modal-bg: rgba(10, 10, 10, 0.95);
+    --modal-card-bg: rgba(20, 20, 20, 0.8);
+    --accent: #ccff00;
+    --text-main: #ffffff;
+    --text-dim: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+.booking-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 10000;
+    display: none; /* Controlled by JS */
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.booking-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.booking-modal-container {
+    width: 95%;
+    max-width: 650px;
+    height: auto;
+    max-height: 90vh;
+    background: var(--modal-card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    position: relative;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.booking-modal-overlay.active .booking-modal-container {
+    transform: translateY(0);
+}
+
+/* Modal Header & Progress */
+.modal-header {
+    padding: 30px 40px 10px;
+}
+
+.modal-header h3 {
+    color: #ffffff !important;
+    margin-bottom: 5px;
+}
+
+.modal-header p {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.modal-close {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    font-size: 24px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: 0.3s;
+    background: none;
+    border: none;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    color: var(--accent);
+    transform: rotate(90deg);
+}
+
+.progress-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 20%; /* Step 1/5 */
+    transition: width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+    box-shadow: 0 0 15px var(--accent);
+}
+
+/* Modal Body/Steps */
+.modal-body {
+    padding: 20px 40px 40px;
+    flex-grow: 1;
+}
+
+.step-content {
+    display: none;
+    animation: fadeInSlide 0.5s ease forwards;
+}
+
+.step-content.active {
+    display: block;
+}
+
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Force High Visibility Text */
+.booking-modal-container h3, 
+.booking-modal-container h4,
+.booking-modal-container p,
+.booking-modal-container label,
+.booking-modal-container span:not(.choice-price):not(.btn-lime span),
+.booking-modal-container div:not(.progress-bar-wrap):not(.progress-bar-fill) {
+    color: #ffffff;
+}
+
+.booking-modal-container label {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Step 1: Services Grid */
+.services-selection-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.service-select-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--glass-border);
+    padding: 18px 25px;
+    border-radius: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.service-select-card:hover {
+    border-color: var(--accent);
+    background: rgba(204, 255, 0, 0.05);
+}
+
+.service-select-card.selected {
+    border-color: var(--accent);
+    background: var(--accent);
+}
+
+.service-select-card.selected h4,
+.service-select-card.selected span {
+    color: #000000 !important; /* Force black when selected for contrast */
+    font-weight: 700;
+}
+
+.service-select-card h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #ffffff !important;
+}
+
+.service-select-card span {
+    color: var(--accent);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+}
+
+/* Step 2: Vehicle Selection */
+.form-step {
+    padding-top: 20px;
+}
+
+.booking-input-group {
+    margin-bottom: 20px;
+}
+
+.booking-input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+}
+
+.booking-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    padding: 15px 20px;
+    border-radius: 12px;
+    color: #fff;
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+.booking-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(255,255,255,0.08);
+}
+
+/* Step 3: Calendar Custom Styles */
+.calendar-step-wrap {
+    margin-top: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.cal-day-name {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-weight: 600;
+    padding-bottom: 5px;
+}
+
+.cal-day {
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid transparent;
+}
+
+.cal-day:hover:not(.disabled) {
+    background: rgba(204, 255, 0, 0.1);
+    border-color: var(--accent);
+}
+
+.cal-day.today {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.cal-day.selected {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+}
+
+.cal-day.disabled {
+    color: rgba(255,255,255,0.1);
+    cursor: not-allowed;
+}
+
+/* Step 4 & 5: Summary & Final */
+.summary-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--glass-border);
+    padding: 25px;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    color: var(--text-dim);
+    font-size: 14px;
+}
+
+.summary-value {
+    color: #fff;
+    font-weight: 500;
+    text-align: right;
+}
+
+.summary-value.highlight {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+/* Modal Footer Buttons */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px 40px;
+    gap: 15px;
+}
+
+.modal-btn {
+    padding: 15px 30px;
+    border-radius: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: inherit;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex: 1;
+}
+
+.btn-prev {
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    border: 1px solid var(--glass-border);
+}
+
+.btn-prev:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.btn-next {
+    background: var(--accent);
+    color: #000000 !important; /* Pure black on lime for maximum contrast */
+    border: none;
+    box-shadow: 0 10px 20px rgba(204, 255, 0, 0.2);
+}
+
+.btn-next:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(204, 255, 0, 0.3);
+}
+
+.btn-next:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+    color: rgba(0,0,0,0.5) !important;
+}
+
+/* Timezone selection */
+.timezone-wrap {
+    margin-top: 15px;
+    font-size: 12px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.timezone-wrap select {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .booking-modal-container {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+    
+    .modal-header, .modal-body, .modal-footer {
+        padding: 25px 25px;
+    }
+    
+    .service-select-card {
+        padding: 15px 20px;
+    }
+}
