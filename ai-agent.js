@@ -1,5 +1,5 @@
 /**
- * Alex AI Agent - Final Human Overhaul (v21)
+ * Alex AI Agent - Call UI Overhaul (v22)
  * Warner & Spencer Car Detailing
  */
 
@@ -8,30 +8,15 @@
         apiKey: "AIzaSyBnbE3Vh_VPvICRVgNkfiyVR4yt9ThygsY",
         businessName: "Warner & Spencer Car Detailing",
         location: "Wrexham",
-        // STRICTLY 2.5 FLASH ONLY
         modelName: "gemini-2.5-flash", 
         persona: `You are a human named Alex. You work at Warner & Spencer Car Detailing. You are on a phone call.
         
 VOICE & TONE:
-- Talk like a real person at a front desk — relaxed, confident, natural
-- Short sentences only. One or two max per response.
-- Never monologue. Say something, then stop and listen.
-- No robotic phrases: never say "certainly", "absolutely", "of course I can assist you with that", "great question"
-- Use natural language: "yeah", "sure", "got it", "no problem", "sounds good"
+- Talk like a front desk person — relaxed, natural. Use "yeah", "sure", "got it".
+- Short sentences only. One or two max. No monologues.
 
 LISTENING:
-- Always let the caller finish before you speak
-- If they interrupt you — stop immediately, mid-sentence if needed
-- Respond to what they just said, not what you were going to say
-
-ANSWERS:
-- Keep every answer to one or two sentences
-- If they ask something detailed, give the short version first, then ask if they want more
-- Never volunteer information they didn't ask for
-- Ask only one question at a time, then wait
-
-IF YOU DON'T KNOW:
-- Don't guess. Say "let me check on that" and offer to call them back.
+- Stop speaking immediately if the user starts talking.
 
 Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
     };
@@ -44,6 +29,7 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             this.recognition = null;
             this.voiceMode = false;
             this.isAgentSpeaking = false;
+            this.isMuted = false;
 
             this.renderUI();
             this.setupEventListeners();
@@ -88,13 +74,26 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
                 </div>
 
                 <div class="ai-voice-overlay" id="voice-overlay">
-                    <i class="fas fa-times ai-voice-close" id="close-voice"></i>
-                    <div class="ai-voice-pulse-container">
-                        <div class="ai-voice-pulse"></div>
-                        <div class="ai-voice-icon"><i class="fas fa-microphone"></i></div>
+                    <div class="ai-call-header">
+                        <h2>Alex</h2>
+                        <span id="call-status">Connecting...</span>
                     </div>
-                    <div class="ai-voice-status" id="voice-status">Listening...</div>
-                    <div class="ai-voice-transcript" id="voice-transcript"></div>
+
+                    <div class="ai-call-avatar-area">
+                        <div class="ai-call-pulse"></div>
+                        <div class="ai-call-pulse" style="animation-delay: 1s"></div>
+                        <div class="ai-call-icon-main"><i class="fas fa-user-tie"></i></div>
+                    </div>
+
+                    <div class="ai-call-transcription" id="call-transcription">
+                        <div class="ai-voice-transcript" id="voice-transcript">"Hello? Is anyone there?"</div>
+                        <div class="ai-voice-status" id="voice-status">Waiting for you to speak...</div>
+                    </div>
+
+                    <div class="ai-call-controls">
+                        <button class="ai-btn-call ai-btn-mute" id="btn-mute"><i class="fas fa-microphone"></i></button>
+                        <button class="ai-btn-call ai-btn-hangup" id="btn-hangup"><i class="fas fa-phone-slash"></i></button>
+                    </div>
                 </div>
             `;
             document.body.appendChild(container);
@@ -108,9 +107,26 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             };
             document.getElementById('btn-voice').onclick = () => this.startVoice();
             document.getElementById('close-chat').onclick = () => document.getElementById('alex-chat').classList.remove('active');
-            document.getElementById('close-voice').onclick = () => this.stopVoice();
+            document.getElementById('btn-hangup').onclick = () => this.stopVoice();
+            document.getElementById('btn-mute').onclick = () => this.toggleMute();
             document.getElementById('send-chat').onclick = () => this.handleSend();
             document.getElementById('chat-input').onkeypress = (e) => { if (e.key === 'Enter') this.handleSend(); };
+        }
+
+        toggleMute() {
+            this.isMuted = !this.isMuted;
+            const btn = document.getElementById('btn-mute');
+            if (this.isMuted) {
+                btn.classList.add('muted');
+                btn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+                if (this.recognition) this.recognition.stop();
+                document.getElementById('voice-status').innerText = "Microphone Muted";
+            } else {
+                btn.classList.remove('muted');
+                btn.innerHTML = '<i class="fas fa-microphone"></i>';
+                if (this.recognition) this.recognition.start();
+                document.getElementById('voice-status').innerText = "Listening...";
+            }
         }
 
         initSpeech() {
@@ -130,7 +146,7 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
                     this.tryGenerateResponse(t, true);
                 };
                 this.recognition.onend = () => {
-                    if (this.voiceMode && !this.isAgentSpeaking && !this.isLoading) {
+                    if (this.voiceMode && !this.isAgentSpeaking && !this.isLoading && !this.isMuted) {
                         try { this.recognition.start(); } catch(e) {}
                     }
                 };
@@ -140,7 +156,9 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
         startVoice() {
             document.getElementById('alex-widget').classList.remove('open');
             document.getElementById('voice-overlay').classList.add('active');
+            document.getElementById('call-status').innerText = "Live";
             this.voiceMode = true;
+            this.isMuted = false;
             this.speak("Yeah, hi! This is Alex at Warner and Spencer. How can I help you?");
         }
 
@@ -155,10 +173,14 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
         speak(text) {
             this.synth.cancel();
             this.isAgentSpeaking = true;
+            document.getElementById('voice-transcript').innerText = text;
+            document.getElementById('voice-status').innerText = "Alex is speaking...";
+            
             const u = new SpeechSynthesisUtterance(text);
             if (this.recognition) { try { this.recognition.stop(); } catch(e) {} }
             u.onend = () => {               this.isAgentSpeaking = false;
-                if (this.voiceMode && this.recognition) { try { this.recognition.start(); } catch(e) {} }
+                document.getElementById('voice-status').innerText = this.isMuted ? "Muted" : "Listening...";
+                if (this.voiceMode && this.recognition && !this.isMuted) { try { this.recognition.start(); } catch(e) {} }
             };
             this.synth.speak(u);
         }
@@ -184,16 +206,17 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
 
         async tryGenerateResponse(text, isVoice = false) {
             this.isLoading = true;
-            if (isVoice) document.getElementById('voice-status').innerText = "Got it...";
+            if (isVoice) {
+                document.getElementById('voice-status').innerText = "Got it...";
+                document.getElementById('voice-transcript').innerText = `"${text}"`;
+            }
 
-            // TRY BOTH API VERSIONS FOR GEMINI 2.5
             const versions = ["v1beta", "v1"];
             let lastError = "";
 
             for (const ver of versions) {
                 try {
                     const url = `https://generativelanguage.googleapis.com/${ver}/models/${ALEX_CONFIG.modelName}:generateContent?key=${ALEX_CONFIG.apiKey}`;
-                    
                     const res = await fetch(url, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -202,7 +225,7 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
                                 { role: "user", parts: [{ text: ALEX_CONFIG.persona }] },
                                 { role: "model", parts: [{ text: "Sure, got it. I'm ready." }] },
                                 ...this.history,
-                                { role: "user", parts: [{ text: text + " (Constraint: 1-2 sentences. Human style.)" }] }
+                                { role: "user", parts: [{ text: text + " (Short response mode.)" }] }
                             ],
                             generationConfig: { temperature: 0.8, maxOutputTokens: 100 }
                         })
@@ -216,17 +239,14 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
                         document.getElementById('alex-status').innerText = `Live (2.5 Flash)`;
                         if (isVoice) { this.speak(aiText); } else { this.addMessageToUI('bot', aiText); }
                         this.isLoading = false; 
-                        return; // SUCCESS!
+                        return;
                     } else {
                         const err = await res.json();
                         lastError = err.error?.message || "Unknown error";
                     }
-                } catch (e) {
-                    lastError = e.message;
-                }
+                } catch (e) { lastError = e.message; }
             }
 
-            // If we reach here, both versions failed
             this.addMessageToUI('bot', `⚠️ API Error: ${lastError}`, true);
             this.isLoading = false;
         }

@@ -9,6 +9,7 @@
     --agent-glass: rgba(10, 10, 10, 0.95);
     --agent-border: rgba(208, 255, 58, 0.2);
     --agent-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    --agent-red: #ff3a3a;
 }
 
 /* FAB Toggle */
@@ -22,7 +23,6 @@
     align-items: center;
     justify-content: center;
 }
-
 
 .ai-fab {
     width: 65px;
@@ -53,22 +53,6 @@
 
 .ai-fab:hover i {
     color: var(--agent-dark);
-}
-
-/* Pulse Animation for FAB */
-.ai-fab::after {
-    content: '';
-    position: absolute;
-    top: -5px; left: -5px; right: -5px; bottom: -5px;
-    border: 1px solid var(--agent-primary);
-    border-radius: 50%;
-    animation: fab-pulse 2s infinite;
-    pointer-events: none;
-}
-
-@keyframes fab-pulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(1.4); opacity: 0; }
 }
 
 /* Options Switcher */
@@ -105,7 +89,6 @@
     font-weight: 600;
     font-size: 14px;
     transition: all 0.3s;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 .ai-option:hover {
@@ -176,8 +159,8 @@
 .ai-user-info h4 { margin: 0; font-size: 15px; color: white; letter-spacing: 0.5px; }
 .ai-user-info span { font-size: 11px; color: var(--agent-primary); opacity: 0.8; font-weight: 500; }
 
-.ai-chat-close { color: white; opacity: 0.5; cursor: pointer; transition: 0.3s; }
-.ai-chat-close:hover { opacity: 1; color: var(--agent-primary); }
+.ai-chat-close { color: white; opacity: 0.5; cursor: pointer; transition: 0.3s; font-size: 18px; }
+.ai-chat-close:hover { opacity: 1; color: var(--agent-primary); transform: rotate(90deg); }
 
 .ai-messages {
     flex: 1;
@@ -251,20 +234,21 @@
 
 .ai-send-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(208, 255, 58, 0.3); }
 
-/* Voice Mode UI */
+/* Call Overlay - UPGRADED UI */
 .ai-voice-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.95);
-    backdrop-filter: blur(20px);
+    background: rgba(0,0,0,0.98);
+    backdrop-filter: blur(40px);
     z-index: 20000;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 60px 20px;
     opacity: 0;
     visibility: hidden;
-    transition: 0.5s;
+    transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .ai-voice-overlay.active {
@@ -272,7 +256,56 @@
     visibility: visible;
 }
 
-.ai-voice-pulse-container {
+.ai-call-header {
+    text-align: center;
+    color: white;
+}
+
+.ai-call-header h2 {
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 3px;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.ai-call-header span {
+    color: var(--agent-primary);
+    opacity: 0.8;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ai-call-transcription {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 40px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 20px;
+}
+
+.ai-voice-transcript {
+    color: rgba(255,255,255,0.9);
+    font-size: 22px;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.ai-voice-status {
+    color: var(--agent-primary);
+    font-size: 14px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.ai-call-avatar-area {
     position: relative;
     width: 250px;
     height: 250px;
@@ -281,24 +314,26 @@
     justify-content: center;
 }
 
-.ai-voice-pulse {
+.ai-call-pulse {
     position: absolute;
     width: 100%; height: 100%;
-    border: 2px solid var(--agent-primary);
+    border: 1px solid var(--agent-primary);
     border-radius: 50%;
     opacity: 0;
+    transform: scale(0.8);
 }
 
-.ai-voice-overlay.listening .ai-voice-pulse {
-    animation: voice-pulse 2s infinite ease-out;
+.active .ai-call-pulse {
+    animation: call-pulse 3s infinite ease-out;
 }
 
-@keyframes voice-pulse {
-    0% { transform: scale(0.5); opacity: 0.8; }
+@keyframes call-pulse {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.1; }
     100% { transform: scale(1.5); opacity: 0; }
 }
 
-.ai-voice-icon {
+.ai-call-icon-main {
     width: 100px;
     height: 100px;
     background: var(--agent-primary);
@@ -309,48 +344,69 @@
     font-size: 40px;
     color: var(--agent-dark);
     z-index: 5;
-    box-shadow: 0 0 50px rgba(208, 255, 58, 0.4);
+    box-shadow: 0 0 80px rgba(208, 255, 58, 0.4);
 }
 
-.ai-voice-status {
-    margin-top: 40px;
-    color: white;
-    font-family: 'Oswald', sans-serif;
+.ai-call-controls {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.ai-btn-call {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 24px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.ai-voice-close {
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    color: white;
-    font-size: 30px;
     cursor: pointer;
     transition: 0.3s;
+    border: none;
 }
 
-.ai-voice-close:hover { color: var(--agent-primary); transform: rotate(90deg); }
-
-.ai-voice-transcript {
-    margin-top: 20px;
-    color: rgba(255,255,255,0.6);
-    font-size: 16px;
-    max-width: 80%;
-    text-align: center;
-    font-style: italic;
+.ai-btn-mute {
+    background: rgba(255,255,255,0.1);
+    color: white;
 }
+
+.ai-btn-mute.muted {
+    background: white;
+    color: var(--agent-dark);
+}
+
+.ai-btn-hangup {
+    background: var(--agent-red);
+    color: white;
+    width: 80px;
+    height: 80px;
+    font-size: 30px;
+    box-shadow: 0 10px 40px rgba(255, 58, 58, 0.4);
+}
+
+.ai-btn-hangup:hover { transform: scale(1.05); }
 
 /* Mobile Adjustments */
 @media (max-width: 480px) {
-    .ai-chat-window {
-        width: calc(100% - 40px);
-        height: 70vh;
-        right: 20px;
-        bottom: 100px;
+    .ai-chat-window { 
+        width: 100%; 
+        height: 100%; 
+        right: 0; 
+        bottom: 0; 
+        border-radius: 0; 
+        z-index: 999999;
     }
+    .ai-chat-header { padding: 30px 20px; }
+    .ai-avatar { width: 50px; height: 50px; }
+    .ai-user-info h4 { font-size: 18px; }
+    .ai-chat-close { font-size: 24px; }
+    .ai-input-area { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+
     .ai-fab { width: 55px; height: 55px; }
-    .ai-voice-pulse-container { width: 180px; height: 180px; }
-    .ai-voice-icon { width: 80px; height: 80px; font-size: 30px; }
+    .ai-call-avatar-area { width: 180px; height: 180px; }
+    .ai-call-icon-main { width: 80px; height: 80px; font-size: 30px; }
+    .ai-call-controls { gap: 25px; }
+    .ai-btn-call { width: 55px; height: 55px; font-size: 20px; }
+    .ai-btn-hangup { width: 70px; height: 70px; }
 }
