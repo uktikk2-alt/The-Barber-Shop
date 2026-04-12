@@ -157,10 +157,6 @@ const BookingManager = {
                             <div class="summary-box" id="booking-summary">
                                 <!-- Summary injected by JS -->
                             </div>
-                            <div style="margin-top: 20px; display: flex; align-items: flex-start; gap: 10px;">
-                                <input type="checkbox" id="terms" style="margin-top: 4px;">
-                                <label for="terms" style="font-size: 13px; color: rgba(255,255,255,0.6);">I agree to the terms of service and confirm that all information provided is accurate.</label>
-                            </div>
                         </div>
                     </div>
 
@@ -175,14 +171,26 @@ const BookingManager = {
     },
 
     attachListeners() {
-        // Open Modal
+        // Universal Link Interception: Capture every "Book Now" style button
+        // and prevent scrolling to #booking-section
         document.addEventListener('click', (e) => {
-            const btn = e.target.closest('a[href="#booking-section"], .btn-outline, .btn-primary, .sc-btn');
-            if (btn && (btn.innerText.toUpperCase().includes('BOOK') || btn.classList.contains('sc-btn'))) {
+            // Find closest link or button
+            const btn = e.target.closest('a, button, .btn, .sc-btn');
+            if (!btn) return;
+
+            const href = btn.getAttribute('href') || '';
+            const text = btn.innerText.toUpperCase();
+            const isBookingTarget = href.includes('#booking-section') || 
+                                  text.includes('BOOK') || 
+                                  text.includes('DETAIL');
+
+            if (isBookingTarget) {
+                // Critical: Stop the jump/scroll to the footer
                 e.preventDefault();
+                e.stopPropagation();
                 this.openModal();
             }
-        });
+        }, true); // Use capture phase to ensure we intercept before other listeners
 
         // Close Modal
         document.getElementById('close-booking').onclick = () => this.closeModal();
@@ -243,12 +251,20 @@ const BookingManager = {
         const modal = document.getElementById('booking-modal');
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        
+        // Hide AI Chat Widget
+        const alexWidget = document.getElementById('alex-widget');
+        if (alexWidget) alexWidget.style.setProperty('display', 'none', 'important');
     },
 
     closeModal() {
         const modal = document.getElementById('booking-modal');
         modal.classList.remove('active');
         document.body.style.overflow = '';
+        
+        // Show AI Chat Widget back
+        const alexWidget = document.getElementById('alex-widget');
+        if (alexWidget) alexWidget.style.setProperty('display', 'flex', 'important');
     },
 
     navigate(dir) {
@@ -287,7 +303,7 @@ const BookingManager = {
                 case 2: isValid = !!this.bookingData.vehicle.make && !!this.bookingData.vehicle.model; break;
                 case 3: isValid = !!this.bookingData.schedule.date; break;
                 case 4: isValid = !!this.bookingData.contact.name && !!this.bookingData.contact.phone; break;
-                case 5: isValid = document.getElementById('terms').checked; break;
+                case 5: isValid = true; break;
                 default: isValid = true;
             }
 
@@ -392,20 +408,18 @@ const BookingManager = {
                 <span class="summary-value highlight" style="font-size: 20px;">£${d.service.price}</span>
             </div>
         `;
-
-        document.getElementById('terms').onchange = () => this.validate();
     },
 
     finishBooking() {
         const modalContainer = document.querySelector('.booking-modal-container');
         modalContainer.innerHTML = `
-            <div style="padding: 60px 40px; text-align: center;">
-                <div style="width: 80px; height: 80px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; font-size: 30px; color: #000;">
+            <div style="padding: 60px 40px; text-align: center; animation: confirmPop 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;">
+                <div style="width: 80px; height: 80px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; font-size: 30px; color: #000; box-shadow: 0 0 30px var(--accent);">
                     <i class="fa-solid fa-check"></i>
                 </div>
-                <h2 style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">Booking Confirmed!</h2>
-                <p style="color: rgba(255,255,255,0.6); margin-bottom: 30px;">Thank you ${this.bookingData.contact.name}. James will contact you shortly at ${this.bookingData.contact.phone} to finalize the details.</p>
-                <button class="modal-btn btn-next" onclick="location.reload()">Return Home</button>
+                <h2 style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #ffffff !important;">Booking Confirmed!</h2>
+                <p style="color: rgba(255,255,255,0.8); margin-bottom: 30px; font-size: 16px;">Thank you ${this.bookingData.contact.name}. James will contact you shortly at ${this.bookingData.contact.phone} to finalize the details.</p>
+                <button class="modal-btn btn-next" onclick="location.reload()" style="max-width: 250px; margin: 0 auto;">Return Home</button>
             </div>
         `;
     }
