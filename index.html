@@ -82,7 +82,7 @@
   </section>
 
   <!-- 2. STATS SECTION (BLACK) -->
-  <section id="stats" class="stats bg-black text-white" style="padding-top: var(--section-padding-v); padding-bottom: 20px;">
+  <section id="stats" class="stats section-padding bg-black text-white">
     <div class="container stats-container">
       <div class="stat-item" data-aos="fade-up" data-aos-duration="1000">
         <div class="stat-icon-box"><i class="fa-solid fa-user-group"></i></div>
@@ -111,7 +111,7 @@
   <!-- 3. SECTION 1: DETAILING SERVICES (GRID) -->
   <section id="services" class="services section-padding bg-dark text-white">
     <div class="container">
-      <div class="text-center" style="margin-bottom: 60px;">
+      <div class="text-center section-header">
         <div class="section-badge" data-aos="fade-down">DETAILING SERVICES</div>
         <h2 class="section-title text-white" data-aos="fade-up">Professional <span class="accent-line">Car Care</span>
         </h2>
@@ -198,7 +198,7 @@
   <!-- 4. SECTION 2: EXTRA SERVICES (PREMIUM SPLIT GRID) -->
   <section id="extra-services" class="services section-padding bg-black text-white">
     <div class="container">
-      <div class="split-header">
+      <div class="split-header section-header">
         <div class="sh-left">
           <div class="section-badge" data-aos="fade-down" style="background: rgba(255,255,255,0.05);">BEYOND THE BASICS
           </div>
@@ -299,63 +299,67 @@
     </div>
   </section>
 
-  <!-- 5. PORTFOLIO SECTION (WHITE) -->
-  <section id="gallery" class="gallery section-padding bg-white">
+  <!-- 5. PORTFOLIO SECTION (DARK) -->
+  <section id="gallery" class="gallery section-padding bg-black text-white">
     <div class="container text-center">
-      <div class="section-badge badge-dark-solid" data-aos="fade-down">PORTFOLIO</div>
-      <h2 class="section-title" data-aos="fade-up">Our <span class="accent-line">Gallery</span></h2>
-      <p class="section-desc mx-auto" style="max-width: 700px;" data-aos="fade-up" data-aos-delay="100">
-        "A selection of real results from real vehicles. Every finish achieved by hand, every detail obsessed over."
-      </p>
-
-
-      <div class="gallery-grid" id="gallery-container">
-        <!-- Using data-category for filtering tabs functionality -->
-        <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="50">
-          <img src="assets/gallery/car-wash-detailing-station.jpg" alt="Detailing Gallery" loading="lazy"
-            decoding="async">
-        </div>
-        <div class="gallery-item" data-category="interior" data-aos="zoom-in" data-aos-delay="100">
-          <img src="assets/gallery/pexels-tima-miroshnichenko-6873176.jpg" alt="Detailing Gallery" loading="lazy"
-            decoding="async">
-        </div>
-        <div class="gallery-item" data-category="ceramic" data-aos="zoom-in" data-aos-delay="150">
-          <img src="assets/gallery/man-wrapping-car-inside-full-shot.jpg" alt="Detailing Gallery" loading="lazy"
-            decoding="async">
-        </div>
-        <div class="gallery-item" data-category="interior" data-aos="zoom-in" data-aos-delay="200">
-          <img src="assets/gallery/pexels-bylukemiller-14231701.jpg" alt="Detailing Gallery" loading="lazy"
-            decoding="async">
-        </div>
-        <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="250">
-          <img src="assets/gallery/a-person-in-yellow-gloves-is-painting-the-front-of-a-blue-car-free-photo.jpeg"
-            alt="Detailing Gallery" loading="lazy" decoding="async">
-        </div>
-        <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="300">
-          <img src="assets/gallery/car-wash-detailing-station (1).jpg" alt="Detailing Gallery" loading="lazy"
-            decoding="async">
-        </div>
-        <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="350">
-          <img src="assets/gallery/pexels-wavyvisuals-377312923-20051461.jpg" alt="Detailing Gallery" loading="lazy"
-            decoding="async">
-        </div>
-        <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="400">
-          <img src="assets/gallery/pexels-wavyvisuals-377312923-20051462.jpg" alt="Detailing Gallery" loading="lazy"
-            decoding="async">
-        </div>
-        <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="450">
-          <img src="assets/gallery/pexels-bulat843-1243575272-29504457.jpg" alt="Detailing Gallery" loading="lazy"
-            decoding="async">
-        </div>
+      <div class="section-header">
+        <div class="section-badge" data-aos="fade-down">PORTFOLIO</div>
+        <h2 class="section-title text-white" data-aos="fade-up">Our <span class="accent-line">Gallery</span></h2>
+        <p class="section-desc text-light mx-auto" style="max-width: 700px;" data-aos="fade-up" data-aos-delay="100">
+          "A selection of real results from real vehicles. Every finish achieved by hand, every detail obsessed over."
+        </p>
       </div>
-      <div class="gallery-dots" id="gallery-dots"></div>
+
+
+      <div class="gallery-track-wrapper bg-black">
+        <div class="gallery-grid" id="gallery-container">
+          <!-- Using data-category for filtering tabs functionality -->
+          <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="50">
+            <img src="assets/gallery/car-wash-detailing-station.jpg" alt="Detailing Gallery" loading="lazy"
+              decoding="async">
+          </div>
+          <div class="gallery-item" data-category="interior" data-aos="zoom-in" data-aos-delay="100">
+            <img src="assets/gallery/pexels-tima-miroshnichenko-6873176.jpg" alt="Detailing Gallery" loading="lazy"
+              decoding="async">
+          </div>
+          <div class="gallery-item" data-category="ceramic" data-aos="zoom-in" data-aos-delay="150">
+            <img src="assets/gallery/man-wrapping-car-inside-full-shot.jpg" alt="Detailing Gallery" loading="lazy"
+              decoding="async">
+          </div>
+          <div class="gallery-item" data-category="interior" data-aos="zoom-in" data-aos-delay="200">
+            <img src="assets/gallery/pexels-bylukemiller-14231701.jpg" alt="Detailing Gallery" loading="lazy"
+              decoding="async">
+          </div>
+          <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="250">
+            <img src="assets/gallery/a-person-in-yellow-gloves-is-painting-the-front-of-a-blue-car-free-photo.jpeg"
+              alt="Detailing Gallery" loading="lazy" decoding="async">
+          </div>
+          <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="300">
+            <img src="assets/gallery/car-wash-detailing-station (1).jpg" alt="Detailing Gallery" loading="lazy"
+              decoding="async">
+          </div>
+          <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="350">
+            <img src="assets/gallery/pexels-wavyvisuals-377312923-20051461.jpg" alt="Detailing Gallery" loading="lazy"
+              decoding="async">
+          </div>
+          <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="400">
+            <img src="assets/gallery/pexels-wavyvisuals-377312923-20051462.jpg" alt="Detailing Gallery" loading="lazy"
+              decoding="async">
+          </div>
+          <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="450">
+            <img src="assets/gallery/pexels-bulat843-1243575272-29504457.jpg" alt="Detailing Gallery" loading="lazy"
+              decoding="async">
+          </div>
+        </div>
+        <p class="gallery-scroll-msg mt-4" data-aos="fade-up">← SCROLL TO EXPLORE →</p>
+      </div>
     </div>
   </section>
 
   <!-- 6. QUICK QUOTE SECTION (DARK) -->
   <section id="estimator" class="estimator section-padding bg-black text-white">
     <div class="container" style="max-width: 1000px;">
-      <div class="text-center" style="margin-bottom: 50px;">
+      <div class="text-center section-header">
         <div class="section-badge" data-aos="fade-down">QUICK QUOTE</div>
         <h2 class="section-title text-white" data-aos="fade-up">Get an <span class="accent-line">Estimate</span></h2>
         <p class="section-desc text-light mx-auto" style="max-width: 700px;" data-aos="fade-up" data-aos-delay="100">
@@ -465,7 +469,7 @@
   <!-- 7. WHY CHOOSE US SECTON (WHITE) -->
   <section id="features" class="features section-padding bg-white">
     <div class="container features-container">
-      <div class="features-text" data-aos="fade-right">
+      <div class="features-text section-header" data-aos="fade-right">
         <div class="section-badge badge-dark-bg">WHY CHOOSE US</div>
         <h2 class="section-title">Professional <span class="accent-line">Car Care</span> &<br><span
             class="accent-line">Elite Detailing</span> Certification</h2>
@@ -514,11 +518,13 @@
   <!-- 8. TESTIMONIALS SECTION (BRAND DARK) -->
   <section id="reviews" class="reviews section-padding bg-black text-white">
     <div class="container text-center">
-      <div class="section-badge" data-aos="fade-down">TESTIMONIALS</div>
-      <h2 class="section-title text-white" data-aos="fade-up">Why Our Customers <span class="accent-line">Love Us</span>
-      </h2>
-      <p class="section-desc text-light" data-aos="fade-up" data-aos-delay="100">Our system ensures every inquiry is
-        responded to quickly and every booking is handled smoothly — so you never miss a chance to serve a customer.</p>
+      <div class="section-header">
+        <div class="section-badge" data-aos="fade-down">TESTIMONIALS</div>
+        <h2 class="section-title text-white" data-aos="fade-up">Why Our Customers <span class="accent-line">Love Us</span>
+        </h2>
+        <p class="section-desc text-light" data-aos="fade-up" data-aos-delay="100">Our system ensures every inquiry is
+          responded to quickly and every booking is handled smoothly — so you never miss a chance to serve a customer.</p>
+      </div>
 
       <div class="ticker-wrapper">
         <div class="ticker-track track-1">
@@ -868,19 +874,6 @@
     </div>
   </section>
 
-  <!-- 10. OPEN HOURS BANNER -->
-  <section class="banner-info-section">
-    <div class="container" style="display: flex; justify-content: center; max-width: 1200px; padding: 0;">
-      <div class="info-card bg-white" data-aos="fade-up" style="max-width: 500px; width: 100%;">
-        <div class="icon-wrap"><i class="fa-regular fa-clock" style="color: #000000;"></i></div>
-        <div class="info-text">
-          <h4 style="text-transform: uppercase;" class="text-dark">Open Hours</h4>
-          <p class="text-dark">Mon - Fri: 9:00 AM - 10:00 PM</p>
-          <p class="text-dark">Sat - Sun: 9:00 AM - 6:00 PM</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- FOOTER (DARKER) -->
   <footer class="footer bg-darker section-padding" style="padding-bottom: 0;">

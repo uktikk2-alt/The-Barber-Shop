@@ -350,38 +350,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 13. Portfolio Drag-to-Scroll & Dots Pagination Integration
+  // 13. Portfolio Drag-to-Scroll (Cinematic Reference Style)
   const gallery = document.getElementById('gallery-container');
-  const dotsContainer = document.getElementById('gallery-dots');
-  const galleryItems = document.querySelectorAll('.gallery-item');
 
-  if (gallery && dotsContainer && galleryItems.length > 0) {
-    // 1. Create Dots Dynamically
-    galleryItems.forEach((_, index) => {
-      const dot = document.createElement('div');
-      dot.classList.add('gallery-dot');
-      if (index === 0) dot.classList.add('active');
-      
-      dot.addEventListener('click', () => {
-        const itemWidth = galleryItems[0].offsetWidth + 20; // Width + Gap
-        gallery.scrollTo({ left: index * itemWidth, behavior: 'smooth' });
-      });
-      
-      dotsContainer.appendChild(dot);
-    });
-
-    const dots = document.querySelectorAll('.gallery-dot');
-
-    // 2. Sync Active Dot with Scroll
-    gallery.onscroll = () => {
-      const itemWidth = galleryItems[0].offsetWidth + 20;
-      const index = Math.round(gallery.scrollLeft / itemWidth);
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
-    };
-
-    // 3. Drag Logic with Smooth Interaction
+  if (gallery) {
     let isDown = false;
     let startX;
     let scrollLeft;
@@ -391,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
       gallery.classList.add('grabbing');
       startX = e.pageX - gallery.offsetLeft;
       scrollLeft = gallery.scrollLeft;
-      gallery.style.scrollBehavior = 'auto';
+      gallery.style.scrollBehavior = 'auto'; // Disable smooth for drag
     });
 
     gallery.addEventListener('mouseleave', () => {

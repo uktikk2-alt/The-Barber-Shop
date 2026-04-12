@@ -178,6 +178,9 @@ const BookingManager = {
             const btn = e.target.closest('a, button, .btn, .sc-btn');
             if (!btn) return;
 
+            // FIX: If the button is inside the modal itself, let it behave naturally
+            if (btn.closest('.booking-modal-container')) return;
+
             const href = btn.getAttribute('href') || '';
             const text = btn.innerText.toUpperCase();
             const isBookingTarget = href.includes('#booking-section') || 

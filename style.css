@@ -13,14 +13,15 @@
   --font-body: 'Inter', sans-serif;
   
   --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  --section-padding-v: clamp(60px, 10vw, 150px);
-  --section-padding: var(--section-padding-v) 0;
-  --container-gap: clamp(30px, 6vw, 100px);
-  --grid-gap: clamp(15px, 3vw, 30px);
-  --card-padding: clamp(25px, 4vw, 60px);
-  --header-margin-sm: 15px;
-  --header-margin-md: 30px;
-  --header-margin-lg: 60px;
+  --section-spacer: clamp(50px, 6vw, 80px);
+  --header-spacer: 35px;
+  --section-padding: var(--section-spacer) 0;
+  --container-gap: clamp(15px, 3vw, 50px);
+  --grid-gap: clamp(7px, 1.5vw, 15px);
+  --card-padding: clamp(12px, 2vw, 30px);
+  --header-margin-sm: 8px;
+  --header-margin-md: 15px;
+  --header-margin-lg: 30px;
   --glass-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-blur: blur(15px);
@@ -93,7 +94,8 @@ ul { list-style: none; }
 .bg-black { background-color: #000000; color: var(--white); }
 .bg-primary { background: var(--primary-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(208, 255, 58, 0.5); border-bottom: 1px solid rgba(208, 255, 58, 0.5); box-shadow: 0 10px 30px rgba(208, 255, 58, 0.2); }
 
-.section-padding { padding: var(--section-padding); }
+.section-padding { padding: var(--section-spacer) 0; }
+.section-header { margin-bottom: 70px; }
 .mt-4 { margin-top: 40px; }
 
 /* Typography */
@@ -574,8 +576,6 @@ h1, h2, h3, h4, h5, h6 {
 /* Enhanced Features Grid System */
 /* Enhanced Features Grid System */
 #features { 
-  padding-top: 48px; 
-  padding-bottom: 48px;
   transition: background-color 0.8s ease; 
 }
 .features-text .section-title {
@@ -587,8 +587,6 @@ h1, h2, h3, h4, h5, h6 {
   display: grid; 
   grid-template-columns: repeat(2, 1fr); 
   gap: var(--grid-gap); 
-  margin-top: 48px;
-  margin-bottom: 48px;
 }
 .feature-card { 
   display: flex; align-items: flex-start; gap: var(--grid-gap); padding: var(--card-padding);
@@ -702,12 +700,19 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes shine { 100% { transform: rotate(30deg) translateX(100%); } }
 
 /* Gallery */
+.gallery-track-wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+}
+
 .gallery-grid {
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
-    gap: 20px;
-    padding: 20px 0 30px;
+    gap: 15px;
+    padding: 20px 40px;
     scrollbar-width: none;
     -ms-overflow-style: none;
     cursor: grab;
@@ -720,22 +725,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gallery-item {
-    flex: 0 0 450px;
-    height: 600px;
+    flex: 0 0 auto;
+    width: 600px; /* Cinematic width */
+    height: 450px; /* Cinematic height */
     position: relative;
     overflow: hidden;
-    scroll-snap-align: start;
-    border-radius: 10px;
-    transition: var(--transition);
-    cursor: pointer;
-}
-.gallery-item { overflow: hidden; position: relative; border-radius: 10px; transition: opacity 0.5s ease, transform 0.5s ease; cursor: pointer; }
-.gallery-item {
-    flex: 0 0 450px;
-    height: 600px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
+    border: 3px solid #fff;
+    border-radius: 0;
     transition: var(--transition);
 }
 
@@ -745,28 +741,13 @@ h1, h2, h3, h4, h5, h6 {
     object-fit: cover; 
 }
 
-/* Dots Pagination */
-.gallery-dots {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 40px;
-}
-
-.gallery-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1px solid var(--primary);
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.gallery-dot.active {
-    background: var(--primary);
-    transform: scale(1.2);
-    box-shadow: 0 0 10px var(--primary-glass);
+.gallery-scroll-msg {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #4a5568;
+    font-weight: 500;
+    margin-top: 20px;
 }
 
 .ticker-wrapper {
@@ -970,7 +951,7 @@ h1, h2, h3, h4, h5, h6 {
   object-fit: cover;
   z-index: 0;
 }
-.hero { position: relative; overflow: hidden; background: #000; }
+.hero { position: relative; overflow: hidden; background: #000; padding-bottom: var(--section-spacer); }
 .hero-content { 
   position: relative; 
   z-index: 2; 
@@ -1000,7 +981,6 @@ h1, h2, h3, h4, h5, h6 {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Forced 4-column as per screenshot */
     gap: 0; /* Zero gaps for brutalist look */
-    margin-top: 50px;
     border-top: 1px solid #1a1a1a;
     border-left: 1px solid #1a1a1a;
 }
