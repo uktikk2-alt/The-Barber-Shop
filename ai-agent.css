@@ -1,0 +1,356 @@
+/* 
+   AI Agent Styling - Alex 
+   Warner & Spencer Car Detailing 
+*/
+
+:root {
+    --agent-primary: #D0FF3A;
+    --agent-dark: #000000;
+    --agent-glass: rgba(10, 10, 10, 0.95);
+    --agent-border: rgba(208, 255, 58, 0.2);
+    --agent-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* FAB Toggle */
+.ai-widget-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999999 !important;
+    font-family: 'Inter', sans-serif;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.ai-fab {
+    width: 65px;
+    height: 65px;
+    background: var(--agent-dark);
+    border: 2px solid var(--agent-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--agent-shadow);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    z-index: 2;
+}
+
+.ai-fab:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: var(--agent-primary);
+}
+
+.ai-fab i {
+    font-size: 24px;
+    color: var(--agent-primary);
+    transition: color 0.3s;
+}
+
+.ai-fab:hover i {
+    color: var(--agent-dark);
+}
+
+/* Pulse Animation for FAB */
+.ai-fab::after {
+    content: '';
+    position: absolute;
+    top: -5px; left: -5px; right: -5px; bottom: -5px;
+    border: 1px solid var(--agent-primary);
+    border-radius: 50%;
+    animation: fab-pulse 2s infinite;
+    pointer-events: none;
+}
+
+@keyframes fab-pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* Options Switcher */
+.ai-switcher {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ai-widget-container.open .ai-switcher {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.ai-option {
+    background: var(--agent-dark);
+    border: 1px solid var(--agent-border);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    white-space: nowrap;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.ai-option:hover {
+    background: var(--agent-primary);
+    color: var(--agent-dark);
+    border-color: var(--agent-primary);
+    transform: translateX(-10px);
+}
+
+.ai-option i { color: var(--agent-primary); transition: inherit; }
+.ai-option:hover i { color: var(--agent-dark); }
+
+/* Chat Window */
+.ai-chat-window {
+    position: fixed;
+    bottom: 110px;
+    right: 30px;
+    width: 380px;
+    height: 550px;
+    background: var(--agent-dark);
+    border: 1px solid var(--agent-border);
+    border-radius: 24px;
+    box-shadow: var(--agent-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 10001;
+}
+
+.ai-chat-window.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.ai-chat-header {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    padding: 20px;
+    border-bottom: 1px solid var(--agent-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ai-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ai-avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--agent-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: var(--agent-dark);
+    font-size: 18px;
+}
+
+.ai-user-info h4 { margin: 0; font-size: 15px; color: white; letter-spacing: 0.5px; }
+.ai-user-info span { font-size: 11px; color: var(--agent-primary); opacity: 0.8; font-weight: 500; }
+
+.ai-chat-close { color: white; opacity: 0.5; cursor: pointer; transition: 0.3s; }
+.ai-chat-close:hover { opacity: 1; color: var(--agent-primary); }
+
+.ai-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #050505;
+}
+
+.ai-msg {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.ai-msg.bot {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.ai-msg.user {
+    background: var(--agent-primary);
+    color: var(--agent-dark);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+    font-weight: 500;
+}
+
+.ai-input-area {
+    padding: 20px;
+    background: #0a0a0a;
+    border-top: 1px solid var(--agent-border);
+    display: flex;
+    gap: 10px;
+}
+
+.ai-input {
+    flex: 1;
+    background: #151515;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 12px 15px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.ai-input:focus { border-color: var(--agent-primary); }
+
+.ai-send-btn {
+    width: 45px;
+    height: 45px;
+    background: var(--agent-primary);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--agent-dark);
+    transition: 0.3s;
+}
+
+.ai-send-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(208, 255, 58, 0.3); }
+
+/* Voice Mode UI */
+.ai-voice-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(20px);
+    z-index: 20000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+}
+
+.ai-voice-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ai-voice-pulse-container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-voice-pulse {
+    position: absolute;
+    width: 100%; height: 100%;
+    border: 2px solid var(--agent-primary);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.ai-voice-overlay.listening .ai-voice-pulse {
+    animation: voice-pulse 2s infinite ease-out;
+}
+
+@keyframes voice-pulse {
+    0% { transform: scale(0.5); opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.ai-voice-icon {
+    width: 100px;
+    height: 100px;
+    background: var(--agent-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: var(--agent-dark);
+    z-index: 5;
+    box-shadow: 0 0 50px rgba(208, 255, 58, 0.4);
+}
+
+.ai-voice-status {
+    margin-top: 40px;
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.ai-voice-close {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.ai-voice-close:hover { color: var(--agent-primary); transform: rotate(90deg); }
+
+.ai-voice-transcript {
+    margin-top: 20px;
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    max-width: 80%;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 480px) {
+    .ai-chat-window {
+        width: calc(100% - 40px);
+        height: 70vh;
+        right: 20px;
+        bottom: 100px;
+    }
+    .ai-fab { width: 55px; height: 55px; }
+    .ai-voice-pulse-container { width: 180px; height: 180px; }
+    .ai-voice-icon { width: 80px; height: 80px; font-size: 30px; }
+}
