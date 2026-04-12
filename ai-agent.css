@@ -12,10 +12,12 @@
     --agent-red: #ff3a3a;
 }
 
-/* Scroll Lock */
-body.ai-no-scroll {
-    overflow: hidden !important;
-    height: 100vh !important;
+/* Scroll Lock - MOBILE ONLY */
+@media (max-width: 1024px) {
+    body.ai-no-scroll {
+        overflow: hidden !important;
+        height: 100vh !important;
+    }
 }
 
 /* FAB Toggle */
@@ -28,6 +30,14 @@ body.ai-no-scroll {
     display: flex !important;
     align-items: center;
     justify-content: center;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+.ai-widget-container.scrolling {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    pointer-events: none;
 }
 
 .ai-fab {

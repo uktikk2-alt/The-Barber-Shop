@@ -1,5 +1,5 @@
 /**
- * Alex AI Agent - Scroll Lock & Final Polish (v23)
+ * Alex AI Agent - UI Polish & Scroll Logic (v24)
  * Warner & Spencer Car Detailing
  */
 
@@ -30,6 +30,7 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             this.voiceMode = false;
             this.isAgentSpeaking = false;
             this.isMuted = false;
+            this.scrollTimeout = null;
 
             this.renderUI();
             this.setupEventListeners();
@@ -57,7 +58,8 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
                     <div class="ai-option" id="btn-chat"><i class="fas fa-comment-dots"></i> Live Chat</div>
                     <div class="ai-option" id="btn-voice"><i class="fas fa-microphone"></i> Speak to our Agent</div>
                 </div>
-                <div class="ai-fab" id="fab-main"><i class="fas fa-robot"></i></div>
+                <!-- CHANGED ICON TO CHAT ICON -->
+                <div class="ai-fab" id="fab-main"><i class="fas fa-comment-dots"></i></div>
                 
                 <div class="ai-chat-window" id="alex-chat">
                     <div class="ai-chat-header">
@@ -115,6 +117,16 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             document.getElementById('btn-mute').onclick = () => this.toggleMute();
             document.getElementById('send-chat').onclick = () => this.handleSend();
             document.getElementById('chat-input').onkeypress = (e) => { if (e.key === 'Enter') this.handleSend(); };
+
+            // SCROLL HIDE/SHOW LOGIC
+            window.addEventListener('scroll', () => {
+                const widget = document.getElementById('alex-widget');
+                widget.classList.add('scrolling');
+                clearTimeout(this.scrollTimeout);
+                this.scrollTimeout = setTimeout(() => {
+                    widget.classList.remove('scrolling');
+                }, 1000); // Appear 1s after scroll stops
+            });
         }
 
         toggleMute() {
