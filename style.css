@@ -963,7 +963,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 1px; 
   line-height: 1.1; 
   position: relative;
-  top: 100px; /* Shifted downward by 100px total */
+  top: 110px; /* Shifted downward by 110px total */
 }
 
 .hero-title .highlight {
