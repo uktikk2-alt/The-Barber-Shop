@@ -449,50 +449,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 15px; border-radius: 50%;
 }
 
-/* Hero Section */
-.hero { 
-    height: auto;
-    min-height: 100vh;
-    background-size: cover; 
-    background-position: center; 
-    position: relative; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    padding: 100px 0; /* Standardized padding for safe buffers */
-    overflow: visible;
-}
 
-.hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.5)); z-index: 1; }
-
-.hero-content { 
-    position: relative; 
-    z-index: 10;
-    text-align: center; 
-    color: var(--white); 
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.hero .section-badge { margin-bottom: 20px; }
-.hero-title { font-size: clamp(38px, 10vw, 85px); color: var(--white); margin-bottom: 25px; letter-spacing: 1px; line-height: 1.1; }
-.hero-title span { color: var(--primary); display: inline-block; }
-.hero-desc { font-size: clamp(16px, 2.5vw, 20px); margin-bottom: 40px; color: #cccccc; max-width: 600px; line-height: 1.6; }
-.hero-btns { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 15; }
-
-/* Responsive Polish for All Devices */
-@media (max-width: 992px) {
-    .hero { padding: 120px 20px 80px; }
-    .hero-title { font-size: clamp(34px, 8vw, 60px); }
-}
-
-@media (max-width: 480px) {
-    .hero { padding: 100px 20px 60px; }
-    .hero-title { font-size: 34px; line-height: 1.2; }
-    .hero-desc { font-size: 15px; margin-bottom: 30px; }
-}
 
 
 
@@ -905,7 +862,7 @@ h1, h2, h3, h4, h5, h6 {
   .hero-content { 
     text-align: center; 
     padding-top: 120px; 
-    padding-bottom: 60px;
+    padding-bottom: 30px;
     margin: 0 auto; 
     display: flex; 
     flex-direction: column; 
@@ -943,7 +900,7 @@ h1, h2, h3, h4, h5, h6 {
   .feature-grid { grid-template-columns: 1fr; }
   .hero-btns { flex-direction: column; width: 100%; }
   .btn { width: 100%; border-radius: 4px; }
-  .hero-content { padding-top: 80px; padding-bottom: 40px; transform: none !important; }
+  .hero-content { padding-top: 80px; padding-bottom: 20px; transform: none !important; }
   .stat-item { padding: 25px 30px; }
   .stat-item h2 { font-size: 48px; }
   .logo-text h2 { font-size: 20px; }
@@ -960,27 +917,64 @@ h1, h2, h3, h4, h5, h6 {
   object-fit: cover;
   z-index: 0;
 }
-.hero { position: relative; overflow: hidden; background: #000; padding-bottom: var(--section-spacer); }
-.hero-content { 
+
+.hero { 
   position: relative; 
-  z-index: 2; 
-  transform: translateY(30%); /* Moves title, desc, and buttons 30% down */
+  overflow: hidden; 
+  background: #000; 
+  min-height: 75vh; /* Cinematic Crop: Reduced from 100vh to tighten the gap */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 0;
 }
 
-/* Moving ONLY the badge 20% up */
-.hero .section-badge {
-  transform: translateY(-20%); /* Moves badge 20% up */
-  margin-bottom: 40px; /* Extra breathing room */
+/* Master Overlay System */
+.hero::before { 
+  content: ''; 
+  position: absolute; 
+  top: 0; left: 0; width: 100%; height: 100%; 
+  background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4)); 
+  z-index: 1; 
 }
+
 .hero-overlay {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.45); /* Soft dimming over the animation */
+  background: rgba(0, 0, 0, 0.40) !important; /* User requested brightness */
   z-index: 1;
 }
 
-.hero-overlay {
-  background: rgba(0, 0, 0, 0.40) !important;
+.hero-content { 
+  position: relative; 
+  z-index: 10;
+  text-align: center; 
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Removed aggressive translateY to prevent clipping and improve alignment */
+}
+
+.hero-title { 
+  font-size: clamp(38px, 10vw, 85px); 
+  color: var(--white); 
+  margin-bottom: 25px; 
+  letter-spacing: 1px; 
+  line-height: 1.1; 
+}
+
+.hero-desc { 
+  font-size: clamp(16px, 2.5vw, 20px); 
+  margin-bottom: 40px; 
+  color: #cccccc; 
+  max-width: 650px; 
+  line-height: 1.6; 
+}
+
+/* Moving ONLY the badge for tactical breathing room */
+.hero .section-badge {
+  margin-bottom: 40px;
 }
 /* ==========================================================================
    BRUTALIST SERVICES GRID (Screenshot Parity)
