@@ -285,8 +285,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sizeItems = document.querySelectorAll('#size-choices .choice-item');
   const priceDisplay = document.getElementById('total-price');
   const summaryDisplay = document.getElementById('price-summary');
-  const infoTitle = document.getElementById('info-title');
-  const infoText = document.getElementById('info-text');
 
   let currentService = 'deep-clean';
   let currentSize = 'small';
@@ -316,19 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
       summaryDisplay.textContent = `${service.title} — ${size.label} vehicle`;
     }
 
-    // Update Info Box with Fade Effect
-    if (infoTitle && infoText) {
-      gsap.to('#estimator-info', {
-        opacity: 0,
-        y: 10,
-        duration: 0.15,
-        onComplete: () => {
-          infoTitle.textContent = `WHAT IS ${service.title.toUpperCase()}?`;
-          infoText.textContent = service.desc;
-          gsap.to('#estimator-info', { opacity: 1, y: 0, duration: 0.3 });
-        }
-      });
-    }
   }
 
   // Event Listeners

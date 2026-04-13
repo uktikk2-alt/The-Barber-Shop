@@ -1188,7 +1188,7 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 
 .estimator-container {
-    background-color: #05080a;
+    background-color: #0a0a0a; /* Synchronized with service card theme */
     border: 1px solid #1a1a1a;
     display: flex;
     flex-direction: column;
@@ -1346,7 +1346,7 @@ h1, h2, h3, h4, h5, h6 {
 .form-group input, 
 .form-group select, 
 .form-group textarea {
-    background: #05080a;
+    background: #0a0a0a;
     border: 1px solid #1a1a1a;
     padding: 15px 18px;
     color: #fff;
