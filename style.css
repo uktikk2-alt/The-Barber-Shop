@@ -997,6 +997,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.6; 
   position: relative;
   top: 110px; /* Moves description downward by 110px total */
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.4); /* Enhanced readability against light backgrounds */
 }
 
 /* Moving ONLY the badge 25% upward using relative positioning to avoid AOS transform conflicts */
