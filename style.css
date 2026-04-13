@@ -972,9 +972,10 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.6; 
 }
 
-/* Moving ONLY the badge for tactical breathing room */
+/* Moving ONLY the badge for tactical breathing room and 25% upward shift */
 .hero .section-badge {
   margin-bottom: 40px;
+  transform: translateY(-25%);
 }
 /* ==========================================================================
    BRUTALIST SERVICES GRID (Screenshot Parity)
