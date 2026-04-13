@@ -1235,8 +1235,8 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 
-.choice-item span { font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.7); flex: 1; }
-.choice-price { color: var(--primary) !important; font-weight: 700; font-size: 13px; flex-shrink: 0; white-space: nowrap; }
+.choice-item > span:first-child { font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.7); flex: 1; }
+.choice-price { color: var(--primary) !important; font-weight: 700; font-size: 13px; flex-shrink: 0; white-space: nowrap; text-align: right; }
 
 .choice-item:hover { border-color: rgba(208, 255, 58, 0.3); background: rgba(208, 255, 58, 0.05); }
 .choice-item.active { 
