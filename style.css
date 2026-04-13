@@ -902,7 +902,16 @@ h1, h2, h3, h4, h5, h6 {
   .header.sticky { padding: 10px 0; } /* Further reduced from 12px */
   .about-container, .experience-container, .services-interactive-wrapper { flex-direction: column; text-align: center; gap: var(--header-margin-md); }
   .features-container { flex-direction: column; text-align: center; gap: var(--section-padding-v); }
-  .hero-content { text-align: center; padding-top: 150px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+  .hero-content { 
+    text-align: center; 
+    padding-top: 120px; 
+    padding-bottom: 60px;
+    margin: 0 auto; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    transform: none !important; /* Remove downward push on mobile to prevent clipping */
+  }
   .hero-btns { justify-content: center; }
   .img-wrap-1, .img-wrap-2 { position: static; width: 100%; border: none; box-shadow: none; margin-bottom: var(--header-margin-sm);}
   .img-wrap-2 { display: none; }
@@ -934,7 +943,7 @@ h1, h2, h3, h4, h5, h6 {
   .feature-grid { grid-template-columns: 1fr; }
   .hero-btns { flex-direction: column; width: 100%; }
   .btn { width: 100%; border-radius: 4px; }
-  .hero-content { padding-top: 80px; }
+  .hero-content { padding-top: 80px; padding-bottom: 40px; transform: none !important; }
   .stat-item { padding: 25px 30px; }
   .stat-item h2 { font-size: 48px; }
   .logo-text h2 { font-size: 20px; }
