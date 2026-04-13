@@ -901,6 +901,17 @@ h1, h2, h3, h4, h5, h6 {
   .hero-btns { flex-direction: column; width: 100%; }
   .btn { width: 100%; border-radius: 4px; }
   .hero-content { padding-top: 80px; padding-bottom: 20px; transform: none !important; }
+  
+  /* Mobile Heading Layout Fix */
+  .hero-title {
+    text-align: center;
+  }
+  .hero-title .highlight {
+    display: block;
+    width: fit-content;
+    margin: 15px auto 0 40px; /* 40px left margin to create the "STARE" look */
+  }
+
   .stat-item { padding: 25px 30px; }
   .stat-item h2 { font-size: 48px; }
   .logo-text h2 { font-size: 20px; }
