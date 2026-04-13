@@ -963,7 +963,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 1px; 
   line-height: 1.1; 
   position: relative;
-  top: 40px; /* Shifted downward by 40px total */
+  top: 100px; /* Shifted downward by 100px total */
 }
 
 .hero-title .highlight {
@@ -996,7 +996,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 650px; 
   line-height: 1.6; 
   position: relative;
-  top: 70px; /* Moves description downward by 70px total */
+  top: 110px; /* Moves description downward by 110px total */
 }
 
 /* Moving ONLY the badge 25% upward using relative positioning to avoid AOS transform conflicts */
@@ -1008,7 +1008,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-btns {
   position: relative;
-  top: 85px; /* Moves buttons downward by 85px total (75px + 10px) */
+  top: 105px; /* Moves buttons downward by 105px total (95px + 10px) */
 }
 /* ==========================================================================
    BRUTALIST SERVICES GRID (Screenshot Parity)
