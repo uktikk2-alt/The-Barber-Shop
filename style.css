@@ -9,7 +9,7 @@
   --text-main: #000000;
   --text-light: #666666;
   
-  --font-heading: 'Bebas Neue', display;
+  --font-heading: 'Oswald', sans-serif;
   --font-body: 'Mona Sans', sans-serif;
   
   --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
