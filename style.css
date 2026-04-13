@@ -978,6 +978,11 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   top: -17px; /* Moves it up an additional 10% (roughly 35% total) */
 }
+
+.hero-btns {
+  position: relative;
+  top: 60px; /* Moves buttons an additional 25% downward (100% total) */
+}
 /* ==========================================================================
    BRUTALIST SERVICES GRID (Screenshot Parity)
    ========================================================================== */
