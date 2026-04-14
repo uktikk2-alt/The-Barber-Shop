@@ -14,8 +14,10 @@ VOICE & TONE:
 - Talk like a front desk person — relaxed, natural. Use "yeah", "sure", "got it".
 - Short sentences only. One or two max. No monologues.
 
-LISTENING:
-- Stop speaking immediately if the user starts talking.
+LEAD CAPTURE:
+- If a user provides their Name, Email, or Phone, YOU MUST SECURE it.
+- After your natural response, append this hidden marker: [[LEAD_DATA: {"name": "...", "email": "...", "phone": "...", "service": "..."}]]
+- Replace ... with the info. If unknown, leave as empty string "".
 
 Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
     };
@@ -245,7 +247,32 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
 
                 if (res.ok) {
                     const data = await res.json();
-                    const aiText = data.candidates[0].content.parts[0].text;
+                    let aiText = data.candidates[0].content.parts[0].text;
+                    
+                    // GHL SYNC LOGIC: Check for lead markers in the AI response
+                    if (aiText.includes('[[LEAD_DATA:')) {
+                        const marker = aiText.match(/\[\[LEAD_DATA: (.*?)\]\]/);
+                        if (marker && marker[1]) {
+                            try {
+                                const leadData = JSON.parse(marker[1]);
+                                // Silently sync to GHL
+                                fetch('/api/ghl', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        name: leadData.name || 'AI Chat Lead',
+                                        email: leadData.email || '',
+                                        phone: leadData.phone || '',
+                                        service: leadData.service || 'AI Consultation',
+                                        message: `Captured via Alex AI Chat: "${text}"`
+                                    })
+                                }).then(r => r.json()).then(d => console.log("AI Lead Synced to GHL:", d));
+                            } catch(e) { console.error("Failed to parse lead data:", e); }
+                        }
+                        // Clean the UI: Hide the technical marker from the user
+                        aiText = aiText.replace(/\[\[LEAD_DATA: .*?\]\]/g, '').trim();
+                    }
+
                     this.history.push({ role: "user", parts: [{ text: text }] });
                     this.history.push({ role: "model", parts: [{ text: aiText }] });
                     document.getElementById('alex-status').innerText = `Live (AI Agent)`;
