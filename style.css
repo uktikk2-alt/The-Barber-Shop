@@ -1482,3 +1482,28 @@ h1, h2, h3, h4, h5, h6 {
 .services-grid:not(.collapsed) + .services-toggle-wrap .btn-toggle-services i {
   transform: rotate(180deg);
 }
+
+/* 16. GoHighLevel Widget Hidden Logic (Ghost Mode) - Final Sweep */
+#chat-widget-launcher,
+#chat-widget-container,
+.ghl-chat-widget,
+#voice-ai-chat-widget,
+[class*="lc-"],
+[id*="lc-"],
+[class*="ghl-"],
+iframe[src*="leadconnector"],
+iframe[src*="widgets.leadconnectorhq.com"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+}
+
+/* Specific fix for the 2026 Voice Orb bubble */
+[id^="voice-orb-"],
+.voice-ai-trigger,
+.ghl-voice-trigger {
+    display: none !important;
+    opacity: 0 !important;
+}

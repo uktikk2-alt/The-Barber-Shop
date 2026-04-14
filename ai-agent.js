@@ -128,80 +128,88 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
                     widget.classList.remove('scrolling');
                 }, 1000); // Appear 1s after scroll stops
             });
+
+            // GHL Event Sync: Try to catch GHL voice state if possible
+            window.addEventListener('message', (event) => {
+                if (event.data?.type === 'GHL_VOICE_STATE') {
+                    const state = event.data.state; // e.g., 'talking', 'listening'
+                    this.updateVoiceUI(state);
+                }
+            });
+        }
+
+        updateVoiceUI(state) {
+            const statusEl = document.getElementById('voice-status');
+            const transcriptEl = document.getElementById('voice-transcript');
+            if (state === 'talking') {
+                statusEl.innerText = "Alex is speaking...";
+            } else if (state === 'listening') {
+                statusEl.innerText = "Listening to you...";
+                transcriptEl.innerText = "...";
+            }
         }
 
         toggleMute() {
             this.isMuted = !this.isMuted;
             const btn = document.getElementById('btn-mute');
+            
+            // Trigger GHL Mute (Supports multiple API names)
+            const ghl = window.HLChatWidget || window.P_CHAT_WIDGET || window.ghlChatWidget;
+            if (ghl && typeof ghl.toggleMute === 'function') {
+                ghl.toggleMute();
+            }
+
             if (this.isMuted) {
                 btn.classList.add('muted');
                 btn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
-                if (this.recognition) this.recognition.stop();
                 document.getElementById('voice-status').innerText = "Microphone Muted";
             } else {
                 btn.classList.remove('muted');
                 btn.innerHTML = '<i class="fas fa-microphone"></i>';
-                if (this.recognition) this.recognition.start();
-                document.getElementById('voice-status').innerText = "Listening...";
+                document.getElementById('voice-status').innerText = "Connecting...";
             }
         }
 
         initSpeech() {
-            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (SR) {
-                this.recognition = new SR();
-                this.recognition.continuous = false;
-                this.recognition.onspeechstart = () => {
-                    if (this.isAgentSpeaking) {
-                        this.synth.cancel();
-                        this.isAgentSpeaking = false;
-                    }
-                };
-                this.recognition.onresult = (e) => {
-                    const t = e.results[0][0].transcript;
-                    document.getElementById('voice-transcript').innerText = `"${t}"`;
-                    this.tryGenerateResponse(t, true);
-                };
-                this.recognition.onend = () => {
-                    if (this.voiceMode && !this.isAgentSpeaking && !this.isLoading && !this.isMuted) {
-                        try { this.recognition.start(); } catch(e) {}
-                    }
-                };
-            }
+            // SpeechRecognition is now managed by the GHL Widget Engine
+            console.log("Alex: GHL Voice Engine initialized.");
         }
 
         startVoice() {
+            // 1. Show our custom UI
             document.getElementById('alex-widget').classList.remove('open');
             document.getElementById('voice-overlay').classList.add('active');
             document.body.classList.add('ai-no-scroll');
             document.getElementById('call-status').innerText = "Live";
+            document.getElementById('voice-status').innerText = "Connecting to AI...";
             this.voiceMode = true;
             this.isMuted = false;
-            this.speak("Yeah, hi! This is Alex at Warner and Spencer. How can I help you?");
+
+            // 2. Trigger GHL Voice AI (Supports multiple API names)
+            const ghl = window.HLChatWidget || window.P_CHAT_WIDGET || window.ghlChatWidget;
+            if (ghl && typeof ghl.startVoice === 'function') {
+                ghl.startVoice();
+            } else {
+                console.warn("GHL Voice Engine not ready yet. Retrying...");
+                setTimeout(() => this.startVoice(), 1000);
+            }
         }
 
         stopVoice() {
+            // 1. Hide our custom UI
             document.getElementById('voice-overlay').classList.remove('active');
             document.body.classList.remove('ai-no-scroll');
             this.voiceMode = false;
-            this.isAgentSpeaking = false;
-            this.synth.cancel();
-            if (this.recognition) this.recognition.stop();
+
+            // 2. Stop GHL Voice AI
+            const ghl = window.HLChatWidget || window.P_CHAT_WIDGET || window.ghlChatWidget;
+            if (ghl && typeof ghl.stopVoice === 'function') {
+                ghl.stopVoice();
+            }
         }
 
         speak(text) {
-            this.synth.cancel();
-            this.isAgentSpeaking = true;
-            document.getElementById('voice-transcript').innerText = text;
-            document.getElementById('voice-status').innerText = "Alex is speaking...";
-            
-            const u = new SpeechSynthesisUtterance(text);
-            if (this.recognition) { try { this.recognition.stop(); } catch(e) {} }
-            u.onend = () => {               this.isAgentSpeaking = false;
-                document.getElementById('voice-status').innerText = this.isMuted ? "Muted" : "Listening...";
-                if (this.voiceMode && this.recognition && !this.isMuted) { try { this.recognition.start(); } catch(e) {} }
-            };
-            this.synth.speak(u);
+            // Redundant: GHL handles audio natively
         }
 
         addMessageToUI(r, t, isError = false) {
@@ -276,7 +284,8 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
                     this.history.push({ role: "user", parts: [{ text: text }] });
                     this.history.push({ role: "model", parts: [{ text: aiText }] });
                     document.getElementById('alex-status').innerText = `Live (AI Agent)`;
-                    if (isVoice) { this.speak(aiText); } else { this.addMessageToUI('bot', aiText); }
+                    // ALWAYS show text response for the Chat window
+                    this.addMessageToUI('bot', aiText);
                     this.isLoading = false; 
                     return;
                 } else {
