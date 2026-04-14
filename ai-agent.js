@@ -33,11 +33,46 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             this.isMuted = false;
             this.scrollTimeout = null;
 
+            this.interceptRTC(); // Must be FIRST — before GHL loads
             this.renderUI();
             this.setupEventListeners();
             this.initSpeech();
             this.checkEnvironment();
+            this.startVisibilityStalker();
         }
+
+        /**
+         * INTERCEPT WebRTC at the source
+         * Monkey-patches RTCPeerConnection so we capture GHL's call handle.
+         * This is the ONLY reliable way to kill a WebRTC session we didn't create.
+         */
+        interceptRTC() {
+            // Use arrays so ALL connections/streams are captured, not just the last one
+            window._alex_pcs = [];
+            window._alex_mic_streams = [];
+
+            // 1. Intercept ALL RTCPeerConnections
+            const OriginalPC = window.RTCPeerConnection;
+            window.RTCPeerConnection = function(...args) {
+                const pc = new OriginalPC(...args);
+                console.log("GHL Sync: RTCPeerConnection intercepted! 🎯", pc);
+                window._alex_pcs.push(pc);
+                return pc;
+            };
+            window.RTCPeerConnection.prototype = OriginalPC.prototype;
+
+            // 2. Intercept ALL getUserMedia calls
+            const originalGUM = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+            navigator.mediaDevices.getUserMedia = async function(constraints) {
+                const stream = await originalGUM(constraints);
+                console.log("GHL Sync: getUserMedia intercepted! Mic stream captured 🎤", stream.getTracks());
+                window._alex_mic_streams.push(stream);
+                return stream;
+            };
+
+            console.log("GHL Sync: RTCPeerConnection interceptor armed.");
+        }
+
 
         checkEnvironment() {
             if (window.location.protocol === 'file:') {
@@ -78,19 +113,38 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
 
                 <div class="ai-voice-overlay" id="voice-overlay">
                     <div class="ai-call-header">
-                        <h2>Alex</h2>
-                        <span id="call-status">Connecting...</span>
+                        <h2>ALEX</h2>
+                        <div class="ai-live-indicator">
+                            <span class="dot"></span>
+                            <span id="call-status">CONNECTING...</span>
+                        </div>
                     </div>
 
                     <div class="ai-call-avatar-area">
+                        <!-- Orbital Rings -->
+                        <div class="ai-ring ring-1"></div>
+                        <div class="ai-ring ring-2"></div>
+                        <div class="ai-ring ring-3"></div>
+                        
                         <div class="ai-call-pulse"></div>
-                        <div class="ai-call-pulse" style="animation-delay: 1s"></div>
                         <div class="ai-call-icon-main"><i class="fas fa-user-tie"></i></div>
                     </div>
 
+                    <!-- Ambient Audio Wave -->
+                    <div class="ai-wave-container">
+                        <div class="ai-wave-bar"></div>
+                        <div class="ai-wave-bar"></div>
+                        <div class="ai-wave-bar"></div>
+                        <div class="ai-wave-bar"></div>
+                        <div class="ai-wave-bar"></div>
+                        <div class="ai-wave-bar"></div>
+                        <div class="ai-wave-bar"></div>
+                        <div class="ai-wave-bar"></div>
+                    </div>
+
                     <div class="ai-call-transcription" id="call-transcription">
-                        <div class="ai-voice-transcript" id="voice-transcript">"Hello? Is anyone there?"</div>
-                        <div class="ai-voice-status" id="voice-status">Waiting for you to speak...</div>
+                        <div class="ai-voice-transcript" id="voice-transcript"></div>
+                        <div class="ai-voice-status" id="voice-status"></div>
                     </div>
 
                     <div class="ai-call-controls">
@@ -171,15 +225,6 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             // Managed by GHL Engine
         }
 
-        // NEW: Shadow Stalker - Find the GHL button inside its hidden Shadow DOM
-        findGHLButton() {
-            const host = document.querySelector('lc-chat-widget') || document.querySelector('ghl-chat-widget');
-            if (host && host.shadowRoot) {
-                return host.shadowRoot.querySelector('#chat-widget-launcher') || host.shadowRoot.querySelector('.launcher');
-            }
-            return document.querySelector('#chat-widget-launcher') || document.querySelector('.ghl-chat-widget');
-        }
-
         startVoice() {
             // 1. Show custom UI
             document.getElementById('alex-widget').classList.remove('open');
@@ -188,36 +233,109 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             document.getElementById('call-status').innerText = "Connecting...";
             this.voiceMode = true;
 
-            // 2. TRIGGER GHL (Proxy + API Waterfall)
-            const ghlButton = this.findGHLButton();
-            if (ghlButton) {
-                console.log("GHL Sync: Proxy clicking hidden GHL button...");
-                ghlButton.click();
-                document.getElementById('call-status').innerText = "Live";
-            } else if (window.ghlChatWidget && typeof window.ghlChatWidget.openVoiceCall === 'function') {
-                console.log("GHL Sync: Using official openVoiceCall API...");
-                window.ghlChatWidget.openVoiceCall();
-                document.getElementById('call-status').innerText = "Live";
-            } else {
-                console.warn("GHL Sync: Widget not ready, retrying...");
-                setTimeout(() => this.startVoice(), 800);
+            // 2. GHL TRIGGER (The Claude Fix)
+            const ghl = document.querySelector('chat-widget');
+            if (ghl) {
+                // Force GHL alive but off-screen immediately
+                ghl.style.cssText = 'position: fixed !important; bottom: -9999px !important; right: -9999px !important; display: block !important; visibility: visible !important; z-index: -1 !important;';
+                
+                // Open GHL and click call button
+                if (window.leadConnector && window.leadConnector.chatWidget) {
+                    window.leadConnector.chatWidget.openWidget();
+                    
+                    setTimeout(() => {
+                        const shadow = document.querySelector('chat-widget').shadowRoot;
+                        const callBtn = shadow?.querySelector('.lc_text-widget--voice-talk-button');
+                        if (callBtn) {
+                            callBtn.click();
+                            document.getElementById('call-status').innerText = "LIVE";
+                            this.startTranscriptSync(); // Start pulling text from GHL
+                        } else {
+                            console.error("GHL Sync: Call button not found in Shadow DOM.");
+                        }
+                    }, 2000);
+                } else {
+                    console.error("GHL Sync: window.leadConnector API not found.");
+                }
             }
         }
 
+        startTranscriptSync() {
+            if (this.transcriptInterval) clearInterval(this.transcriptInterval);
+            
+            const sync = () => {
+                if (!this.voiceMode) return;
+                const shadow = document.querySelector('chat-widget')?.shadowRoot;
+                if (shadow) {
+                    // Hunt for transcription text inside GHL Shadow DOM
+                    const transcript = shadow.querySelector('.lc_text-widget--voice-transcript-text') || 
+                                       shadow.querySelector('[class*="transcript"]') ||
+                                       shadow.querySelector('.message-text');
+                    
+                    if (transcript && transcript.innerText.trim()) {
+                        document.getElementById('voice-transcript').innerText = transcript.innerText.trim();
+                    }
+                }
+            };
+            this.transcriptInterval = setInterval(sync, 500);
+        }
+
         stopVoice() {
-            // 1. Close UI
+            console.log("GHL Sync: Initiating Hangup Procedure...");
+
+            // 1. Clear transcript sync
+            if (this.transcriptInterval) clearInterval(this.transcriptInterval);
+
+            // 2. NUCLEAR HANGUP: Close ALL RTCPeerConnections
+            (window._alex_pcs || []).forEach(pc => {
+                try {
+                    pc.getSenders().forEach(s => s.track && s.track.stop());
+                    pc.getReceivers().forEach(r => r.track && r.track.stop());
+                    pc.close();
+                    console.log("GHL Sync: ✅ RTCPeerConnection closed.");
+                } catch(e) { console.error("RTC close error:", e); }
+            });
+            window._alex_pcs = [];
+
+            // 3. Stop ALL getUserMedia streams (releases the browser mic icon)
+            (window._alex_mic_streams || []).forEach(stream => {
+                stream.getTracks().forEach(track => {
+                    track.stop();
+                    console.log("GHL Sync: ✅ Track stopped:", track.label);
+                });
+            });
+            window._alex_mic_streams = [];
+            console.log("GHL Sync: ✅ All microphone streams released.");
+
+
+            // 3. Also close GHL widget UI
+            if (window.leadConnector && window.leadConnector.chatWidget) {
+                window.leadConnector.chatWidget.closeWidget();
+            }
+
+            // 4. Close our UI
             document.getElementById('voice-overlay').classList.remove('active');
             document.body.classList.remove('ai-no-scroll');
             this.voiceMode = false;
+        }
 
-            // 2. Hang up (Proxy + API Waterfall)
-            if (window.ghlChatWidget && typeof window.ghlChatWidget.hangupCall === 'function') {
-                window.ghlChatWidget.hangupCall();
-            } else {
-                // Fallback: Click the GHL button again if it toggles, or find their hangup button
-                const ghlBtn = this.findGHLButton();
-                if (ghlBtn) ghlBtn.click(); 
-            }
+        /**
+         * SAFE VISIBILITY GUARD
+         * Throttled check to keep GHL off-screen.
+         */
+        startVisibilityStalker() {
+            const hideGHL = () => {
+                const selectors = ['chat-widget', 'lc-chat-widget', 'ghl-chat-widget', '#chat-widget-container'];
+                selectors.forEach(s => {
+                    const el = document.querySelector(s);
+                    // Keep it alive and clickable, but far off-screen and transparent
+                    if (el && el.style.bottom !== '-9999px') {
+                        el.style.cssText = 'position: fixed !important; bottom: -9999px !important; right: -9999px !important; opacity: 0 !important; display: block !important;';
+                    }
+                });
+            };
+            hideGHL();
+            setInterval(hideGHL, 2000); // Check every 2 seconds instead of every millisecond
         }
 
         speak(text) {

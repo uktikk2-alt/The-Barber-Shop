@@ -8,6 +8,20 @@
   <meta name="description"
     content="Clipper Auto Detail - Professional car detailing with fast booking, instant responses, and zero hassle. Get your car looking brand new today.">
 
+  <!-- Zero-Flash GHL Stealth Guard -->
+  <style>
+    chat-widget, lc-chat-widget, ghl-chat-widget, #chat-widget-container, 
+    iframe[src*="leadconnector"], iframe[src*="widgets.leadconnectorhq.com"] {
+      display: block !important;
+      opacity: 0 !important;
+      visibility: visible !important;
+      position: fixed !important;
+      bottom: -9999px !important;
+      left: -9999px !important;
+      pointer-events: none !important;
+    }
+  </style>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -920,14 +934,12 @@
   <script src="script.js?v=19.0"></script>
   <!-- Booking Modal Logic -->
   <script src="booking-modal.js"></script>
-  <!-- GoHighLevel Voice AI (Hidden Container Method) -->
-  <div id="ghl-hidden-container" style="width: 0; height: 0; overflow: hidden; position: absolute; pointer-events: none;">
-    <script src="https://widgets.leadconnectorhq.com/loader.js" 
-            data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
-            data-widget-id="69de59fb2676eaf85eb99f86"
-            data-hide-launcher="true">
-    </script>
-  </div>
+  <!-- GoHighLevel Voice AI Widget -->
+  <script src="https://widgets.leadconnectorhq.com/loader.js" 
+          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
+          data-widget-id="69de59fb2676eaf85eb99f86"
+          data-hide-launcher="true">
+  </script>
   <!-- AI Agent -->
   <script src="ai-agent.js"></script>
 </body>

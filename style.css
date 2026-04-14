@@ -1483,17 +1483,102 @@ h1, h2, h3, h4, h5, h6 {
   transform: rotate(180deg);
 }
 
-/* 16. GoHighLevel UI Integration (Hidden Container Proxy Method) */
-#ghl-hidden-container {
+/* 16. GoHighLevel UI Integration (Final Off-Screen Method) */
+/* Force GHL to stay off-screen so you never see their button, but the engine stays alive */
+chat-widget,
+lc-chat-widget,
+ghl-chat-widget,
+#chat-widget-container,
+iframe[src*="leadconnector"],
+iframe[src*="widgets.leadconnectorhq.com"] {
+    position: fixed !important;
+    bottom: -9999px !important;
+    left: -9999px !important;
+    visibility: visible !important;
     display: block !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-    position: absolute !important;
-    top: -1000px !important;
-    left: -1000px !important;
-    pointer-events: none !important;
 }
+
+/* 17. Enhanced AI Voice Overlay Aesthetics */
+.ai-voice-overlay {
+    background: radial-gradient(circle at center, rgba(15, 15, 15, 0.98) 0%, rgba(0, 0, 0, 0.99) 100%);
+}
+
+.ai-live-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.ai-live-indicator .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--agent-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--agent-primary);
+    animation: recording-pulse 1.5s infinite;
+}
+
+@keyframes recording-pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.ai-call-header h2 {
+    letter-spacing: 8px !important;
+    font-weight: 300 !important;
+    opacity: 0.9;
+}
+
+/* Orbital Rings */
+.ai-ring {
+    position: absolute;
+    border: 1px solid rgba(208, 255, 58, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.ring-1 { width: 320px; height: 320px; border-style: dashed; animation: rotate-ring 40s linear infinite; }
+.ring-2 { width: 400px; height: 400px; border-width: 2px; border-color: rgba(208, 255, 58, 0.05); animation: rotate-ring 60s linear infinite reverse; }
+.ring-3 { width: 500px; height: 500px; border-style: dotted; animation: rotate-ring 120s linear infinite; }
+
+@keyframes rotate-ring {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Sinewave Bars */
+.ai-wave-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    margin-bottom: 40px;
+}
+
+.ai-wave-bar {
+    width: 3px;
+    height: 10px;
+    background: var(--agent-primary);
+    border-radius: 2px;
+    opacity: 0.6;
+    animation: wave-pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes wave-pulse {
+    0%, 100% { height: 10px; opacity: 0.3; }
+    50% { height: 40px; opacity: 1; transform: scaleY(1.2); }
+}
+
+.ai-wave-bar:nth-child(2) { animation-delay: 0.1s; }
+.ai-wave-bar:nth-child(3) { animation-delay: 0.2s; }
+.ai-wave-bar:nth-child(4) { animation-delay: 0.3s; }
+.ai-wave-bar:nth-child(5) { animation-delay: 0.4s; }
+.ai-wave-bar:nth-child(6) { animation-delay: 0.3s; }
+.ai-wave-bar:nth-child(7) { animation-delay: 0.2s; }
+.ai-wave-bar:nth-child(8) { animation-delay: 0.1s; }
 
 /* Ensure our custom widget is the absolute top-most element on the page */
 .ai-widget-container,
@@ -1501,7 +1586,20 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 2147483647 !important;
 }
 
-/* Keep the Alex Transcription hidden for Voice Calls as requested */
+/* Keep the Alex Transcription visible for Voice Calls as requested */
 .ai-call-transcription {
-    display: none !important;
+    display: flex !important;
+    opacity: 0.9;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    min-height: 40px;
+}
+
+.ai-voice-transcript {
+    color: var(--agent-primary);
+    font-size: 18px;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(208, 255, 58, 0.3);
 }
