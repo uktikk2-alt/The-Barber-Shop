@@ -1497,7 +1497,7 @@ iframe[src*="widgets.leadconnectorhq.com"] {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
-    z-index: -1 !important;
+    z-index: -100 !important;
 }
 
 /* Specific fix for the 2026 Voice Orb bubble */
@@ -1506,4 +1506,9 @@ iframe[src*="widgets.leadconnectorhq.com"] {
 .ghl-voice-trigger {
     display: none !important;
     opacity: 0 !important;
+}
+
+/* Hide Alex Transcription specifically during Voice Calls as requested */
+.ai-call-transcription {
+    display: none !important;
 }

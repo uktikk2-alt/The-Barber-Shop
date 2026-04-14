@@ -153,58 +153,52 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             this.isMuted = !this.isMuted;
             const btn = document.getElementById('btn-mute');
             
-            // Trigger GHL Mute (Supports multiple API names)
-            const ghl = window.HLChatWidget || window.P_CHAT_WIDGET || window.ghlChatWidget;
-            if (ghl && typeof ghl.toggleMute === 'function') {
-                ghl.toggleMute();
+            // Trigger GHL native mute
+            if (window.ghlChatWidget && typeof window.ghlChatWidget.muteCall === 'function') {
+                window.ghlChatWidget.muteCall(this.isMuted);
             }
 
             if (this.isMuted) {
                 btn.classList.add('muted');
                 btn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
-                document.getElementById('voice-status').innerText = "Microphone Muted";
             } else {
                 btn.classList.remove('muted');
                 btn.innerHTML = '<i class="fas fa-microphone"></i>';
-                document.getElementById('voice-status').innerText = "Connecting...";
             }
         }
 
         initSpeech() {
-            // SpeechRecognition is now managed by the GHL Widget Engine
-            console.log("Alex: GHL Voice Engine initialized.");
+            // Managed by GHL Engine
         }
 
         startVoice() {
-            // 1. Show our custom UI
+            // 1. Show custom UI
             document.getElementById('alex-widget').classList.remove('open');
             document.getElementById('voice-overlay').classList.add('active');
             document.body.classList.add('ai-no-scroll');
-            document.getElementById('call-status').innerText = "Live";
-            document.getElementById('voice-status').innerText = "Connecting to AI...";
+            document.getElementById('call-status').innerText = "Connecting...";
             this.voiceMode = true;
             this.isMuted = false;
 
-            // 2. Trigger GHL Voice AI (Supports multiple API names)
-            const ghl = window.HLChatWidget || window.P_CHAT_WIDGET || window.ghlChatWidget;
-            if (ghl && typeof ghl.startVoice === 'function') {
-                ghl.startVoice();
+            // 2. Trigger GHL native voice call
+            if (window.ghlChatWidget && typeof window.ghlChatWidget.openVoiceCall === 'function') {
+                window.ghlChatWidget.openVoiceCall();
+                document.getElementById('call-status').innerText = "Live";
             } else {
-                console.warn("GHL Voice Engine not ready yet. Retrying...");
-                setTimeout(() => this.startVoice(), 1000);
+                // Wait for widget initialization if clicked too fast
+                setTimeout(() => this.startVoice(), 800);
             }
         }
 
         stopVoice() {
-            // 1. Hide our custom UI
+            // 1. Close UI
             document.getElementById('voice-overlay').classList.remove('active');
             document.body.classList.remove('ai-no-scroll');
             this.voiceMode = false;
 
-            // 2. Stop GHL Voice AI
-            const ghl = window.HLChatWidget || window.P_CHAT_WIDGET || window.ghlChatWidget;
-            if (ghl && typeof ghl.stopVoice === 'function') {
-                ghl.stopVoice();
+            // 2. Hang up GHL
+            if (window.ghlChatWidget && typeof window.ghlChatWidget.hangupCall === 'function') {
+                window.ghlChatWidget.hangupCall();
             }
         }
 
