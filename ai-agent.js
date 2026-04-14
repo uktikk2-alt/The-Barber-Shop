@@ -7,7 +7,7 @@
     const ALEX_CONFIG = {
         businessName: "Warner & Spencer Car Detailing",
         location: "Wrexham",
-        modelName: "gemini-1.5-flash", 
+        modelName: "gemini-2.5-flash", 
         persona: `You are a human named Alex. You work at Warner & Spencer Car Detailing. You are on a phone call.
         
 VOICE & TONE:
