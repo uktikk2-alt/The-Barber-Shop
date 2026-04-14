@@ -20,14 +20,16 @@ module.exports = async (req, res) => {
     const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : ' ';
 
     // 2. Prepare Contact Data
+    // We add a Smart Tag based on the service selected to trigger specific automations
+    const serviceTag = `Service: ${service || 'General'}`;
     const contactData = {
       firstName,
       lastName,
       email,
       phone,
       locationId: LOCATION_ID,
-      tags: ['Website Lead', 'Custom Form'],
-      source: 'Website Custom Booking Form'
+      tags: ['Website Lead', 'Custom Form', serviceTag],
+      source: service || 'General Detail'
     };
 
     // 3. Create Contact in GHL (Using native fetch available in Node 18+)
