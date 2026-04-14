@@ -399,65 +399,66 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+
   // 15. GoHighLevel Lead Capture Integration
-  const leadForm = document.getElementById('lead-form');
-  if (leadForm) {
+  // We use a robust check to ensure the form exists before attaching
+  const attachGHLHandler = () => {
+    const leadForm = document.getElementById('lead-form');
+    if (!leadForm) return;
+
+    // Remove any existing listeners if this runs twice
+    leadForm.onsubmit = null; 
+
     leadForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      e.stopPropagation(); // Stop other scripts from interfering
       
       const submitBtn = leadForm.querySelector('button[type="submit"]');
       const originalBtnText = submitBtn.innerHTML;
       
-      // Get form data
+      console.log("GHL Sync: Form submission detected.");
+
+      // Get form data with fallback values
       const formData = {
-        name: leadForm.querySelector('input[placeholder="Full Name"]').value,
-        phone: leadForm.querySelector('input[type="tel"]').value,
-        email: leadForm.querySelector('input[type="email"]').value,
-        address: leadForm.querySelector('input[placeholder*="vehicle located"]').value,
-        vehicle: leadForm.querySelector('input[placeholder*="e.g. BMW"]').value,
-        service: leadForm.querySelector('select').value,
-        message: leadForm.querySelector('textarea').value
+        name: leadForm.querySelector('input[placeholder="Full Name"]')?.value || 'New Lead',
+        phone: leadForm.querySelector('input[type="tel"]')?.value || '',
+        email: leadForm.querySelector('input[type="email"]')?.value || '',
+        address: leadForm.querySelector('input[placeholder*="vehicle located"]')?.value || 'N/A',
+        vehicle: leadForm.querySelector('input[placeholder*="e.g. BMW"]')?.value || 'N/A',
+        service: leadForm.querySelector('select')?.value || 'Inquiry',
+        message: leadForm.querySelector('textarea')?.value || ''
       };
 
       try {
-        // UI Loading State
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> SECURING YOUR BOOKING...';
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> SYNCING...';
 
         const response = await fetch('/api/ghl', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         });
 
         const result = await response.json();
 
         if (result.success) {
-          // Success State
           submitBtn.style.backgroundColor = '#28a745';
-          submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> REQUEST SENT TO JAMES!';
-          
-          // Reset form
+          submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> REQUEST SECURED!';
           leadForm.reset();
-          
-          // Optional: Redirect or show modal
           setTimeout(() => {
             submitBtn.disabled = false;
             submitBtn.style.backgroundColor = '';
             submitBtn.innerHTML = originalBtnText;
-            alert('Thank you! Your request has been sent to James. He will be in touch shortly.');
+            alert('Lead captured in GHL! James will be in touch.');
           }, 3000);
         } else {
-          throw new Error(result.details || 'Failed to sync with GHL');
+          throw new Error(result.error || 'Server Error');
         }
 
       } catch (error) {
-        console.error('Submission Error:', error);
+        console.error('GHL Submission Error:', error);
         submitBtn.style.backgroundColor = '#dc3545';
-        submitBtn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> ERROR - TRY AGAIN';
-        
+        submitBtn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> SYNC FAILED';
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.style.backgroundColor = '';
@@ -465,5 +466,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
       }
     });
-  }
+  };
+
+  // Run immediately and on DOM load
+  attachGHLHandler();
 });

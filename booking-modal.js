@@ -464,18 +464,59 @@ const BookingManager = {
         `;
     },
 
-    finishBooking() {
+    async finishBooking() {
         const modalContainer = document.querySelector('.booking-modal-container');
+        
+        // Show Loading State
         modalContainer.innerHTML = `
-            <div style="padding: 60px 40px; text-align: center; animation: confirmPop 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;">
-                <div style="width: 80px; height: 80px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; font-size: 30px; color: #000; box-shadow: 0 0 30px var(--accent);">
-                    <i class="fa-solid fa-check"></i>
-                </div>
-                <h2 style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #ffffff !important;">Booking Confirmed!</h2>
-                <p style="color: rgba(255,255,255,0.8); margin-bottom: 30px; font-size: 16px;">Thank you ${this.bookingData.contact.name}. James will contact you shortly at ${this.bookingData.contact.phone} to finalize the details.</p>
-                <button class="modal-btn btn-next" onclick="location.reload()" style="max-width: 250px; margin: 0 auto;">Return Home</button>
+            <div style="padding: 60px 40px; text-align: center;">
+                <div class="loader-spinner" style="width: 50px; height: 50px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+                <h3 style="color: #fff;">SECURING YOUR SLOT...</h3>
             </div>
+            <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
         `;
+
+        try {
+            // Prepare data for GHL
+            const ghlData = {
+                name: this.bookingData.contact.name,
+                email: this.bookingData.contact.email,
+                phone: this.bookingData.contact.phone,
+                address: this.bookingData.contact.address,
+                vehicle: `${this.bookingData.vehicle.make} ${this.bookingData.vehicle.model}`,
+                service: this.bookingData.service.name,
+                message: `Scheduled for: ${this.bookingData.schedule.date} @ ${this.bookingData.schedule.time}`
+            };
+
+            // Send to Bridge
+            await fetch('/api/ghl', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ghlData)
+            });
+
+            // Success UI
+            modalContainer.innerHTML = `
+                <div style="padding: 60px 40px; text-align: center; animation: confirmPop 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;">
+                    <div style="width: 80px; height: 80px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; font-size: 30px; color: #000; box-shadow: 0 0 30px var(--accent);">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h2 style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #ffffff !important;">Booking Confirmed!</h2>
+                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 30px; font-size: 16px;">Thank you ${this.bookingData.contact.name}. James will contact you shortly at ${this.bookingData.contact.phone} to finalize the details.</p>
+                    <button class="modal-btn btn-next" onclick="location.reload()" style="max-width: 250px; margin: 0 auto;">Return Home</button>
+                </div>
+            `;
+        } catch (error) {
+            console.error("GHL Sync Error:", error);
+            modalContainer.innerHTML = `
+                <div style="padding: 60px 40px; text-align: center;">
+                    <i class="fa-solid fa-circle-exclamation" style="font-size: 50px; color: #ff4d4d; margin-bottom: 20px;"></i>
+                    <h3 style="color: #fff;">Connection Error</h3>
+                    <p style="color: rgba(255,255,255,0.6);">We couldn't reach the server, but don't worry—your booking is noted. Please call us directly.</p>
+                    <button class="modal-btn btn-next" onclick="location.reload()">Try Again</button>
+                </div>
+            `;
+        }
     }
 };
 
