@@ -171,6 +171,15 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             // Managed by GHL Engine
         }
 
+        // NEW: Shadow Stalker - Find the GHL button inside its hidden Shadow DOM
+        findGHLButton() {
+            const host = document.querySelector('lc-chat-widget') || document.querySelector('ghl-chat-widget');
+            if (host && host.shadowRoot) {
+                return host.shadowRoot.querySelector('#chat-widget-launcher') || host.shadowRoot.querySelector('.launcher');
+            }
+            return document.querySelector('#chat-widget-launcher') || document.querySelector('.ghl-chat-widget');
+        }
+
         startVoice() {
             // 1. Show custom UI
             document.getElementById('alex-widget').classList.remove('open');
@@ -178,14 +187,19 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             document.body.classList.add('ai-no-scroll');
             document.getElementById('call-status').innerText = "Connecting...";
             this.voiceMode = true;
-            this.isMuted = false;
 
-            // 2. Trigger GHL native voice call
-            if (window.ghlChatWidget && typeof window.ghlChatWidget.openVoiceCall === 'function') {
+            // 2. TRIGGER GHL (Proxy + API Waterfall)
+            const ghlButton = this.findGHLButton();
+            if (ghlButton) {
+                console.log("GHL Sync: Proxy clicking hidden GHL button...");
+                ghlButton.click();
+                document.getElementById('call-status').innerText = "Live";
+            } else if (window.ghlChatWidget && typeof window.ghlChatWidget.openVoiceCall === 'function') {
+                console.log("GHL Sync: Using official openVoiceCall API...");
                 window.ghlChatWidget.openVoiceCall();
                 document.getElementById('call-status').innerText = "Live";
             } else {
-                // Wait for widget initialization if clicked too fast
+                console.warn("GHL Sync: Widget not ready, retrying...");
                 setTimeout(() => this.startVoice(), 800);
             }
         }
@@ -196,9 +210,13 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             document.body.classList.remove('ai-no-scroll');
             this.voiceMode = false;
 
-            // 2. Hang up GHL
+            // 2. Hang up (Proxy + API Waterfall)
             if (window.ghlChatWidget && typeof window.ghlChatWidget.hangupCall === 'function') {
                 window.ghlChatWidget.hangupCall();
+            } else {
+                // Fallback: Click the GHL button again if it toggles, or find their hangup button
+                const ghlBtn = this.findGHLButton();
+                if (ghlBtn) ghlBtn.click(); 
             }
         }
 

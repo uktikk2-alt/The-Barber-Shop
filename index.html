@@ -920,12 +920,14 @@
   <script src="script.js?v=19.0"></script>
   <!-- Booking Modal Logic -->
   <script src="booking-modal.js"></script>
-  <!-- GoHighLevel Voice AI Widget -->
-  <script src="https://widgets.leadconnectorhq.com/loader.js" 
-          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
-          data-widget-id="69de59fb2676eaf85eb99f86"
-          data-hide-launcher="true">
-  </script>
+  <!-- GoHighLevel Voice AI (Hidden Container Method) -->
+  <div id="ghl-hidden-container" style="width: 0; height: 0; overflow: hidden; position: absolute; pointer-events: none;">
+    <script src="https://widgets.leadconnectorhq.com/loader.js" 
+            data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
+            data-widget-id="69de59fb2676eaf85eb99f86"
+            data-hide-launcher="true">
+    </script>
+  </div>
   <!-- AI Agent -->
   <script src="ai-agent.js"></script>
 </body>

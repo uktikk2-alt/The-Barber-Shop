@@ -1483,32 +1483,25 @@ h1, h2, h3, h4, h5, h6 {
   transform: rotate(180deg);
 }
 
-/* 16. GoHighLevel Widget Hidden Logic (Ghost Mode) - Final Sweep */
-#chat-widget-launcher,
-#chat-widget-container,
-.ghl-chat-widget,
-#voice-ai-chat-widget,
-[class*="lc-"],
-[id*="lc-"],
-[class*="ghl-"],
-iframe[src*="leadconnector"],
-iframe[src*="widgets.leadconnectorhq.com"] {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
+/* 16. GoHighLevel UI Integration (Hidden Container Proxy Method) */
+#ghl-hidden-container {
+    display: block !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    top: -1000px !important;
+    left: -1000px !important;
     pointer-events: none !important;
-    z-index: -100 !important;
 }
 
-/* Specific fix for the 2026 Voice Orb bubble */
-[id^="voice-orb-"],
-.voice-ai-trigger,
-.ghl-voice-trigger {
-    display: none !important;
-    opacity: 0 !important;
+/* Ensure our custom widget is the absolute top-most element on the page */
+.ai-widget-container,
+.ai-voice-overlay {
+    z-index: 2147483647 !important;
 }
 
-/* Hide Alex Transcription specifically during Voice Calls as requested */
+/* Keep the Alex Transcription hidden for Voice Calls as requested */
 .ai-call-transcription {
     display: none !important;
 }
