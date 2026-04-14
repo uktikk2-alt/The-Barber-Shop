@@ -237,9 +237,9 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
                             { role: "user", parts: [{ text: ALEX_CONFIG.persona }] },
                             { role: "model", parts: [{ text: "Sure, got it. I'm ready." }] },
                             ...this.history,
-                            { role: "user", parts: [{ text: text + " (Short response mode.)" }] }
+                            { role: "user", parts: [{ text: text }] }
                         ],
-                        generationConfig: { temperature: 0.8, maxOutputTokens: 100 }
+                        generationConfig: { temperature: 0.8, maxOutputTokens: 1000 }
                     })
                 });
 
