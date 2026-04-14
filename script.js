@@ -370,4 +370,32 @@ document.addEventListener("DOMContentLoaded", () => {
       gallery.scrollLeft = scrollLeft - walk;
     });
   }
+
+  // 14. Services Toggle Logic
+  const toggleBtns = document.querySelectorAll('.btn-toggle-services');
+  toggleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const grid = document.getElementById(targetId);
+      if (grid) {
+        const isCollapsed = grid.classList.toggle('collapsed');
+        btn.innerHTML = isCollapsed 
+          ? 'See all services <i class="fa-solid fa-chevron-down"></i>' 
+          : 'Show less <i class="fa-solid fa-chevron-up"></i>';
+        
+        // Trigger AOS refresh to handle newly visible items
+        if (typeof AOS !== 'undefined') {
+          AOS.refresh();
+        }
+        
+        // Smooth scroll to top of section if closing
+        if (isCollapsed) {
+          window.scrollTo({
+            top: grid.parentElement.offsetTop - 100,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  });
 });

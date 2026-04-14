@@ -1441,3 +1441,44 @@ h1, h2, h3, h4, h5, h6 {
     .step-box { padding: 25px; }
 }
 
+
+
+/* Services Toggle Logic */
+.services-grid.collapsed .service-card:nth-child(n+3) {
+  display: none;
+}
+
+/* Make cards bigger on desktop (2 columns instead of 4) */
+@media (min-width: 1025px) {
+  .services-grid.collapsed {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+.services-toggle-wrap {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-toggle-services {
+  border: none !important;
+  background: transparent !important;
+  color: var(--white) !important;
+  box-shadow: none !important;
+}
+
+.btn-toggle-services:hover {
+  color: var(--primary) !important;
+}
+
+.btn-toggle-services i {
+  margin-left: 10px;
+  transition: transform 0.3s;
+}
+
+.services-grid:not(.collapsed) + .services-toggle-wrap .btn-toggle-services i {
+  transform: rotate(180deg);
+}
