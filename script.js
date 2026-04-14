@@ -398,4 +398,72 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  // 15. GoHighLevel Lead Capture Integration
+  const leadForm = document.getElementById('lead-form');
+  if (leadForm) {
+    leadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = leadForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.innerHTML;
+      
+      // Get form data
+      const formData = {
+        name: leadForm.querySelector('input[placeholder="Full Name"]').value,
+        phone: leadForm.querySelector('input[type="tel"]').value,
+        email: leadForm.querySelector('input[type="email"]').value,
+        address: leadForm.querySelector('input[placeholder*="vehicle located"]').value,
+        vehicle: leadForm.querySelector('input[placeholder*="e.g. BMW"]').value,
+        service: leadForm.querySelector('select').value,
+        message: leadForm.querySelector('textarea').value
+      };
+
+      try {
+        // UI Loading State
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> SECURING YOUR BOOKING...';
+
+        const response = await fetch('/api/ghl', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Success State
+          submitBtn.style.backgroundColor = '#28a745';
+          submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> REQUEST SENT TO JAMES!';
+          
+          // Reset form
+          leadForm.reset();
+          
+          // Optional: Redirect or show modal
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.style.backgroundColor = '';
+            submitBtn.innerHTML = originalBtnText;
+            alert('Thank you! Your request has been sent to James. He will be in touch shortly.');
+          }, 3000);
+        } else {
+          throw new Error(result.details || 'Failed to sync with GHL');
+        }
+
+      } catch (error) {
+        console.error('Submission Error:', error);
+        submitBtn.style.backgroundColor = '#dc3545';
+        submitBtn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> ERROR - TRY AGAIN';
+        
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.style.backgroundColor = '';
+          submitBtn.innerHTML = originalBtnText;
+        }, 3000);
+      }
+    });
+  }
 });
