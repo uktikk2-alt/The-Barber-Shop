@@ -225,11 +225,10 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
             this.isLoading = true;
             if (isVoice) {
                 document.getElementById('voice-status').innerText = "Got it...";
-                document.getElementById('voice-transcript').innerText = `"${text}"`;
             }
-
+            let lastError = "";
             try {
-                const res = await fetch('/api/chat', {
+                const res = await fetch('/api/process', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

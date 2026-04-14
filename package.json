@@ -1,0 +1,10 @@
+{
+  "name": "the-barber-shop",
+  "version": "1.0.0",
+  "description": "Premium Barbershop Landing Page",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {}
+}
