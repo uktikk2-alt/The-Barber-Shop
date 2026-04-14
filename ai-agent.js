@@ -5,10 +5,9 @@
 
 (function() {
     const ALEX_CONFIG = {
-        apiKey: "AIzaSyBnbE3Vh_VPvICRVgNkfiyVR4yt9ThygsY",
         businessName: "Warner & Spencer Car Detailing",
         location: "Wrexham",
-        modelName: "gemini-2.5-flash", 
+        modelName: "gemini-1.5-flash", 
         persona: `You are a human named Alex. You work at Warner & Spencer Car Detailing. You are on a phone call.
         
 VOICE & TONE:
@@ -229,41 +228,36 @@ Business Info: Warner & Spencer, Wrexham. Phone: 01978 541080.`
                 document.getElementById('voice-transcript').innerText = `"${text}"`;
             }
 
-            const versions = ["v1beta", "v1"];
-            let lastError = "";
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        modelName: ALEX_CONFIG.modelName,
+                        contents: [
+                            { role: "user", parts: [{ text: ALEX_CONFIG.persona }] },
+                            { role: "model", parts: [{ text: "Sure, got it. I'm ready." }] },
+                            ...this.history,
+                            { role: "user", parts: [{ text: text + " (Short response mode.)" }] }
+                        ],
+                        generationConfig: { temperature: 0.8, maxOutputTokens: 100 }
+                    })
+                });
 
-            for (const ver of versions) {
-                try {
-                    const url = `https://generativelanguage.googleapis.com/${ver}/models/${ALEX_CONFIG.modelName}:generateContent?key=${ALEX_CONFIG.apiKey}`;
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [
-                                { role: "user", parts: [{ text: ALEX_CONFIG.persona }] },
-                                { role: "model", parts: [{ text: "Sure, got it. I'm ready." }] },
-                                ...this.history,
-                                { role: "user", parts: [{ text: text + " (Short response mode.)" }] }
-                            ],
-                            generationConfig: { temperature: 0.8, maxOutputTokens: 100 }
-                        })
-                    });
-
-                    if (res.ok) {
-                        const data = await res.json();
-                        const aiText = data.candidates[0].content.parts[0].text;
-                        this.history.push({ role: "user", parts: [{ text: text }] });
-                        this.history.push({ role: "model", parts: [{ text: aiText }] });
-                        document.getElementById('alex-status').innerText = `Live (2.5 Flash)`;
-                        if (isVoice) { this.speak(aiText); } else { this.addMessageToUI('bot', aiText); }
-                        this.isLoading = false; 
-                        return;
-                    } else {
-                        const err = await res.json();
-                        lastError = err.error?.message || "Unknown error";
-                    }
-                } catch (e) { lastError = e.message; }
-            }
+                if (res.ok) {
+                    const data = await res.json();
+                    const aiText = data.candidates[0].content.parts[0].text;
+                    this.history.push({ role: "user", parts: [{ text: text }] });
+                    this.history.push({ role: "model", parts: [{ text: aiText }] });
+                    document.getElementById('alex-status').innerText = `Live (AI Agent)`;
+                    if (isVoice) { this.speak(aiText); } else { this.addMessageToUI('bot', aiText); }
+                    this.isLoading = false; 
+                    return;
+                } else {
+                    const err = await res.json();
+                    lastError = err.error || "Backend Error";
+                }
+            } catch (e) { lastError = e.message; }
 
             this.addMessageToUI('bot', `⚠️ API Error: ${lastError}`, true);
             this.isLoading = false;

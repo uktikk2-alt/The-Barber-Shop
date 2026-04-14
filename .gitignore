@@ -3,6 +3,14 @@
 Thumbs.db
 desktop.ini
 
+# Secrets
+.env
+.env.local
+
+# Build & Dependencies
+node_modules/
+dist/
+
 # IDES
 .vscode/
 .idea/
