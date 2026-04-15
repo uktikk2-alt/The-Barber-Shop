@@ -188,85 +188,94 @@ document.addEventListener("DOMContentLoaded", () => {
   // 10. 5 Second Smooth Hero Canvas Sequence
   const heroCanvas = document.getElementById("hero-canvas");
   if (heroCanvas) {
-    const ctx = heroCanvas.getContext("2d", { alpha: false });
-    
-    const frameCount = 123;
-    const currentFrame = index => `assets/hero-seq/frame_${index.toString().padStart(3, '0')}_delay-0.041s.jpg`;
-    const images = [];
-    
-    for (let i = 0; i < frameCount; i++) {
-        const img = new Image();
-        img.src = currentFrame(i);
-        if (i === 0) {
-          img.onload = () => {
-            // Dynamically set canvas exact dimensions so 'object-fit: cover' works properly without stretching
-            heroCanvas.width = img.naturalWidth;
-            heroCanvas.height = img.naturalHeight;
-            ctx.drawImage(img, 0, 0, heroCanvas.width, heroCanvas.height);
-          }
+    // Wrap entire initialization in a 1.2s timeout to guarantee GSAP Hero Typography cleanly executes first unhindered on mobile threads
+    setTimeout(() => {
+        const ctx = heroCanvas.getContext("2d", { alpha: false });
+        
+        const frameCount = 123;
+        const currentFrame = index => `assets/hero-seq/frame_${index.toString().padStart(3, '0')}_delay-0.041s.jpg`;
+        const images = [];
+        
+        for (let i = 0; i < frameCount; i++) {
+            const img = new Image();
+            img.src = currentFrame(i);
+            if (i === 0) {
+              img.onload = () => {
+                heroCanvas.width = img.naturalWidth;
+                heroCanvas.height = img.naturalHeight;
+                ctx.drawImage(img, 0, 0, heroCanvas.width, heroCanvas.height);
+              }
+            }
+            images.push(img);
         }
-        images.push(img);
-    }
-    
-    let frameIndex = 0;
-    let lastTime = 0;
-    let isPlaying = true;
-    let animationId = null;
-    
-    const durationMs = 5000; // 5 seconds perfectly
-    const frameInterval = durationMs / frameCount;
-    
-    const animateHeroSeq = (currentTime) => {
-        if (!isPlaying) return;
+        
+        let frameIndex = 0;
+        let lastTime = 0;
+        let isPlaying = true;
+        let animationId = null;
+        
+        const durationMs = 5000; // 5 seconds perfectly
+        const frameInterval = durationMs / frameCount;
+        
+        const animateHeroSeq = (currentTime) => {
+            if (!isPlaying) return;
+            animationId = requestAnimationFrame(animateHeroSeq);
+            
+            if (!lastTime) lastTime = currentTime;
+            const delta = currentTime - lastTime;
+            
+            if (delta >= frameInterval) {
+                const img = images[frameIndex];
+                
+                // CRUCIAL: Only advance frame if the image is actually fully loaded, eliminating jitter/skipping!
+                if (img && img.complete && img.naturalWidth > 0) {
+                    if (heroCanvas.width !== img.naturalWidth) {
+                        heroCanvas.width = img.naturalWidth;
+                        heroCanvas.height = img.naturalHeight;
+                    }
+                    ctx.drawImage(img, 0, 0, heroCanvas.width, heroCanvas.height);
+                    
+                    lastTime = currentTime - (delta % frameInterval);
+                    
+                    if (frameIndex < frameCount - 1) {
+                        frameIndex++;
+                    } else {
+                        isPlaying = false;
+                        cancelAnimationFrame(animationId);
+                    }
+                } else {
+                    // Buffer condition: image isn't loaded yet on slow mobile networks. Reset lastTime so we don't accidentally skip frames!
+                    lastTime = currentTime;
+                }
+            }
+        };
+        
+        // Start initial animation
         animationId = requestAnimationFrame(animateHeroSeq);
         
-        if (!lastTime) lastTime = currentTime;
-        const delta = currentTime - lastTime;
-        
-        if (delta >= frameInterval) {
-            lastTime = currentTime - (delta % frameInterval);
-            
-            const img = images[frameIndex];
-            if (img && img.complete && img.naturalWidth > 0) {
-                // Failsafe resize just in case first onload was skipped by cache fast-load
-                if (heroCanvas.width !== img.naturalWidth) {
-                    heroCanvas.width = img.naturalWidth;
-                    heroCanvas.height = img.naturalHeight;
-                }
-                ctx.drawImage(img, 0, 0, heroCanvas.width, heroCanvas.height);
-            }
-            
-            if (frameIndex < frameCount - 1) {
-                frameIndex++;
-            } else {
-                // Reached the last frame, halt CPU cycle and freeze
-                isPlaying = false;
-                cancelAnimationFrame(animationId);
-            }
-        }
-    };
-    
-    // Start initial animation
-    animationId = requestAnimationFrame(animateHeroSeq);
-    
-    // Observe hero section to restart animation upon scrolling back up
-    const heroSection = document.querySelector('.hero');
-    if (heroSection) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // If it scrolled into view and was previously frozen at the end, restart it
-                    if (!isPlaying && frameIndex === frameCount - 1) {
-                        frameIndex = 0;
-                        lastTime = 0;
-                        isPlaying = true;
-                        animationId = requestAnimationFrame(animateHeroSeq);
+        // Observe hero section to restart animation upon scrolling back up
+        const heroSection = document.querySelector('.hero');
+        if (heroSection) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (!isPlaying && frameIndex === frameCount - 1) {
+                            frameIndex = 0;
+                            lastTime = 0;
+                            isPlaying = true;
+                            animationId = requestAnimationFrame(animateHeroSeq);
+                        }
+                    } else {
+                        if (isPlaying) {
+                            isPlaying = false;
+                            if (animationId) cancelAnimationFrame(animationId);
+                        }
                     }
-                }
-            });
-        }, { threshold: 0.15 });
-        observer.observe(heroSection);
-    }
+                });
+            }, { threshold: 0.15 });
+            observer.observe(heroSection);
+        }
+    }, 1200);
   }
 
   // 11. Interactive Price Estimator Logic
