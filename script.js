@@ -590,13 +590,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Cinematic Reveal: Add 'page-ready' class to body to fade the website in smoothly
-  // We wait 150ms to ensure AOS and Browser Layout have settled positions
+  // Cinematic Reveal: Fade out the black shield overlay once layout has settled
+  // We wait 150ms to ensure AOS/GSAP have calculated their initial positions
   setTimeout(() => {
-    document.body.classList.add("page-ready");
+    const shield = document.getElementById("load-shield");
+    if (shield) shield.classList.add("fade-out");
   }, 150);
 
-  // Execution Delay: Start Hero animations as the page fades in
+  // Execution Delay: Start Hero animations as the shield fades away
   setTimeout(initHeroDeferred, 350);
 
   // 2. Magnetic Buttons
