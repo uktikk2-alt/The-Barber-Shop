@@ -245,8 +245,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (frameIndex < frameCount - 1) {
                         frameIndex++;
                     } else {
+                        // Freeze on last frame
                         isPlaying = false;
-                        cancelAnimationFrame(animationId);
+                        if (animationId) cancelAnimationFrame(animationId);
                     }
                 } else {
                     // Buffer condition: image isn't loaded yet on slow mobile networks. Reset lastTime so we don't accidentally skip frames!
@@ -264,20 +265,23 @@ document.addEventListener("DOMContentLoaded", () => {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        if (!isPlaying && frameIndex === frameCount - 1) {
+                        // RESTART logic: whenever the user scrolls back to the hero, 
+                        // we reset to frame 0 and play the 5s reveal again.
+                        if (!isPlaying) {
                             frameIndex = 0;
                             lastTime = 0;
                             isPlaying = true;
                             animationId = requestAnimationFrame(animateHeroSeq);
                         }
                     } else {
+                        // Pause when out of view to save performance
                         if (isPlaying) {
                             isPlaying = false;
                             if (animationId) cancelAnimationFrame(animationId);
                         }
                     }
                 });
-            }, { threshold: 0.15 });
+            }, { threshold: 0.1 });
             observer.observe(heroSection);
         }
 
