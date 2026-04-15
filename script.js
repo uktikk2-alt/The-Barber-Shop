@@ -1,25 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   
-  // 0. Initialize Lenis Smooth Scroll (Clean, battle-tested config)
-  const lenis = new Lenis({
-    duration: 0.9,              // Snappier response to prevent perceived stutter
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    orientation: 'vertical',   // Correct API for this Lenis version
-    gestureOrientation: 'vertical',
-    smoothWheel: true,
-    smoothTouch: false,         // No touch momentum (avoids mobile jank)
-    wheelMultiplier: 1.0,       // Default wheel speed, no amplification
-    touchMultiplier: 2,
-  });
-
-  // Sync Lenis RAF with GSAP ticker (single source of truth)
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
-  gsap.ticker.lagSmoothing(0);
-
-  // Update ScrollTrigger on every Lenis scroll
-  lenis.on('scroll', ScrollTrigger.update);
 
   // 1. Initialize AOS Animation Library
   AOS.init({
@@ -48,10 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ScrollTrigger.refresh();
   }, { passive: true });
 
-  // 2. Optimized Scroll Engine (Synced with Lenis)
-  lenis.on('scroll', ({ scroll }) => {
-    handleScroll(scroll);
-  });
+  // 2. Standard Native Scroll Engine
+  window.addEventListener('scroll', () => {
+    handleScroll(window.scrollY);
+  }, { passive: true });
 
   const handleScroll = (scrollPos) => {
     // Sticky Header Logic
@@ -96,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 4. Smooth scrolling for anchor links using Lenis
+  // 4. Smooth scrolling for anchor links using Native Browser Spec
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
@@ -104,10 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if(targetId === '#') return;
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
-        lenis.scrollTo(targetElement, {
-          offset: -80,
-          duration: 1.5,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        const headerOffset = 80;
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+             top: offsetPosition,
+             behavior: "smooth"
         });
       }
     });
