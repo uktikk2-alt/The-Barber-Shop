@@ -113,25 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 5. GALLERY: Staggered Intersection Observer (Prevents decode-burst freeze)
-  // Each image loads 120ms after the previous one to spread the CPU/GPU work.
-  const galleryImages = document.querySelectorAll('.lazy-gallery');
+  // 5. GALLERY: Staggered Intersection Observer Bottom Reveal
+  const galleryItems = document.querySelectorAll('.gallery-item');
   
-  if (galleryImages.length > 0) {
+  if (galleryItems.length > 0) {
     const galleryObserver = new IntersectionObserver((entries, observer) => {
       // Only trigger when the gallery section first enters view
       const visibleEntries = entries.filter(e => e.isIntersecting);
       if (visibleEntries.length === 0) return;
 
-      // Stagger-load: each image loads 120ms after the last
-      galleryImages.forEach((img, index) => {
+      // Stagger: each image animates 250ms after the last
+      galleryItems.forEach((item, index) => {
         setTimeout(() => {
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-            img.classList.add('loaded');
-          }
-        }, index * 120);
+          item.classList.add('animate-in');
+        }, index * 250);
       });
 
       // Only trigger once — unobserve the gallery section after firing
@@ -518,4 +513,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Run immediately and on DOM load
   attachGHLHandler();
+
+  // --- PREMIUM GSAP CHOREOGRAPHY ---
+
+  // 1. Masked Typography Reveals
+  // Using setTimeout prevents ScrollTrigger from calculating layout positions 
+  // before the initial browser CSS paint and custom font-loads complete.
+  setTimeout(() => {
+    gsap.utils.toArray('.reveal-wrapper').forEach(wrapper => {
+      const inner = wrapper.querySelector('.reveal-inner');
+      if (inner) {
+        // Explicit fromTo mapping completely prevents matrix calculation mismatches
+        gsap.fromTo(inner, 
+          { y: "150%" }, 
+          {
+            y: "0%",
+            duration: 1.0,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: wrapper,
+              start: "top 90%", // Triggers slightly before it enters fully
+              toggleActions: "play none none none" 
+            }
+          }
+        );
+      }
+    });
+  }, 50);
+
+  // 2. Magnetic Buttons
+  const magneticBtns = document.querySelectorAll('.magnetic-btn');
+  magneticBtns.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const position = btn.getBoundingClientRect();
+      const x = e.clientX - position.left - position.width / 2;
+      const y = e.clientY - position.top - position.height / 2;
+      
+      // Pull button towards cursor
+      gsap.to(btn, {
+        x: x * 0.3,
+        y: y * 0.3,
+        duration: 0.5,
+        ease: "power2.out"
+      });
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      // Elastic snap back
+      gsap.to(btn, {
+        x: 0,
+        y: 0,
+        duration: 1.0,
+        ease: "elastic.out(1, 0.3)"
+      });
+    });
+  });
+
 });
