@@ -156,21 +156,21 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 8px 18px 8px 10px;
+  padding: 6px 16px 6px 8px;
   border-radius: 50px;
   background: rgba(255, 255, 255, 0.08); /* Transparent glass to match other badges */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   font-family: var(--font-heading);
-  font-size: 13px; /* Matched to section-badge */
+  font-size: 11px; /* Slightly smaller for hierarchy */
   font-weight: 500;
-  letter-spacing: 1.5px; /* Matched to section-badge */
+  letter-spacing: 1px;
   color: var(--white);
   margin-top: -15px; /* Pulling up slightly to group with the title */
   margin-bottom: 30px; /* Space before the description */
   position: relative;
-  top: 133px; /* Maintained the user's preferred vertical position */
+  top: 133px; /* Moved down by another 8px to 133px */
 }
 
 .avatar-stack {
@@ -179,8 +179,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .avatar-stack img {
-  width: 26px; /* Slightly larger to match the increased badge height */
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   border: 2px solid rgba(0,0,0,0.5); /* Stronger border for overlap visibility */
   margin-left: -10px;
@@ -1376,10 +1376,34 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-btns {
   position: relative;
-  top: 120px; /* Moved down by 10px to 120px */
+  top: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px; /* Wider gap for the text link treatment */
   opacity: 0;
   visibility: hidden;
   will-change: transform, opacity;
+}
+
+.hero-text-link {
+  color: var(--white);
+  text-decoration: none;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hero-text-link:hover {
+  opacity: 1;
+  color: var(--primary);
+  transform: translateY(1px);
 }
 /* ==========================================================================
    BRUTALIST SERVICES GRID (Screenshot Parity)
