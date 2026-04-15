@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const ctx = heroCanvas.getContext("2d", { alpha: false });
         
         const frameCount = 123;
-        const currentFrame = index => `assets/hero-seq/frame_${index.toString().padStart(3, '0')}_delay-0.041s.jpg`;
+        const currentFrame = index => `assets/hero-seq/frame_${index.toString().padStart(3, '0')}_delay-0.041s.webp`;
         const images = [];
         
         for (let i = 0; i < frameCount; i++) {
