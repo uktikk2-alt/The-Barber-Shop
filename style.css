@@ -34,7 +34,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Lenis handles smooth scrolling programmatically */
 }
 
 body {
@@ -47,14 +47,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hardware Acceleration for Smooth Mobile Scrolling */
-section, 
-.service-card, 
-.gallery-item, 
-.booking-section, 
-.estimator,
+/* Hardware Acceleration — only on elements with continuous animations */
+/* Applying will-change too broadly causes GPU layer overload and stuttering */
+.gallery-item,
+.ticker-track {
+  will-change: transform;
+}
+
+section,
+.service-card,
 [data-aos] {
-  will-change: transform, opacity;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -656,6 +658,116 @@ h1, h2, h3, h4, h5, h6 {
 .shining-effect::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%); transform: rotate(30deg) translateX(-100%); animation: shine 4s infinite; }
 @keyframes shine { 100% { transform: rotate(30deg) translateX(100%); } }
 
+/* ============================================
+   MEET THE TEAM SECTION
+   ============================================ */
+.team-section { background: #050505; }
+
+.team-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.team-card {
+  width: 340px;
+  background: #111;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: default;
+}
+
+.team-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+
+/* Portrait image container */
+.team-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+}
+
+.team-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: grayscale(100%);
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+.team-card:hover .team-card-img-wrap img {
+  filter: grayscale(0%);
+  transform: scale(1.03);
+}
+
+/* Phone badge — overlaid at bottom of image, centered */
+.team-phone-badge {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 30px;
+  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: 13px;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.team-phone-badge i {
+  color: var(--primary);
+  font-size: 12px;
+}
+
+/* Name & role below image */
+.team-card-info {
+  padding: 20px 20px 24px;
+  text-align: center;
+}
+
+.team-name {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.team-role {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .team-grid { gap: 24px; }
+  .team-card { width: 300px; }
+  .team-card-img-wrap { height: 360px; }
+}
+
+/* ============================================ */
+
 /* Gallery */
 .gallery-track-wrapper {
     overflow: hidden;
@@ -697,6 +809,27 @@ h1, h2, h3, h4, h5, h6 {
     height: 100%; 
     object-fit: cover; 
 }
+
+/* Skeleton shimmer for lazy-loaded gallery images */
+.lazy-gallery {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: linear-gradient(90deg, #111 25%, #1a1a1a 50%, #111 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.lazy-gallery.loaded {
+  opacity: 1;
+  animation: none;
+  background: none;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 
 .gallery-scroll-msg {
     font-size: 11px;

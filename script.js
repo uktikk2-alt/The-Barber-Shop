@@ -1,6 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
   
-  // 1. Initialize AOS Animation Library with "Insane" Settings
+  // 0. Initialize Lenis Smooth Scroll (Clean, battle-tested config)
+  const lenis = new Lenis({
+    duration: 0.9,              // Snappier response to prevent perceived stutter
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',   // Correct API for this Lenis version
+    gestureOrientation: 'vertical',
+    smoothWheel: true,
+    smoothTouch: false,         // No touch momentum (avoids mobile jank)
+    wheelMultiplier: 1.0,       // Default wheel speed, no amplification
+    touchMultiplier: 2,
+  });
+
+  // Sync Lenis RAF with GSAP ticker (single source of truth)
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+  gsap.ticker.lagSmoothing(0);
+
+  // Update ScrollTrigger on every Lenis scroll
+  lenis.on('scroll', ScrollTrigger.update);
+
+  // 1. Initialize AOS Animation Library
   AOS.init({
     once: true, 
     offset: 50,
@@ -22,23 +43,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }));
   };
   calculateOffsets();
-  window.addEventListener('resize', calculateOffsets, { passive: true });
-
-  // 2. Optimized Scroll Engine (Passive & Throttled)
-  let isScrolling = false;
-  window.addEventListener("scroll", () => {
-    if (!isScrolling) {
-      window.requestAnimationFrame(() => {
-        handleScroll();
-        isScrolling = false;
-      });
-      isScrolling = true;
-    }
+  window.addEventListener('resize', () => {
+    calculateOffsets();
+    ScrollTrigger.refresh();
   }, { passive: true });
 
-  const handleScroll = () => {
-    const scrollPos = window.scrollY;
+  // 2. Optimized Scroll Engine (Synced with Lenis)
+  lenis.on('scroll', ({ scroll }) => {
+    handleScroll(scroll);
+  });
 
+  const handleScroll = (scrollPos) => {
     // Sticky Header Logic
     if (scrollPos > 50) {
       header.classList.add("sticky");
@@ -62,9 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // Initial call
-  handleScroll();
-
   // 3. Mobile Menu Toggle
   const mobileToggle = document.getElementById("mobile-toggle");
   const mainNav = document.getElementById("main-nav");
@@ -82,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 4. Smooth scrolling for anchor links
+  // 4. Smooth scrolling for anchor links using Lenis
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
@@ -90,13 +102,47 @@ document.addEventListener("DOMContentLoaded", () => {
       if(targetId === '#') return;
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 80,
-          behavior: 'smooth'
+        lenis.scrollTo(targetElement, {
+          offset: -80,
+          duration: 1.5,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
         });
       }
     });
   });
+
+  // 5. GALLERY: Staggered Intersection Observer (Prevents decode-burst freeze)
+  // Each image loads 120ms after the previous one to spread the CPU/GPU work.
+  const galleryImages = document.querySelectorAll('.lazy-gallery');
+  
+  if (galleryImages.length > 0) {
+    const galleryObserver = new IntersectionObserver((entries, observer) => {
+      // Only trigger when the gallery section first enters view
+      const visibleEntries = entries.filter(e => e.isIntersecting);
+      if (visibleEntries.length === 0) return;
+
+      // Stagger-load: each image loads 120ms after the last
+      galleryImages.forEach((img, index) => {
+        setTimeout(() => {
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            img.classList.add('loaded');
+          }
+        }, index * 120);
+      });
+
+      // Only trigger once — unobserve the gallery section after firing
+      observer.disconnect();
+    }, {
+      rootMargin: '0px 0px -100px 0px', // Fire 100px before gallery comes into view
+      threshold: 0
+    });
+
+    // Observe the gallery section, not individual images
+    const gallerySection = document.getElementById('gallery-container');
+    if (gallerySection) galleryObserver.observe(gallerySection);
+  }
 
   // 6. Services Grid Visual Enhancements (Currently handled via CSS)
   // No JS required for the Color Reveal effect as it is pure CSS.

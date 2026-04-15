@@ -41,6 +41,9 @@
   <link rel="stylesheet" href="booking-modal.css">
   <!-- AI Agent Styles -->
   <link rel="stylesheet" href="ai-agent.css">
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 </head>
 
 <body id="home">
@@ -139,7 +142,7 @@
         <!-- Item 1 -->
         <div class="service-card" data-aos="fade-up">
           <div class="service-card-img">
-            <img src="assets/Detailing%20Services/Super-Shine-Package-730x411.jpg" alt="Exterior Wash & Shine">
+            <img src="assets/Detailing%20Services/Super-Shine-Package-730x411.jpg" alt="Exterior Wash & Shine" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">01</span>
@@ -153,7 +156,7 @@
         <!-- Item 2 -->
         <div class="service-card" data-aos="fade-up" data-aos-delay="100">
           <div class="service-card-img">
-            <img src="assets/Detailing%20Services/Interior-Deluxe-730x411.jpg" alt="Interior Deluxe">
+            <img src="assets/Detailing%20Services/Interior-Deluxe-730x411.jpg" alt="Interior Deluxe" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">02</span>
@@ -167,7 +170,7 @@
         <!-- Item 3 -->
         <div class="service-card" data-aos="fade-up" data-aos-delay="200">
           <div class="service-card-img">
-            <img src="assets/Detailing%20Services/Ultimate-Package-730x411.jpg" alt="Full Detail Package">
+            <img src="assets/Detailing%20Services/Ultimate-Package-730x411.jpg" alt="Full Detail Package" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">03</span>
@@ -181,7 +184,7 @@
         <!-- Item 4 -->
         <div class="service-card" data-aos="fade-up" data-aos-delay="300">
           <div class="service-card-img">
-            <img src="assets/Detailing%20Services/Ceramic-Coating-Service-730x411.jpg" alt="Ceramic Coating">
+            <img src="assets/Detailing%20Services/Ceramic-Coating-Service-730x411.jpg" alt="Ceramic Coating" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">04</span>
@@ -195,7 +198,7 @@
         <!-- Item 5 -->
         <div class="service-card" data-aos="fade-up" data-aos-delay="400">
           <div class="service-card-img">
-            <img src="assets/Detailing%20Services/Showroom-Car-730x411.jpg" alt="Showroom Maintenance">
+            <img src="assets/Detailing%20Services/Showroom-Car-730x411.jpg" alt="Showroom Maintenance" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">05</span>
@@ -229,7 +232,7 @@
         <!-- Item 1 -->
         <div class="service-card" data-aos="flip-left">
           <div class="service-card-img">
-            <img src="assets/Extra%20Services/Headlight-Restoration-840x473.jpg" alt="Headlight Restoration">
+            <img src="assets/Extra%20Services/Headlight-Restoration-840x473.jpg" alt="Headlight Restoration" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">01</span>
@@ -243,7 +246,7 @@
         <!-- Item 2 (FEATURED) -->
         <div class="service-card featured" data-aos="flip-left" data-aos-delay="100">
           <div class="service-card-img">
-            <img src="assets/Extra%20Services/Engine-Cleaning-840x473.jpg" alt="Engine Bay Detailing">
+            <img src="assets/Extra%20Services/Engine-Cleaning-840x473.jpg" alt="Engine Bay Detailing" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">02</span>
@@ -257,7 +260,7 @@
         <!-- Item 3 -->
         <div class="service-card" data-aos="flip-left" data-aos-delay="200">
           <div class="service-card-img">
-            <img src="assets/Extra%20Services/Steam-Cleaning-840x473.jpg" alt="Steam Cleaning">
+            <img src="assets/Extra%20Services/Steam-Cleaning-840x473.jpg" alt="Steam Cleaning" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">03</span>
@@ -271,7 +274,7 @@
         <!-- Item 4 -->
         <div class="service-card" data-aos="flip-left" data-aos-delay="300">
           <div class="service-card-img">
-            <img src="assets/Extra%20Services/Ozone-Treatment-840x473.jpg" alt="Odor Removal">
+            <img src="assets/Extra%20Services/Ozone-Treatment-840x473.jpg" alt="Odor Removal" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">04</span>
@@ -285,7 +288,7 @@
         <!-- Item 5 -->
         <div class="service-card" data-aos="flip-left" data-aos-delay="400">
           <div class="service-card-img">
-            <img src="assets/Extra%20Services/Pest-Control-840x473.jpg" alt="Trim Restoration">
+            <img src="assets/Extra%20Services/Pest-Control-840x473.jpg" alt="Trim Restoration" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">05</span>
@@ -299,7 +302,7 @@
         <!-- Item 6 -->
         <div class="service-card" data-aos="flip-left" data-aos-delay="500">
           <div class="service-card-img">
-            <img src="assets/Extra%20Services/Pet-Hair-Removal-840x473.jpg" alt="Pet Hair Removal">
+            <img src="assets/Extra%20Services/Pet-Hair-Removal-840x473.jpg" alt="Pet Hair Removal" loading="lazy" decoding="async">
           </div>
           <div class="service-card-content">
             <span class="sc-number">06</span>
@@ -334,40 +337,31 @@
         <div class="gallery-grid" id="gallery-container">
           <!-- Using data-category for filtering tabs functionality -->
           <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="50">
-            <img src="assets/gallery/car-wash-detailing-station.jpg" alt="Detailing Gallery" loading="lazy"
-              decoding="async">
+            <img data-src="assets/gallery/car-wash-detailing-station.jpg" src="" alt="Detailing Gallery" decoding="async" class="lazy-gallery">
           </div>
           <div class="gallery-item" data-category="interior" data-aos="zoom-in" data-aos-delay="100">
-            <img src="assets/gallery/pexels-tima-miroshnichenko-6873176.jpg" alt="Detailing Gallery" loading="lazy"
-              decoding="async">
+            <img data-src="assets/gallery/pexels-tima-miroshnichenko-6873176.jpg" src="" alt="Detailing Gallery" decoding="async" class="lazy-gallery">
           </div>
           <div class="gallery-item" data-category="ceramic" data-aos="zoom-in" data-aos-delay="150">
-            <img src="assets/gallery/man-wrapping-car-inside-full-shot.jpg" alt="Detailing Gallery" loading="lazy"
-              decoding="async">
+            <img data-src="assets/gallery/man-wrapping-car-inside-full-shot.jpg" src="" alt="Detailing Gallery" decoding="async" class="lazy-gallery">
           </div>
           <div class="gallery-item" data-category="interior" data-aos="zoom-in" data-aos-delay="200">
-            <img src="assets/gallery/pexels-bylukemiller-14231701.jpg" alt="Detailing Gallery" loading="lazy"
-              decoding="async">
+            <img data-src="assets/gallery/pexels-bylukemiller-14231701.jpg" src="" alt="Detailing Gallery" decoding="async" class="lazy-gallery">
           </div>
           <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="250">
-            <img src="assets/gallery/a-person-in-yellow-gloves-is-painting-the-front-of-a-blue-car-free-photo.jpeg"
-              alt="Detailing Gallery" loading="lazy" decoding="async">
+            <img data-src="assets/gallery/a-person-in-yellow-gloves-is-painting-the-front-of-a-blue-car-free-photo.jpeg" src="" alt="Detailing Gallery" decoding="async" class="lazy-gallery">
           </div>
           <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="300">
-            <img src="assets/gallery/car-wash-detailing-station (1).jpg" alt="Detailing Gallery" loading="lazy"
-              decoding="async">
+            <img data-src="assets/gallery/car-wash-detailing-station (1).jpg" src="" alt="Detailing Gallery" decoding="async" class="lazy-gallery">
           </div>
           <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="350">
-            <img src="assets/gallery/pexels-wavyvisuals-377312923-20051461.jpg" alt="Detailing Gallery" loading="lazy"
-              decoding="async">
+            <img data-src="assets/gallery/pexels-wavyvisuals-377312923-20051461.jpg" src="" alt="Detailing Gallery" decoding="async" class="lazy-gallery">
           </div>
           <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="400">
-            <img src="assets/gallery/pexels-wavyvisuals-377312923-20051462.jpg" alt="Detailing Gallery" loading="lazy"
-              decoding="async">
+            <img data-src="assets/gallery/pexels-wavyvisuals-377312923-20051462.jpg" src="" alt="Detailing Gallery" decoding="async" class="lazy-gallery">
           </div>
           <div class="gallery-item" data-category="exterior" data-aos="zoom-in" data-aos-delay="450">
-            <img src="assets/gallery/pexels-bulat843-1243575272-29504457.jpg" alt="Detailing Gallery" loading="lazy"
-              decoding="async">
+            <img data-src="assets/gallery/pexels-bulat843-1243575272-29504457.jpg" src="" alt="Detailing Gallery" decoding="async" class="lazy-gallery">
           </div>
         </div>
         <p class="gallery-scroll-msg mt-4" data-aos="fade-up">← SCROLL TO EXPLORE →</p>
@@ -472,56 +466,53 @@
     </div>
   </section>
 
-  <!-- 7. WHY CHOOSE US SECTON (WHITE) -->
-  <section id="features" class="features section-padding bg-white">
+  <!-- 7. MEET THE TEAM SECTION (DARK) -->
+  <section id="features" class="team-section section-padding bg-black text-white">
     <div class="container text-center">
       <div class="section-header" data-aos="fade-up">
-        <div class="section-badge badge-dark-bg">WHY CHOOSE US</div>
-        <h2 class="section-title">Professional <span class="accent-line">Car Care</span> & <span class="accent-line">Elite Detailing</span> Certification</h2>
-        <p class="section-desc mx-auto" style="max-width: 800px;">
-          In terms of quantity, detailers are not in short supply. However, finding shops that provide precisely your
-          needs can be relatively tough. We provide reliable and expert car care services alongside high-end treatments
-          according to your specifications.
+        <div class="section-badge">THE EXPERTS</div>
+        <h2 class="section-title text-white">Meet <span class="accent-line">The Team</span></h2>
+        <p class="section-desc text-light mx-auto" style="max-width: 560px;">
+          The dedicated professionals behind every spotless finish. Years of experience, obsessive attention to detail, and a genuine love for cars.
         </p>
       </div>
-        <div class="feature-grid">
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="50">
-            <div class="f-icon-wrap"><i class="fa-solid fa-bolt"></i></div>
-            <div class="f-content">
-              <h4>Fast response</h4>
-              <p>Quick answers to every inquiry.</p>
-            </div>
-          </div>
 
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
-            <div class="f-icon-wrap"><i class="fa-solid fa-mobile-screen-button"></i></div>
-            <div class="f-content">
-              <h4>Easy online booking</h4>
-              <p>Book your spot in seconds.</p>
+      <div class="team-grid">
+        <!-- Team Member 1 -->
+        <div class="team-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="team-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face" 
+                 alt="James Warner" loading="lazy" decoding="async">
+            <div class="team-phone-badge">
+              <i class="fa-solid fa-phone"></i>
+              <span>+1 333 333 3333</span>
             </div>
           </div>
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-            <div class="f-icon-wrap"><i class="fa-solid fa-award"></i></div>
-            <div class="f-content">
-              <h4>Professional results</h4>
-              <p>High-quality showroom finish.</p>
-            </div>
+          <div class="team-card-info">
+            <h3 class="team-name">James</h3>
+            <span class="team-role">CO-OWNER</span>
           </div>
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="250">
-            <div class="f-icon-wrap"><i class="fa-solid fa-calendar-days"></i></div>
-            <div class="f-content">
-              <h4>Convenient scheduling</h4>
-              <p>Fits perfectly around your day.</p>
-            </div>
-          </div>
-
         </div>
-      </div>
-      <div class="features-image highlight-glow" data-aos="zoom-in">
-        <img src="assets/Why%20Choose%20us.png" alt="Professional Detailing" loading="lazy" decoding="async">
+
+        <!-- Team Member 2 -->
+        <div class="team-card" data-aos="fade-up" data-aos-delay="220">
+          <div class="team-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&crop=face" 
+                 alt="Spencer" loading="lazy" decoding="async">
+            <div class="team-phone-badge">
+              <i class="fa-solid fa-phone"></i>
+              <span>+1 333 333 3333</span>
+            </div>
+          </div>
+          <div class="team-card-info">
+            <h3 class="team-name">Spencer</h3>
+            <span class="team-role">CO-OWNER</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+
 
   <!-- 8. TESTIMONIALS SECTION (BRAND DARK) -->
   <section id="reviews" class="reviews section-padding bg-black text-white">
