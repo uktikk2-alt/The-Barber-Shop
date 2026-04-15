@@ -84,12 +84,14 @@ document.addEventListener("DOMContentLoaded", () => {
     mobileToggle.addEventListener("click", () => {
       mobileToggle.classList.toggle("active");
       mainNav.classList.toggle("active");
+      header.classList.toggle("menu-open");
     });
     // Close menu when a link is clicked
     mainNav.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
         mobileToggle.classList.remove("active");
         mainNav.classList.remove("active");
+        header.classList.remove("menu-open");
       });
     });
   }
