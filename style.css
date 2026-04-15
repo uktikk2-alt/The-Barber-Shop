@@ -156,21 +156,21 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 6px 16px 6px 8px;
+  padding: 8px 18px 8px 10px;
   border-radius: 50px;
   background: rgba(255, 255, 255, 0.08); /* Transparent glass to match other badges */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   font-family: var(--font-heading);
-  font-size: 11px; /* Slightly smaller for hierarchy */
+  font-size: 13px; /* Matched to section-badge */
   font-weight: 500;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px; /* Matched to section-badge */
   color: var(--white);
   margin-top: -15px; /* Pulling up slightly to group with the title */
   margin-bottom: 30px; /* Space before the description */
   position: relative;
-  top: 115px; /* Moved down by another 10px to 115px */
+  top: 133px; /* Maintained the user's preferred vertical position */
 }
 
 .avatar-stack {
@@ -179,8 +179,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .avatar-stack img {
-  width: 24px;
-  height: 24px;
+  width: 26px; /* Slightly larger to match the increased badge height */
+  height: 26px;
   border-radius: 50%;
   border: 2px solid rgba(0,0,0,0.5); /* Stronger border for overlap visibility */
   margin-left: -10px;
@@ -1318,7 +1318,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 1px; 
   line-height: 1.1; 
   position: relative;
-  top: 105px; /* Moved down by 15px from 90px */
+  top: 120px; /* Restored properties and set to final 120px offset */
 }
 
 .hero-title .highlight {
@@ -1360,7 +1360,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 650px; 
   line-height: 1.6; 
   position: relative;
-  top: 110px; /* Moved UP from 125px to follow title shift */
+  top: 125px; /* Moved down by 15px to 125px */
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.4); /* Enhanced readability against light backgrounds */
   opacity: 0;
   visibility: hidden;
@@ -1376,7 +1376,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-btns {
   position: relative;
-  top: 110px; /* Moved UP from 119px to match description shift */
+  top: 120px; /* Moved down by 10px to 120px */
   opacity: 0;
   visibility: hidden;
   will-change: transform, opacity;
