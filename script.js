@@ -590,8 +590,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Execution Delay: Wait for FCP to settle before hitting the CPU with GSAP
-  setTimeout(initHeroDeferred, 450);
+  // Cinematic Reveal: Add 'page-ready' class to body to fade the website in smoothly
+  // We wait 150ms to ensure AOS and Browser Layout have settled positions
+  setTimeout(() => {
+    document.body.classList.add("page-ready");
+  }, 150);
+
+  // Execution Delay: Start Hero animations as the page fades in
+  setTimeout(initHeroDeferred, 350);
 
   // 2. Magnetic Buttons
   const magneticBtns = document.querySelectorAll('.magnetic-btn');

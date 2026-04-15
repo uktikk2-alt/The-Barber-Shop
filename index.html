@@ -20,6 +20,22 @@
       left: -9999px !important;
       pointer-events: none !important;
     }
+
+    /* Cinematic Page Reveal Guard (Branded Dark) */
+    html {
+      background-color: #000 !important;
+    }
+    body {
+      opacity: 0;
+      background-color: #000 !important;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: blur(10px); /* Subtler blur to prevent GPU jitter */
+      will-change: opacity, filter;
+    }
+    body.page-ready {
+      opacity: 1;
+      filter: blur(0);
+    }
   </style>
 
   <!-- Fonts -->
@@ -524,7 +540,7 @@
         <div class="section-badge" data-aos="fade-down">TESTIMONIALS</div>
         <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Why Our Customers <span class="accent-line">Love Us</span></span></span></h2>
         <p class="section-desc text-light" data-aos="fade-up" data-aos-delay="100">Our system ensures every inquiry is
-          responded to quickly and every booking is handled smoothly â€” so you never miss a chance to serve a customer.</p>
+          responded to quickly and every booking is handled smoothly - so you never miss a chance to serve a customer.</p>
       </div>
 
       <div class="ticker-wrapper">
@@ -543,7 +559,7 @@
           </div>
           <div class="review-card-clean">
             <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Car looked brand new â€” and booking was so easy."</p>
+            <p>"Car looked brand new - and booking was so easy."</p>
             <div class="reviewer-meta">
               <img src="https://i.pravatar.cc/150?u=samantha" alt="Reviewer">
               <div class="meta-text">
@@ -554,7 +570,7 @@
           </div>
           <div class="review-card-clean">
             <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Didnâ€™t have to wait or call, everything was handled fast."</p>
+            <p>"Didn't have to wait or call, everything was handled fast."</p>
             <div class="reviewer-meta">
               <img src="https://i.pravatar.cc/150?u=isabella" alt="Reviewer">
               <div class="meta-text">
