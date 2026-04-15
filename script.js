@@ -188,8 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 10. 5 Second Smooth Hero Canvas Sequence
   const heroCanvas = document.getElementById("hero-canvas");
   if (heroCanvas) {
-    // Wrap entire initialization in a 1.2s timeout to guarantee GSAP Hero Typography cleanly executes first unhindered on mobile threads
-    setTimeout(() => {
+
         const ctx = heroCanvas.getContext("2d", { alpha: false });
         
         const frameCount = 123;
@@ -275,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }, { threshold: 0.15 });
             observer.observe(heroSection);
         }
-    }, 1200);
+
   }
 
   // 11. Interactive Price Estimator Logic

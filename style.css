@@ -1908,3 +1908,27 @@ iframe[src*="widgets.leadconnectorhq.com"] {
     transform: translateY(150%);
     will-change: transform;
 }
+
+/* --- PREMIUM NATIVE CSS HERO REVEAL --- */
+.hero-cinematic-text {
+    display: inline-block;
+    opacity: 0;
+    transform: scale(1.1) translateY(40px);
+    filter: blur(10px);
+    animation: cinematicHero 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    will-change: transform, opacity, filter;
+    animation-delay: 0.15s; /* Slight breather for browser paint before GPU trigger */
+}
+
+@keyframes cinematicHero {
+    0% {
+        opacity: 0;
+        transform: scale(1.1) translateY(40px);
+        filter: blur(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+    }
+}
