@@ -1708,11 +1708,11 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 
 .booking-layout {
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 80px;
-    align-items: flex-start;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 60px;
 }
 
 .booking-title { 
@@ -1728,14 +1728,22 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 16px; 
     color: rgba(255,255,255,0.6); 
     line-height: 1.8; 
-    margin-bottom: 50px; 
-    max-width: 400px;
+    margin: 0 auto 50px; 
+    max-width: 450px;
 }
 
-.contact-list { display: flex; flex-direction: column; gap: 30px; }
+.contact-list { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 20px; 
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
 
 .contact-card { 
   display: flex; gap: 20px; align-items: center; 
+  justify-content: center; /* Centering card content */
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -1743,8 +1751,10 @@ h1, h2, h3, h4, h5, h6 {
   padding: 15px 25px;
   border-radius: 10px;
   transition: var(--transition);
+  text-align: left; /* Keep internal text left-aligned for readability */
 }
-.contact-card:hover { background: rgba(255,255,255,0.08); transform: translateX(10px); }
+
+.contact-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); }
 
 .c-icon { 
     width: 45px; 
@@ -1777,8 +1787,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 .c-text a:hover { color: var(--primary); }
 
+/* Lead Form Container */
+.booking-form-box {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 /* Form Styling */
-.lead-form { display: flex; flex-direction: column; gap: 20px; }
+.lead-form { display: flex; flex-direction: column; gap: 20px; width: 100%; text-align: left; }
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
@@ -1842,8 +1859,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Responsive Grid Overrides */
 @media (max-width: 992px) {
-    .booking-layout { grid-template-columns: 1fr; gap: 60px; }
-    .booking-title { font-size: 36px; }
+    .booking-layout { gap: 40px; }
+    .booking-title { font-size: 34px; }
     .form-row { grid-template-columns: 1fr; }
 }
 
