@@ -57,6 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  // Immediate execution of scroll handler to prevent header jumps on load
+  handleScroll(window.scrollY);
+
   // 3. Mobile Menu Toggle
   const mobileToggle = document.getElementById("mobile-toggle");
   const mainNav = document.getElementById("main-nav");
@@ -531,17 +534,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- 1.5 Deferred Hero Performance Sequence ---
   const initHeroDeferred = () => {
     const heroTitleChars = document.querySelectorAll('.hero-title .char');
+    const heroHighlights = document.querySelectorAll('.hero-title .highlight');
     const heroDesc = document.querySelector('.hero-desc');
     const heroBtns = document.querySelector('.hero-btns');
 
     if (!heroTitleChars.length) return;
 
     // Set visibility to visible before starting the timeline
-    gsap.set([heroTitleChars, heroDesc, heroBtns], { visibility: 'visible' });
+    gsap.set([heroTitleChars, heroHighlights, heroDesc, heroBtns], { visibility: 'visible' });
 
     const heroTl = gsap.timeline();
 
-    // 1. Reveal Heading characters
+    // 1. Reveal Heading characters (Highlights fade in with their characters)
     heroTl.fromTo(heroTitleChars, 
       { opacity: 0, y: 30, filter: 'blur(8px)', scale: 1.1 },
       { 
@@ -554,6 +558,15 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "power3.out" 
       }
     );
+
+    // Fade in the green boxes (highlights) alongside the characters
+    if (heroHighlights.length) {
+      heroTl.fromTo(heroHighlights,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, ease: "none" },
+        "<" // Starts at the same time as the character animation starts
+      );
+    }
 
     // 2. Reveal Description (150ms delay after title starts)
     if (heroDesc) {
