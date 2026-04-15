@@ -1387,23 +1387,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-text-link {
-  color: var(--white);
+  color: #888888;
   text-decoration: none;
   font-family: var(--font-heading);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  opacity: 0.6;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
+  gap: 8px;
+  animation: linkPulse 2.5s infinite ease-in-out;
 }
 
 .hero-text-link:hover {
   opacity: 1;
   color: var(--primary);
   transform: translateY(1px);
+  animation-play-state: paused; /* Stop pulsing on hover */
+}
+
+@keyframes linkPulse {
+  0%, 100% { color: #888888; text-shadow: none; }
+  50% { color: var(--primary); text-shadow: 0 0 10px var(--primary-glass); }
 }
 /* ==========================================================================
    BRUTALIST SERVICES GRID (Screenshot Parity)
