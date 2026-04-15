@@ -34,10 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { passive: true });
 
   const handleScroll = (scrollPos) => {
-    // Sticky Header Logic
-    if (scrollPos > 50) {
+    // Sticky Header Logic with Hysteresis (Buffer Zone)
+    const stickyEnter = 120;
+    const stickyLeave = 60;
+    
+    if (!header.classList.contains("sticky") && scrollPos > stickyEnter) {
       header.classList.add("sticky");
-    } else {
+    } else if (header.classList.contains("sticky") && scrollPos < stickyLeave) {
       header.classList.remove("sticky");
     }
 
