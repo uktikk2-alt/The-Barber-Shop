@@ -15,7 +15,7 @@ const BookingManager = {
         schedule: {
             date: null,
             time: '09:00',
-            timezone: 'GMT+0 (London)'
+            timezone: 'CST (Texas)'
         },
         contact: {
             name: '',
@@ -67,7 +67,7 @@ const BookingManager = {
                                 ${this.services.map(s => `
                                     <div class="service-select-card" data-id="${s.id}" data-price="${s.price}">
                                         <h4>${s.name}</h4>
-                                        <span>£${s.price}</span>
+                                        <span>$${s.price}</span>
                                     </div>
                                 `).join('')}
                             </div>
@@ -120,9 +120,9 @@ const BookingManager = {
                                     <i class="fa-solid fa-globe"></i>
                                     <span>Timezone:</span>
                                     <select>
-                                        <option>GMT+0 (London)</option>
-                                        <option>GMT+1 (Paris)</option>
+                                        <option selected>CST (Texas)</option>
                                         <option>EST (New York)</option>
+                                        <option>PST (Los Angeles)</option>
                                     </select>
                                 </div>
                             </div>
@@ -459,7 +459,7 @@ const BookingManager = {
             </div>
             <div class="summary-row">
                 <span class="summary-label">PRICE (ESTIMATE)</span>
-                <span class="summary-value highlight" style="font-size: 20px;">£${d.service.price}</span>
+                <span class="summary-value highlight" style="font-size: 20px;">$${d.service.price}</span>
             </div>
         `;
     },

@@ -343,14 +343,14 @@ document.addEventListener("DOMContentLoaded", () => {
         snap: { innerHTML: 1 },
         ease: "power2.out",
         onUpdate: function() {
-          priceDisplay.innerHTML = '£' + Math.ceil(this.targets()[0].innerHTML);
+          priceDisplay.innerHTML = '$' + Math.ceil(this.targets()[0].innerHTML);
         }
       });
     }
 
     // Update Meta Summary
     if (summaryDisplay) {
-      summaryDisplay.textContent = `${service.title} — ${size.label} vehicle`;
+      summaryDisplay.textContent = `${service.title} - ${size.label} vehicle`;
     }
 
   }
