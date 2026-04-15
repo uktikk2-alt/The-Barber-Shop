@@ -43,6 +43,8 @@
   <link rel="stylesheet" href="ai-agent.css">
 
 
+  <!-- LCP Optimization: Preload first frame of the canvas hero sequence -->
+  <link rel="preload" as="image" href="assets/hero-seq/frame_000_delay-0.041s.jpg" fetchpriority="high">
 </head>
 
 <body id="home">
@@ -82,7 +84,7 @@
   </header>
 
   <!-- 1. HERO SECTION (DARK) -->
-  <section class="hero bg-dark">
+  <section class="hero bg-dark" style="background: url('assets/hero-seq/frame_000_delay-0.041s.jpg') center/cover no-repeat;">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-overlay"></div>
     <div class="container hero-content">
