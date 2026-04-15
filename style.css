@@ -1296,7 +1296,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero .section-badge {
   margin-bottom: 40px;
   position: relative;
-  top: -32px; /* Total upward shift: was -17px, now -32px */
+  top: -47px; /* Total upward shift: was -32px, now -47px */
 }
 
 .hero-btns {
