@@ -1910,21 +1910,27 @@ iframe[src*="widgets.leadconnectorhq.com"] {
 }
 
 /* --- PREMIUM NATIVE CSS HERO REVEAL --- */
-.hero-cinematic-text {
+.hero-title .word {
     display: inline-block;
-    opacity: 0;
-    transform: scale(1.1) translateY(40px);
-    filter: blur(10px);
-    animation: cinematicHero 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    will-change: transform, opacity, filter;
-    animation-delay: 0.15s; /* Slight breather for browser paint before GPU trigger */
+    white-space: nowrap;
+    margin-right: 0.15em;
 }
 
-@keyframes cinematicHero {
+.hero-title .char {
+    display: inline-block;
+    opacity: 0;
+    transform: scale(1.1) translateY(30px);
+    filter: blur(8px);
+    animation: cinematicChar 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    will-change: transform, opacity, filter;
+    animation-delay: calc(0.1s + (var(--i) * 0.03s)); /* Faster, staggered emergence */
+}
+
+@keyframes cinematicChar {
     0% {
         opacity: 0;
-        transform: scale(1.1) translateY(40px);
-        filter: blur(10px);
+        transform: scale(1.1) translateY(30px);
+        filter: blur(8px);
     }
     100% {
         opacity: 1;
