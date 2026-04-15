@@ -1278,6 +1278,9 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   top: 110px; /* Moves description downward by 110px total */
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.4); /* Enhanced readability against light backgrounds */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
 }
 
 /* Moving ONLY the badge 25% upward using relative positioning to avoid AOS transform conflicts */
@@ -1290,6 +1293,9 @@ h1, h2, h3, h4, h5, h6 {
 .hero-btns {
   position: relative;
   top: 105px; /* Moves buttons downward by 105px total (95px + 10px) */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
 }
 /* ==========================================================================
    BRUTALIST SERVICES GRID (Screenshot Parity)
@@ -1919,11 +1925,10 @@ iframe[src*="widgets.leadconnectorhq.com"] {
 .hero-title .char {
     display: inline-block;
     opacity: 0;
+    visibility: hidden;
     transform: scale(1.1) translateY(30px);
     filter: blur(8px);
-    animation: cinematicChar 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     will-change: transform, opacity, filter;
-    animation-delay: calc(0.1s + (var(--i) * 0.03s)); /* Faster, staggered emergence */
 }
 
 @keyframes cinematicChar {

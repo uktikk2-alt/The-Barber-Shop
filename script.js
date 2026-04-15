@@ -506,14 +506,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- PREMIUM GSAP CHOREOGRAPHY ---
 
-  // 1. Masked Typography Reveals
-  // Using setTimeout prevents ScrollTrigger from calculating layout positions 
-  // before the initial browser CSS paint and custom font-loads complete.
+  // --- 1. Masked Typography Reveals (Section Titles) ---
   setTimeout(() => {
     gsap.utils.toArray('.reveal-wrapper').forEach(wrapper => {
       const inner = wrapper.querySelector('.reveal-inner');
       if (inner) {
-        // Explicit fromTo mapping completely prevents matrix calculation mismatches
         gsap.fromTo(inner, 
           { y: "150%" }, 
           {
@@ -522,7 +519,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ease: "power3.out",
             scrollTrigger: {
               trigger: wrapper,
-              start: "top 90%", // Triggers slightly before it enters fully
+              start: "top 90%",
               toggleActions: "play none none none" 
             }
           }
@@ -530,6 +527,55 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }, 50);
+
+  // --- 1.5 Deferred Hero Performance Sequence ---
+  const initHeroDeferred = () => {
+    const heroTitleChars = document.querySelectorAll('.hero-title .char');
+    const heroDesc = document.querySelector('.hero-desc');
+    const heroBtns = document.querySelector('.hero-btns');
+
+    if (!heroTitleChars.length) return;
+
+    // Set visibility to visible before starting the timeline
+    gsap.set([heroTitleChars, heroDesc, heroBtns], { visibility: 'visible' });
+
+    const heroTl = gsap.timeline();
+
+    // 1. Reveal Heading characters
+    heroTl.fromTo(heroTitleChars, 
+      { opacity: 0, y: 30, filter: 'blur(8px)', scale: 1.1 },
+      { 
+        opacity: 1, 
+        y: 0, 
+        filter: 'blur(0px)', 
+        scale: 1,
+        duration: 0.8, 
+        stagger: 0.03, 
+        ease: "power3.out" 
+      }
+    );
+
+    // 2. Reveal Description (150ms delay after title starts)
+    if (heroDesc) {
+      heroTl.fromTo(heroDesc,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        "-=0.6" // Starts earlier to overlap with title reveal
+      );
+    }
+
+    // 3. Reveal Buttons
+    if (heroBtns) {
+      heroTl.fromTo(heroBtns,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        "-=0.4"
+      );
+    }
+  };
+
+  // Execution Delay: Wait for FCP to settle before hitting the CPU with GSAP
+  setTimeout(initHeroDeferred, 450);
 
   // 2. Magnetic Buttons
   const magneticBtns = document.querySelectorAll('.magnetic-btn');
