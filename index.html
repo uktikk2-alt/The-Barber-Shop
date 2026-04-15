@@ -29,49 +29,21 @@
     href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Oswald:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 
-  <!-- Critical CSS (Above the Fold) -->
-  <style>
-    :root {
-      --primary: #D0FF3A; --dark: #000000; --white: #ffffff;
-      --font-heading: 'Oswald', sans-serif; --font-body: 'Mona Sans', sans-serif;
-      --glass-blur: blur(15px); --transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: var(--font-body); background-color: var(--white); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-    .header { position: absolute; top: 0; left: 0; width: 100%; padding: 30px 0; background: rgba(10, 10, 10, 0.3); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); z-index: 1000; color: var(--white); }
-    .header-container { display: flex; justify-content: space-between; align-items: center; }
-    .hero { position: relative; overflow: hidden; background: #000; min-height: 75vh; display: flex; align-items: center; justify-content: center; padding: 120px 0; }
-    .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4)); z-index: 1; }
-    .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.35) !important; z-index: 1; }
-    .hero-content { position: relative; z-index: 10; text-align: center; max-width: 900px; display: flex; flex-direction: column; align-items: center; }
-    .hero-title { font-family: var(--font-heading); font-size: clamp(38px, 10vw, 85px); color: var(--white); margin-bottom: 25px; line-height: 1.1; position: relative; top: 110px; text-transform: uppercase; }
-    .hero-title .word { display: inline-block; white-space: nowrap; margin-right: 0.15em; }
-    .hero-title .char { display: inline-block; opacity: 0; transform: scale(1.1) translateY(30px); filter: blur(8px); animation: cinematicChar 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; animation-delay: calc(0.1s + (var(--i) * 0.03s)); }
-    @keyframes cinematicChar { 0% { opacity: 0; transform: scale(1.1) translateY(30px); filter: blur(8px); } 100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); } }
-    .section-badge { display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; border-radius: 50px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); font-family: var(--font-heading); font-size: 13px; color: var(--white); text-transform: uppercase; margin-bottom: 40px; position: relative; top: -32px; }
-    .section-badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background-color: var(--primary); }
-    .hero-desc { font-size: clamp(16px, 2.5vw, 20px); color: #cccccc; max-width: 650px; position: relative; top: 110px; }
-    .hero-btns { position: relative; top: 105px; display: flex; gap: 20px; }
-    #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-  </style>
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    @font-face { font-family: 'Oswald'; font-display: swap; }
-    @font-face { font-family: 'Mona Sans'; font-display: swap; }
-  </style>
+  <!-- AOS Animation CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-  <!-- Non-blocking CSS Loading -->
-  <link rel="stylesheet" href="style.css?v=19.0" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="style.css?v=19.0"></noscript>
-  <link rel="stylesheet" href="booking-modal.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="ai-agent.css" media="print" onload="this.media='all'">
-  
-  <!-- External CSS (Asynchronous) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'">
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css?v=19.0">
+  <!-- Booking Modal Styles -->
+  <link rel="stylesheet" href="booking-modal.css">
+  <!-- AI Agent Styles -->
+  <link rel="stylesheet" href="ai-agent.css">
 
-  <!-- LCP Optimization: High-priority WebP preload -->
+
+  <!-- LCP Optimization: Preload first frame of the canvas hero sequence -->
   <link rel="preload" as="image" href="assets/hero-seq/frame_000_delay-0.041s.webp" fetchpriority="high">
 </head>
 
@@ -375,10 +347,7 @@
             <img src="assets/gallery/pexels-tima-miroshnichenko-6873176.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
           </div>
           <div class="gallery-item" data-category="ceramic">
-            <img src="assets/gallery/man-wrapping-car-inside-full-shot.webp" 
-                 srcset="assets/gallery/man-wrapping-car-inside-full-shot-mobile.webp 800w, assets/gallery/man-wrapping-car-inside-full-shot.webp 1920w"
-                 sizes="(max-width: 800px) 100vw, 33vw"
-                 loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
+            <img src="assets/gallery/man-wrapping-car-inside-full-shot.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
           </div>
           <div class="gallery-item" data-category="interior">
             <img src="assets/gallery/pexels-bylukemiller-14231701.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
