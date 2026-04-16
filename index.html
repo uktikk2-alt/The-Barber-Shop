@@ -28,6 +28,26 @@
   <link rel="preload" as="image" href="assets/hero-desktop-seq/frame_000_delay-0.033s.webp" media="(min-width: 769px)" fetchpriority="high">
   <link rel="preload" as="image" href="assets/hero-mobile-seq/frame_000_delay-0.033s.jpg" media="(max-width: 768px)" fetchpriority="high">
 
+  <!-- Nuclear Force: Zero-Flash Killswitch (FCP Fix) -->
+  <script>
+    (function() {
+      const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          for (const node of mutation.addedNodes) {
+            if (node.nodeType === 1) {
+              const s = node.tagName?.toLowerCase();
+              if (s === 'chat-widget' || s === 'lc-chat-widget' || s === 'ghl-chat-widget' || node.id === 'chat-widget-container') {
+                node.style.display = 'none';
+                node.remove();
+              }
+            }
+          }
+        }
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    })();
+  </script>
+
   <!-- Critical Rendering Path (Inlined for 90+ FCP) -->
   <style>
     :root {
@@ -37,6 +57,28 @@
       --font-heading: 'Oswald', sans-serif;
       --font-body: 'Mona Sans', sans-serif;
     }
+
+    /* NUCLEAR HIDE: Force GHL off-screen immediately on paint */
+    lc-chat-widget, ghl-chat-widget, chat-widget, #chat-widget-container, 
+    iframe[src*="leadconnector"], iframe[src*="widgets.leadconnectorhq.com"] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      position: fixed !important;
+      bottom: -9999px !important;
+      left: -9999px !important;
+      z-index: -1 !important;
+      pointer-events: none !important;
+    }
+
+    /* HERO STABILIZATION: Hide content until GSAP is ready */
+    .hero-title .char, .hero-desc, .hero-btns, .js-config-hero-badge {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .word { display: inline-block; white-space: nowrap; }
+    .char { display: inline-block; }
 
     /* Meticulous Brand Lock (Zero-Flash) */
     html {
@@ -327,7 +369,6 @@
           Your car deserves more than just a wash. Our specialty add-ons truly bring back that fresh, flawless feel inside and out with expert care and attention to every little detail possible.
         </p>
       </div>
-
       <div class="services-grid collapsed" id="extra-services-grid">
         <!-- Dynamic Extra Services Injected Here -->
       </div>
@@ -469,7 +510,20 @@
       </div>
 
       <div class="team-grid">
-        <!-- Team members injected from config.js -->
+        <!-- Pre-rendered for Zero-Shift Landing -->
+        <div class="team-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="team-card-img-wrap">
+            <img src="assets/gallery/Michel.png" alt="Michele" width="340" height="420" loading="lazy" decoding="async">
+            <div class="team-phone-badge">
+              <i class="fa-solid fa-phone"></i>
+              <span>+44 7308 742727</span>
+            </div>
+          </div>
+          <div class="team-card-info">
+            <h3 class="team-name">Michele</h3>
+            <span class="team-role">OWNER & LEAD DETAILER</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -757,7 +811,7 @@
           <div class="section-badge badge-dark-bg">GET IN TOUCH</div>
           <h2 class="booking-title"><span class="reveal-wrapper"><span class="reveal-inner">BOOK YOUR <span class="primary-text">DETAIL</span></span></span></h2>
           <p class="booking-subtitle">
-            Ready to transform your car? Fill in the form and James will be in touch to confirm your booking.
+            Ready to transform your car? Fill in the form and Michele will be in touch to confirm your booking.
           </p>
 
           <div class="contact-list">
@@ -765,14 +819,14 @@
               <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
               <div class="c-text">
                 <span>PHONE</span>
-                <a href="tel:3333333333" class="js-config-phone-link js-config-phone">+1 333 333 3333</a>
+                <a href="tel:+447308742727" class="js-config-phone-link js-config-phone">+44 7308 742727</a>
               </div>
             </div>
             <div class="contact-card">
               <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
               <div class="c-text">
                 <span>EMAIL</span>
-                <a href="mailto:info@warnerandspencer.com" class="js-config-email-link js-config-email">info@warnerandspencer.com</a>
+                <a href="mailto:info@scuderiaautodetailing.co.uk" class="js-config-email-link js-config-email">info@scuderiaautodetailing.co.uk</a>
               </div>
             </div>
             <div class="contact-card">
@@ -852,9 +906,9 @@
     <div class="container footer-inner">
 
       <!-- Brand -->
-      <div class="footer-brand">
-        <img src="assets/Logo/white.webp" class="footer-logo js-config-logo-white" alt="Company Logo">
-        <p class="footer-brand-desc js-config-footer-desc">Providing premium car detailing with fast booking and high-quality results. Professional care for your vehicle.</p>
+      <div class="footer-top">
+        <img src="assets/Logo/scuderia-logo-main.png" class="footer-logo js-config-logo-white" alt="Company Logo">
+        <p class="footer-tagline">Preserving Prestige & Perfection.</p>
       </div>
 
       <!-- Quick Links + Head Office wrapped for 2-col on mobile -->
@@ -873,14 +927,14 @@
           <h4 class="footer-heading">HEAD OFFICE</h4>
           <p class="footer-address js-config-location">Lincoln, England<br>(15-Mile Mobile Range)</p>
           <p class="footer-address"><a href="tel:+447308742727" class="js-config-phone-link js-config-phone">+44 7308 742727</a></p>
-          <p class="footer-address"><a href="mailto:info@warnerandspencer.com" class="js-config-email-link js-config-email">info@warnerandspencer.com</a></p>
+          <p class="footer-address"><a href="mailto:info@scuderiaautodetailing.co.uk" class="js-config-email-link js-config-email">info@scuderiaautodetailing.co.uk</a></p>
         </div>
       </div>
 
 
     </div>
     <div class="footer-bottom">
-      <p>&copy; <span class="js-config-year">2026</span> <span class="js-config-business-name">Warner & Spencer</span> Auto Detailing. All Rights Reserved.</p>
+      <p>&copy; <span class="js-config-year">2026</span> <span class="js-config-business-name">Scuderia</span> Auto Detailing. All Rights Reserved.</p>
     </div>
   </footer>
 

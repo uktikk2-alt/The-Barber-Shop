@@ -228,6 +228,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const grid = document.querySelector('.team-grid');
       if (!grid || !this.config.team) return;
 
+      // Skip injection if manually hardcoded to prevent layout shift
+      if (grid.children.length > 0) return;
+
       grid.innerHTML = this.config.team.map((member, index) => `
         <div class="team-card" data-aos="fade-up" data-aos-delay="${100 + (index * 120)}">
           <div class="team-card-img-wrap">
