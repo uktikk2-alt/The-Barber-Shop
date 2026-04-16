@@ -190,119 +190,176 @@ document.addEventListener("DOMContentLoaded", () => {
       onLeaveBack: () => card.classList.remove("is-black")
     });
   });
-  
-  // 10. 5 Second Smooth Hero Canvas Sequence
-  const heroCanvas = document.getElementById("hero-canvas");
-  if (heroCanvas) {
+    /**
+   * 10. Robust Hero Canvas Engine (High Performance / Memory Safe)
+   * Implements strict matchMedia context selection, Image.decode() pixel pre-warming,
+   * and proactive memory-flushing upon device breakpoint change.
+   */
+  class HeroCanvasManager {
+    constructor() {
+      this.canvas = document.getElementById("hero-canvas");
+      if (!this.canvas) return;
+      
+      this.ctx = this.canvas.getContext("2d", { alpha: false, desynchronized: true });
+      this.frames = [];
+      this.frameCount = 0;
+      this.frameIndex = 0;
+      this.lastTime = 0;
+      this.isPlaying = false;
+      this.animationId = null;
+      this.isDestroyed = false;
+      this.isMobile = false;
+      this.config = null;
+      
+      // Strict Breakpoint Listener
+      this.mediaQuery = window.matchMedia('(max-width: 768px)');
+      this.setupMobileCheck = (e) => this.handleBreakpointChange(e.matches);
+      
+      this.init();
+    }
 
-        const ctx = heroCanvas.getContext("2d", { alpha: false });
-        const isMobile = window.innerWidth <= 768;
-        
-        // Dynamic Sequence Settings
-        const seq = isMobile ? {
-            folder: 'hero-mobile-seq',
-            frameCount: 123,
-            fileExt: 'webp',
-            suffix: 'delay-0.041s',
-            durationMs: 5043 // 123 * 41ms
-        } : {
-            folder: 'hero-desktop-seq',
-            frameCount: 215,
-            fileExt: 'jpg',
-            suffix: 'delay-0.033s',
-            durationMs: 7095 // 215 * 33ms
-        };
+    async init() {
+      this.isMobile = this.mediaQuery.matches;
+      this.config = this.isMobile ? {
+        folder: 'hero-mobile-seq',
+        frameCount: 123,
+        suffix: 'delay-0.041s',
+        loop: false,
+        fps: 41
+      } : {
+        folder: 'hero-desktop-seq',
+        frameCount: 215,
+        suffix: 'delay-0.033s',
+        loop: true,
+        fps: 33
+      };
+      
+      this.frameCount = this.config.frameCount;
+      this.mediaQuery.addEventListener('change', this.setupMobileCheck);
+      
+      // Start loading background frames
+      await this.loadSequence();
+      
+      // Observer logic integrated into the manager
+      this.setupObserver();
+    }
 
-        const currentFrame = index => `assets/${seq.folder}/frame_${index.toString().padStart(3, '0')}_${seq.suffix}.${seq.fileExt}`;
-        const images = [];
+    async loadSequence() {
+      const folder = this.config.folder;
+      const suffix = this.config.suffix;
+      
+      // Instant first frame draw if not already painted by HTML/CSS
+      const firstFrameUrl = `assets/${folder}/frame_000_${suffix}.webp`;
+      const firstImg = new Image();
+      firstImg.src = firstFrameUrl;
+      
+      try {
+        await firstImg.decode();
+        if (this.isDestroyed) return;
+        this.scaleCanvas(firstImg);
+        this.ctx.drawImage(firstImg, 0, 0, this.canvas.width, this.canvas.height);
+      } catch (e) { console.warn("Initial frame decode failed", e); }
+
+      // Parallel batch loading with decode throttling to prevent main thread lock
+      const batchSize = 10;
+      for (let i = 0; i < this.frameCount; i += batchSize) {
+        if (this.isDestroyed) break;
         
-        for (let i = 0; i < seq.frameCount; i++) {
-            const img = new Image();
-            img.src = currentFrame(i);
-            if (i === 0) {
-              img.onload = () => {
-                heroCanvas.width = img.naturalWidth;
-                heroCanvas.height = img.naturalHeight;
-                ctx.drawImage(img, 0, 0, heroCanvas.width, heroCanvas.height);
-              }
-            }
-            images.push(img);
+        const loadBatch = [];
+        for (let j = i; j < Math.min(i + batchSize, this.frameCount); j++) {
+          const img = new Image();
+          img.src = `assets/${folder}/frame_${j.toString().padStart(3, '0')}_${suffix}.webp`;
+          loadBatch.push((async () => {
+            try {
+              await img.decode();
+              this.frames[j] = img;
+            } catch (err) { /* Silent skip */ }
+          })());
         }
-        
-        let frameIndex = 0;
-        let lastTime = 0;
-        let isPlaying = true;
-        let animationId = null;
-        
-        const frameInterval = seq.durationMs / seq.frameCount;
-        
-        const animateHeroSeq = (currentTime) => {
-            if (!isPlaying) return;
-            animationId = requestAnimationFrame(animateHeroSeq);
-            
-            if (!lastTime) lastTime = currentTime;
-            const delta = currentTime - lastTime;
-            
-            if (delta >= frameInterval) {
-                const img = images[frameIndex];
-                
-                // CRUCIAL: Only advance frame if the image is actually fully loaded, eliminating jitter/skipping!
-                if (img && img.complete && img.naturalWidth > 0) {
-                    if (heroCanvas.width !== img.naturalWidth) {
-                        heroCanvas.width = img.naturalWidth;
-                        heroCanvas.height = img.naturalHeight;
-                    }
-                    ctx.drawImage(img, 0, 0, heroCanvas.width, heroCanvas.height);
-                    
-                    lastTime = currentTime - (delta % frameInterval);
-                    
-                    if (frameIndex < seq.frameCount - 1) {
-                        frameIndex++;
-                    } else if (!isMobile) {
-                        // DESKTOP: Loop continuously
-                        frameIndex = 0;
-                    } else {
-                        // MOBILE: Freeze on last frame
-                        isPlaying = false;
-                        if (animationId) cancelAnimationFrame(animationId);
-                    }
-                } else {
-                    // Buffer condition: image isn't loaded yet on slow mobile networks. Reset lastTime so we don't accidentally skip frames!
-                    lastTime = currentTime;
-                }
-            }
-        };
-        
-        // Start initial animation
-        animationId = requestAnimationFrame(animateHeroSeq);
-        
-        // Observe hero section to restart animation upon scrolling back up
-        const heroSection = document.querySelector('.hero');
-        if (heroSection) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // RESTART logic: whenever the user scrolls back to the hero, 
-                        // we reset to frame 0 and play the 5s reveal again.
-                        if (!isPlaying) {
-                            frameIndex = 0;
-                            lastTime = 0;
-                            isPlaying = true;
-                            animationId = requestAnimationFrame(animateHeroSeq);
-                        }
-                    } else {
-                        // Pause when out of view to save performance
-                        if (isPlaying) {
-                            isPlaying = false;
-                            if (animationId) cancelAnimationFrame(animationId);
-                        }
-                    }
-                });
-            }, { threshold: 0.1 });
-            observer.observe(heroSection);
-        }
+        await Promise.all(loadBatch);
+      }
+    }
 
+    scaleCanvas(img) {
+      if (this.canvas.width !== img.naturalWidth) {
+        this.canvas.width = img.naturalWidth;
+        this.canvas.height = img.naturalHeight;
+      }
+    }
+
+    render = (currentTime) => {
+      if (!this.isPlaying || this.isDestroyed) return;
+      this.animationId = requestAnimationFrame(this.render);
+
+      if (!this.lastTime) this.lastTime = currentTime;
+      const delta = currentTime - this.lastTime;
+
+      if (delta >= this.config.fps) {
+        const img = this.frames[this.frameIndex];
+        
+        if (img && img.complete) {
+          this.ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
+          this.lastTime = currentTime - (delta % this.config.fps);
+          
+          if (this.frameIndex < this.frameCount - 1) {
+            this.frameIndex++;
+          } else if (this.config.loop) {
+            this.frameIndex = 0;
+          } else {
+            this.isPlaying = false;
+          }
+        } else {
+          // Sync protection: reset timing if asset isn't ready
+          this.lastTime = currentTime;
+        }
+      }
+    }
+
+    handleBreakpointChange(isMobile) {
+      if (isMobile !== this.isMobile) {
+        console.log("Memory Reset: Breaking sequence and clearing GPU buffer.");
+        this.destroy();
+        new HeroCanvasManager(); // Re-init fresh
+      }
+    }
+
+    setupObserver() {
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+      
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!this.isPlaying) {
+              this.isPlaying = true;
+              this.animationId = requestAnimationFrame(this.render);
+            }
+          } else {
+            this.isPlaying = false;
+            if (this.animationId) cancelAnimationFrame(this.animationId);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      this.observer.observe(hero);
+    }
+
+    destroy() {
+      this.isDestroyed = true;
+      this.isPlaying = false;
+      if (this.animationId) cancelAnimationFrame(this.animationId);
+      if (this.observer) this.observer.disconnect();
+      this.mediaQuery.removeEventListener('change', this.setupMobileCheck);
+      
+      // CRITICAL Memory Cleanup: Empty the frame array and clear canvas pointers
+      this.frames.length = 0;
+      this.frames = null;
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
   }
+
+  // Initialize the engine
+  const heroManager = new HeroCanvasManager();
 
   // 11. Interactive Price Estimator Logic
   const priceData = {
