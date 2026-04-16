@@ -1768,17 +1768,18 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
 }
 
-.contact-card { 
-  display: flex; gap: 20px; align-items: center; 
-  justify-content: center; /* Centering card content */
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  padding: 15px 25px;
-  border-radius: 10px;
+.contact-card {
+  background: #0a0a0a;
+  border: 1px solid #1a1a1a;
+  padding: 18px 25px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center; /* VITAL FIX: Centers icon and text vertically */
+  gap: 25px;
   transition: var(--transition);
-  text-align: left; /* Keep internal text left-aligned for readability */
+  text-align: left;
+  width: 100%;
+  max-width: 500px; /* Constrain width for better centering */
 }
 
 .contact-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); }
