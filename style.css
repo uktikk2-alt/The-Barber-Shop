@@ -951,24 +951,24 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
   margin-top: 60px;
   mask-image: linear-gradient(to right, 
-    transparent 0%, 
-    rgba(0,0,0,0.1) 5%, 
-    rgba(0,0,0,0.4) 12%, 
+    rgba(0,0,0,0.3) 0%, 
+    rgba(0,0,0,0.5) 8%, 
+    rgba(0,0,0,0.85) 18%, 
     black 25%, 
     black 75%, 
-    rgba(0,0,0,0.4) 88%, 
-    rgba(0,0,0,0.1) 95%, 
-    transparent 100%
+    rgba(0,0,0,0.85) 82%, 
+    rgba(0,0,0,0.5) 92%, 
+    rgba(0,0,0,0.3) 100%
   );
   -webkit-mask-image: linear-gradient(to right, 
-    transparent 0%, 
-    rgba(0,0,0,0.1) 5%, 
-    rgba(0,0,0,0.4) 12%, 
+    rgba(0,0,0,0.3) 0%, 
+    rgba(0,0,0,0.5) 8%, 
+    rgba(0,0,0,0.85) 18%, 
     black 25%, 
     black 75%, 
-    rgba(0,0,0,0.4) 88%, 
-    rgba(0,0,0,0.1) 95%, 
-    transparent 100%
+    rgba(0,0,0,0.85) 82%, 
+    rgba(0,0,0,0.5) 92%, 
+    rgba(0,0,0,0.3) 100%
   );
 }
 
