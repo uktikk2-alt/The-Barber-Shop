@@ -308,9 +308,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (this.isDestroyed) return;
         this.scaleCanvas(firstImg);
         this.ctx.drawImage(firstImg, 0, 0, this.canvas.width, this.canvas.height);
-        
-        // Final Handover: Reveal canvas only after first frame is drawn
-        this.canvas.style.opacity = "1";
       } catch (e) { console.warn("Initial frame decode failed", e); }
 
       // Parallel batch loading with decode throttling to prevent main thread lock
@@ -723,8 +720,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Cinematic Reveal: Fade out the black shield overlay once layout has settled
   // We use requestAnimationFrame to ensure we aren't blocking a paint frame
-  // Instant Hero Reveal: Eliminate artificial loading delay
-  initHeroDeferred();
+  const dismissLoader = () => {
+    const shield = document.getElementById("load-shield");
+    if (shield) {
+      shield.classList.add("fade-out");
+      // Delayed cleanup to remove from DOM after transition
+      setTimeout(() => shield.remove(), 800);
+    }
+    initHeroDeferred();
+  };
+
+  // Immediate dismissal trigger: 
+  // We wait slightly to ensure CSS-OM is hydrated for the critical block
+  if (document.readyState === 'complete') {
+    setTimeout(dismissLoader, 100);
+  } else {
+    window.addEventListener('load', () => setTimeout(dismissLoader, 100));
+  }
 
   // 2. Magnetic Buttons
   const magneticBtns = document.querySelectorAll('.magnetic-btn');
