@@ -6,9 +6,17 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   class ContentManager {
     constructor() {
-      this.config = window.SITE_CONFIG;
-      if (!this.config) return;
-      this.init();
+      // SAFE INIT: Poll for config if not immediately ready (Sync Issue Fix)
+      const tryInit = () => {
+        this.config = window.SITE_CONFIG;
+        if (this.config) {
+          this.init();
+        } else {
+          console.warn("SITE_CONFIG not ready, polling...");
+          setTimeout(tryInit, 50);
+        }
+      };
+      tryInit();
     }
 
     init() {
@@ -411,9 +419,13 @@ document.addEventListener("DOMContentLoaded", () => {
       // Accelerated Load: Wait only for first 10 frames
       await this.loadBuffer(10);
       
-      // Reveal Canvas (Handover from CSS Background)
-      this.canvas.style.opacity = '1';
-      this.setupObserver();
+      // Delay Start: Allow UI elements to settle (Fixes mobile choppiness)
+      setTimeout(() => {
+        if (this.isDestroyed) return;
+        this.canvas.style.opacity = '1';
+        this.setupObserver();
+        this.loadRemaining(10);
+      }, 2000);
     }
 
     async loadBuffer(count) {

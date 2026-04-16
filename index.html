@@ -8,10 +8,12 @@
   <meta name="description"
     content="Scuderia Auto Detailing - Premium car detailing in Lincoln, England. Professional auto care with Italian motorsports passion. Restoring showroom glory to your pride and joy.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://widgets.leadconnectorhq.com" crossorigin>
 
-  <!-- Template Configuration -->
-  <script src="config.js"></script>
+  <!-- Template Configuration (Loaded FIRST) -->
+  <script src="config.js?v=20.0"></script>
   <script>
     // Critical Sync: Lock theme and structure before first paint
     (function() {
@@ -37,8 +39,8 @@
             if (node.nodeType === 1) {
               const s = node.tagName?.toLowerCase();
               if (s === 'chat-widget' || s === 'lc-chat-widget' || s === 'ghl-chat-widget' || node.id === 'chat-widget-container') {
-                node.style.display = 'none';
-                node.remove();
+                // Pacified: Only hide and move off-screen so AI Agent can still communicate
+                node.style.cssText = 'display: block !important; visibility: visible !important; position: fixed !important; bottom: -9999px !important; right: -9999px !important; opacity: 0 !important; pointer-events: none !important; z-index: -1 !important;';
               }
             }
           }
@@ -61,8 +63,8 @@
     /* NUCLEAR HIDE: Force GHL off-screen immediately on paint */
     lc-chat-widget, ghl-chat-widget, chat-widget, #chat-widget-container, 
     iframe[src*="leadconnector"], iframe[src*="widgets.leadconnectorhq.com"] {
-      display: none !important;
-      visibility: hidden !important;
+      display: block !important;
+      visibility: visible !important;
       opacity: 0 !important;
       position: fixed !important;
       bottom: -9999px !important;
@@ -78,7 +80,16 @@
     }
 
     .word { display: inline-block; white-space: nowrap; }
-    .char { display: inline-block; }
+    .char { display: inline-block; min-width: 0.3em; text-align: center; }
+
+    /* LAYOUT FREEZE: Reserve space for the hero title to prevent 4s pop */
+    .hero-title {
+      min-height: 2.2em; /* Reserves space for two lines on mobile */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.25em;
+    }
 
     /* Meticulous Brand Lock (Zero-Flash) */
     html {
@@ -330,25 +341,25 @@
         </p>
       </div>
 
-      <div class="services-grid collapsed" id="main-services-grid">
-        <!-- Skeleton Cards (Zero-Shift Protection) -->
-        <div class="skeleton-card">
-          <div class="skeleton-img skeleton"></div>
-          <div class="skeleton-text-lg skeleton"></div>
-          <div class="skeleton-text-md skeleton"></div>
-          <div class="skeleton-text-sm skeleton"></div>
+      <div class="services-grid" id="main-services-grid">
+        <!-- Pre-rendered for Instant Load & Zero-Shift -->
+        <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="service-card-img"><img src="assets/gallery/scuderia-p1.webp" alt="Intera Premio" loading="eager" decoding="async"></div>
+          <div class="service-card-content">
+            <span class="sc-number">01</span>
+            <h3 class="sc-title">Intera Premio</h3>
+            <p class="sc-desc">The Full Premium Package. Includes Decontamination, Sealant, and UV Protection.</p>
+            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
+          </div>
         </div>
-        <div class="skeleton-card">
-          <div class="skeleton-img skeleton"></div>
-          <div class="skeleton-text-lg skeleton"></div>
-          <div class="skeleton-text-md skeleton"></div>
-          <div class="skeleton-text-sm skeleton"></div>
-        </div>
-        <div class="skeleton-card">
-          <div class="skeleton-img skeleton"></div>
-          <div class="skeleton-text-lg skeleton"></div>
-          <div class="skeleton-text-md skeleton"></div>
-          <div class="skeleton-text-sm skeleton"></div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-card-img"><img src="assets/gallery/scuderia-p2.webp" alt="Intera Base Extra" loading="eager" decoding="async"></div>
+          <div class="service-card-content">
+            <span class="sc-number">02</span>
+            <h3 class="sc-title">Intera Base Extra</h3>
+            <p class="sc-desc">The Full Basic Extra. Includes Partial Decontamination and deep air vent detailing.</p>
+            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
+          </div>
         </div>
       </div>
       <div class="services-toggle-wrap" data-aos="fade-up">
@@ -939,12 +950,13 @@
   </footer>
 
   <!-- AOS Script -->
+  <!-- Standard Scripts -->
   <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <!-- GSAP for insane counter animations and timeline effects -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <!-- Custom Script -->
-  <script defer src="script.js?v=19.0"></script>
+  
+  <!-- Injection Engine (MUST BE AFTER DEPS) -->
+  <script defer src="script.js?v=20.5"></script>
   <!-- Booking Modal Logic -->
   <script defer src="booking-modal.js"></script>
   <!-- Third-Party Widgets: Dynamically loaded via interaction-based injector in script.js -->

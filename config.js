@@ -7,8 +7,8 @@ window.SITE_CONFIG = {
     businessName: "Scuderia Auto Detailing",
     tagline: "Preserving Prestige",
     metaDescription: "Welcome to Scuderia Auto Detailing in Lincoln, England. Premium auto care services restoring your vehicle's showroom glory with Italian motorsports passion.",
-    logoWhite: "assets/Logo/scuderia-logo-main.png", 
-    logoColor: "assets/Logo/scuderia-logo-main.png",
+    logoWhite: "assets/Logo/scuderia-logo-main.webp", 
+    logoColor: "assets/Logo/scuderia-logo-main.webp",
     colors: {
       primary: "#c81017", // Scuderia Red
       dark: "#000000",
@@ -44,28 +44,28 @@ window.SITE_CONFIG = {
       title: "Intera Premio",
       price: "From £130",
       description: "The Full Premium Package. Includes Atom Mac Brake Protector, Full Decontamination (Tar/Glue/Clay), Sealant Application, and UV Interior Protection. Perfect for supercars and vintage maintenance.",
-      image: "assets/gallery/scuderia-p1.png"
+      image: "assets/gallery/scuderia-p1.webp"
     },
     {
       id: "intera-base-extra",
       title: "Intera Base Extra",
       price: "From £110",
       description: "The Full Basic Extra. Includes Partial Decontamination, Booth/Door Seal cleaning, and deep air vent detailing. Ideal for vehicles needing restoration without full ceramic protection.",
-      image: "assets/gallery/scuderia-p2.png"
+      image: "assets/gallery/scuderia-p2.webp"
     },
     {
       id: "intera-base",
       title: "Intera Base",
       price: "From £90",
       description: "Full Basic Package. Near-showroom standard for previously valeted vehicles. Includes wheel fallout removal, pH neutral wash, and leather conditioning.",
-      image: "assets/gallery/scuderia-p3.png"
+      image: "assets/gallery/scuderia-p3.webp"
     },
     {
       id: "intera-maintenance",
       title: "Intera Maintenance",
       price: "From £55",
       description: "Fortnightly (£55+) or Monthly (£75+) upkeep. Only available to vehicles that have had a Full Premium Package within the last 4 weeks. Soft detailing brushes and pH neutral care.",
-      image: "assets/gallery/scuderia-p4.png"
+      image: "assets/gallery/scuderia-p4.webp"
     }
   ],
 
@@ -75,34 +75,34 @@ window.SITE_CONFIG = {
       title: "Fuori Exterior",
       price: "£40 - £60",
       description: "Pure Exterior Valet. Wheel fallout removal, pH neutral pre-wash, glass cleaning, and exhaust polishing. Upcharge available for ceramic sealant (+£15).",
-      image: "assets/gallery/scuderia-p5.jpg"
+      image: "assets/gallery/scuderia-p5.webp"
     },
     {
       id: "dentro",
       title: "Dentro Interior",
       price: "£60 - £80",
       description: "Pure Interior Valet. Steamer on stains, compressor deep-clean, leather conditioning. UV protectant upcharge available (+£15).",
-      image: "assets/gallery/scuderia-p6.jpg"
+      image: "assets/gallery/scuderia-p6.webp"
     },
     {
       id: "motore",
       title: "Motore Engine Bay",
       price: "£40",
       description: "Full Engine Bay Detail. Leaves/dust blown out, APC cleaning, underside of bonnet polished, and plastic trims dressed.",
-      image: "assets/gallery/scuderia-p7.jpg"
+      image: "assets/gallery/scuderia-p7.webp"
     }
   ],
 
   gallery: [
-    { image: "assets/gallery/scuderia-p1.png", category: "exterior" },
-    { image: "assets/gallery/scuderia-p2.png", category: "exterior" },
-    { image: "assets/gallery/scuderia-p3.png", category: "exterior" },
-    { image: "assets/gallery/scuderia-p4.jpg", category: "maintenance" },
-    { image: "assets/gallery/scuderia-p5.jpg", category: "exterior" },
-    { image: "assets/gallery/scuderia-p6.jpg", category: "interior" },
-    { image: "assets/gallery/scuderia-p7.jpg", category: "engine" },
-    { image: "assets/gallery/scuderia-p8.png", category: "ceramic" },
-    { image: "assets/gallery/scuderia-p9.png", category: "exterior" }
+    { image: "assets/gallery/scuderia-p1.webp", category: "exterior" },
+    { image: "assets/gallery/scuderia-p2.webp", category: "exterior" },
+    { image: "assets/gallery/scuderia-p3.webp", category: "exterior" },
+    { image: "assets/gallery/scuderia-p4.webp", category: "maintenance" },
+    { image: "assets/gallery/scuderia-p5.webp", category: "exterior" },
+    { image: "assets/gallery/scuderia-p6.webp", category: "interior" },
+    { image: "assets/gallery/scuderia-p7.webp", category: "engine" },
+    { image: "assets/gallery/scuderia-p8.webp", category: "ceramic" },
+    { image: "assets/gallery/scuderia-p9.webp", category: "exterior" }
   ],
   
   team: [
@@ -110,7 +110,7 @@ window.SITE_CONFIG = {
       name: "Michel",
       role: "OWNER & LEAD DETAILER",
       phone: "+44 7308742727",
-      image: "assets/gallery/Michel.png"
+      image: "assets/gallery/Michel.webp"
     }
   ],
 
