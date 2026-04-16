@@ -1304,11 +1304,18 @@ h1, h2, h3, h4, h5, h6 {
   position: relative; 
   overflow: hidden; 
   background: #000; 
-  min-height: 75vh; /* Cinematic Crop: Reduced from 100vh to tighten the gap */
+  min-height: 100vh; /* Restore Full Cinematic Resolution for Desktop */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 120px 0;
+}
+
+/* Strictly preserve mobile parameters as requested */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 75vh !important;
+  }
 }
 
 /* Master Overlay System */
@@ -1323,8 +1330,18 @@ h1, h2, h3, h4, h5, h6 {
 .hero-overlay {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.35) !important; /* Increased brightness by 5% */
+  background: rgba(0, 0, 0, 0.35) !important; /* Base mobile opacity */
   z-index: 1;
+}
+
+/* Intensify shadows only on Desktop for better cinematic depth */
+@media (min-width: 769px) {
+  .hero-overlay {
+    background: rgba(0, 0, 0, 0.65) !important; /* Darker for Desktop */
+  }
+  .hero::before {
+    background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.6));
+  }
 }
 
 .hero-content { 

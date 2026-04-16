@@ -197,13 +197,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const ctx = heroCanvas.getContext("2d", { alpha: false });
         const isMobile = window.innerWidth <= 768;
-        const sequenceFolder = isMobile ? 'hero-mobile-seq' : 'hero-seq';
         
-        const frameCount = 123;
-        const currentFrame = index => `assets/${sequenceFolder}/frame_${index.toString().padStart(3, '0')}_delay-0.041s.webp`;
+        // Dynamic Sequence Settings
+        const seq = isMobile ? {
+            folder: 'hero-mobile-seq',
+            frameCount: 123,
+            fileExt: 'webp',
+            suffix: 'delay-0.041s',
+            durationMs: 5043 // 123 * 41ms
+        } : {
+            folder: 'hero-desktop-seq',
+            frameCount: 215,
+            fileExt: 'jpg',
+            suffix: 'delay-0.033s',
+            durationMs: 7095 // 215 * 33ms
+        };
+
+        const currentFrame = index => `assets/${seq.folder}/frame_${index.toString().padStart(3, '0')}_${seq.suffix}.${seq.fileExt}`;
         const images = [];
         
-        for (let i = 0; i < frameCount; i++) {
+        for (let i = 0; i < seq.frameCount; i++) {
             const img = new Image();
             img.src = currentFrame(i);
             if (i === 0) {
@@ -221,8 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let isPlaying = true;
         let animationId = null;
         
-        const durationMs = 5000; // 5 seconds perfectly
-        const frameInterval = durationMs / frameCount;
+        const frameInterval = seq.durationMs / seq.frameCount;
         
         const animateHeroSeq = (currentTime) => {
             if (!isPlaying) return;
@@ -244,10 +256,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                     lastTime = currentTime - (delta % frameInterval);
                     
-                    if (frameIndex < frameCount - 1) {
+                    if (frameIndex < seq.frameCount - 1) {
                         frameIndex++;
+                    } else if (!isMobile) {
+                        // DESKTOP: Loop continuously
+                        frameIndex = 0;
                     } else {
-                        // Freeze on last frame
+                        // MOBILE: Freeze on last frame
                         isPlaying = false;
                         if (animationId) cancelAnimationFrame(animationId);
                     }
