@@ -151,26 +151,53 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: var(--header-margin-md);
 }
 
-/* Hero Reviews Widget Style */
-.hero-reviews-badge {
+/* Reusable Glass Reviews Badge Component */
+.glass-reviews-badge {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   padding: 6px 16px 6px 8px;
   border-radius: 50px;
-  background: rgba(255, 255, 255, 0.08); /* Transparent glass to match other badges */
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   font-family: var(--font-heading);
-  font-size: 11px; /* Slightly smaller for hierarchy */
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 1px;
   color: var(--white);
-  margin-top: -15px; /* Pulling up slightly to group with the title */
-  margin-bottom: 30px; /* Space before the description */
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.glass-reviews-badge:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* Hero-specific positioning */
+.hero-reviews-badge {
+  margin-top: -15px;
+  margin-bottom: 30px;
   position: relative;
-  top: 133px; /* Moved down by another 8px to 133px */
+  top: 133px;
+}
+
+/* Testimonials-specific positioning & Sizing */
+.testimonial-google-badge {
+  margin: 60px auto 0; /* Space below the ticker */
+  display: flex;
+  width: fit-content;
+  padding: 10px 24px 10px 12px;
+  font-size: 13px; /* Slightly larger for emphasis */
+  gap: 16px;
+}
+
+.testimonial-google-badge .avatar-stack img {
+  width: 30px;
+  height: 30px;
 }
 
 .avatar-stack {
