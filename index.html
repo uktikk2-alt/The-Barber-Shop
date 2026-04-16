@@ -8,6 +8,13 @@
   <meta name="description"
     content="Warner & Spencer Auto Detailing - Professional car detailing with fast booking, instant responses, and zero hassle. Serving Bluff Dale, Texas and surrounding areas.">
 
+  <!-- Preconnects to Critical CDNs -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://widgets.leadconnectorhq.com" crossorigin>
+
   <!-- Instant First Frame Preload (MatchMedia) -->
   <link rel="preload" as="image" href="assets/hero-desktop-seq/frame_000_delay-0.033s.webp" media="(min-width: 769px)">
   <link rel="preload" as="image" href="assets/hero-mobile-seq/frame_000_delay-0.041s.webp" media="(max-width: 768px)">
@@ -49,18 +56,14 @@
     }
   </style>
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Oswald:wght@400;500;600;700&display=swap"
-    rel="stylesheet">
+  <!-- Fonts (Async) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Oswald:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Icons (Async) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
 
-  <!-- AOS Animation CSS -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- AOS Animation CSS (Async) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" media="print" onload="this.media='all'">
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css?v=19.0">
@@ -70,8 +73,7 @@
   <link rel="stylesheet" href="ai-agent.css">
 
 
-  <!-- LCP Optimization: Preload first frame of the canvas hero sequence -->
-  <link rel="preload" as="image" href="assets/hero-seq/frame_000_delay-0.041s.webp" fetchpriority="high">
+  <!-- LCP Optimization: Correct preloads already handled above with MatchMedia for zero-shift -->
 </head>
 
 <body id="home">
@@ -971,16 +973,16 @@
   <script defer src="script.js?v=19.0"></script>
   <!-- Booking Modal Logic -->
   <script defer src="booking-modal.js"></script>
-  <!-- GoHighLevel Voice AI Widget -->
+  <!-- Third-Party Widgets: Deferred to interaction-based loader in script.js for FCP 90+ Score -->
+  <!-- 
   <script defer src="https://widgets.leadconnectorhq.com/loader.js" 
           data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
           data-widget-id="69de59fb2676eaf85eb99f86"
           data-hide-launcher="true">
   </script>
-  <!-- AI Agent Knowledge Base -->
   <script defer src="knowledge-base.js"></script>
-  <!-- AI Agent -->
   <script defer src="ai-agent.js"></script>
+  -->
 </body>
 
 

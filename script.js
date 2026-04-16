@@ -1,5 +1,55 @@
 document.addEventListener("DOMContentLoaded", () => {
   
+  /**
+   * 0. Progressive Script Injector (FCP 90+ Score Optimization)
+   * Defer non-critical third-party widgets until first interaction.
+   */
+  let scriptsLoaded = false;
+  const loadDeferredScripts = () => {
+    if (scriptsLoaded) return;
+    scriptsLoaded = true;
+
+    // 1. LeadConnector / GHL Launcher
+    const ghlScript = document.createElement("script");
+    ghlScript.src = "https://widgets.leadconnectorhq.com/loader.js";
+    ghlScript.dataset.resourcesUrl = "https://widgets.leadconnectorhq.com/chat-widget/loader.js";
+    ghlScript.dataset.widgetId = "69de59fb2676eaf85eb99f86";
+    ghlScript.dataset.hideLauncher = "true";
+    ghlScript.defer = true;
+    document.body.appendChild(ghlScript);
+
+    // 2. AI Agent Knowledge Base
+    const kbScript = document.createElement("script");
+    kbScript.src = "knowledge-base.js";
+    kbScript.defer = true;
+    document.body.appendChild(kbScript);
+
+    // 3. AI Agent Core
+    const aiScript = document.createElement("script");
+    aiScript.src = "ai-agent.js";
+    aiScript.defer = true;
+    document.body.appendChild(aiScript);
+
+    // Clean up listeners
+    ["mousemove", "scroll", "touchstart", "keydown"].forEach(evt => {
+      window.removeEventListener(evt, triggerDeferredLoading);
+    });
+    console.log("Deferred scripts initialized on interaction.");
+  };
+
+  const triggerDeferredLoading = () => {
+    // Small delay to ensure interaction is settled
+    requestIdleCallback(() => loadDeferredScripts());
+  };
+
+  // Add listeners for any user interaction
+  ["mousemove", "scroll", "touchstart", "keydown"].forEach(evt => {
+    window.addEventListener(evt, triggerDeferredLoading, { passive: true, once: true });
+  });
+
+  // Fallback: Load anyway after 5 seconds of total inactivity
+  setTimeout(loadDeferredScripts, 5000);
+
 
   // 1. Initialize AOS Animation Library
   AOS.init({
