@@ -4,25 +4,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Warner & Spencer - Premium Car Detailing Service</title>
+  <title>Scuderia Auto Detailing - Premium Car Detailing Service in Lincoln</title>
   <meta name="description"
-    content="Warner & Spencer Auto Detailing - Professional car detailing with fast booking, instant responses, and zero hassle. Serving Bluff Dale, Texas and surrounding areas.">
+    content="Scuderia Auto Detailing - Premium car detailing in Lincoln, England. Professional auto care with Italian motorsports passion. Restoring showroom glory to your pride and joy.">
 
-  <!-- Preconnects to Critical CDNs -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://widgets.leadconnectorhq.com" crossorigin>
+
+  <!-- Template Configuration -->
+  <script src="config.js"></script>
+  <script>
+    // Critical Sync: Lock theme and structure before first paint
+    (function() {
+      const config = window.SITE_CONFIG;
+      if (config && config.branding && config.branding.colors) {
+        const root = document.documentElement;
+        root.style.setProperty('--primary', config.branding.colors.primary);
+        root.style.setProperty('--dark', config.branding.colors.dark);
+      }
+    })();
+  </script>
 
   <!-- Instant First Frame Preload (MatchMedia) -->
   <link rel="preload" as="image" href="assets/hero-desktop-seq/frame_000_delay-0.033s.webp" media="(min-width: 769px)" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/hero-mobile-seq/frame_000_delay-0.041s.webp" media="(max-width: 768px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/hero-mobile-seq/frame_000_delay-0.033s.jpg" media="(max-width: 768px)" fetchpriority="high">
 
   <!-- Critical Rendering Path (Inlined for 90+ FCP) -->
   <style>
     :root {
-      --primary: #D0FF3A;
+      --primary: #c81017;
       --dark: #000000;
       --white: #ffffff;
       --font-heading: 'Oswald', sans-serif;
@@ -40,6 +49,10 @@
       font-family: var(--font-body);
       color: #fff;
       -webkit-font-smoothing: antialiased;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
     /* Critical Hero Layout (Fixed CLS & Paint) */
@@ -61,7 +74,7 @@
     @media (max-width: 768px) {
       .hero {
         min-height: 75vh !important;
-        background-image: url('assets/hero-mobile-seq/frame_000_delay-0.041s.webp');
+        background-image: url('assets/hero-mobile-seq/frame_000_delay-0.033s.jpg');
       }
     }
 
@@ -140,32 +153,6 @@
 
     .bg-dark { background-color: #000 !important; }
     
-    /* Cinematic Shield (Load Guard) */
-    #load-shield {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background-color: #000;
-      z-index: 999999;
-      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
-      pointer-events: none;
-    }
-    #load-shield.fade-out {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    /* Stealth Guard for GHL Widgets (Prevents layout shifts if initialized) */
-    chat-widget, lc-chat-widget, ghl-chat-widget, #chat-widget-container, 
-    iframe[src*="leadconnector"], iframe[src*="widgets.leadconnectorhq.com"] {
-      display: block !important;
-      opacity: 0 !important;
-      visibility: visible !important;
-      position: fixed !important;
-      bottom: -9999px !important;
-      left: -9999px !important;
-      pointer-events: none !important;
-    }
-
     /* Hero Canvas Positioning */
     #hero-canvas {
       position: absolute;
@@ -173,17 +160,19 @@
       width: 100%; height: 100%;
       object-fit: cover;
       z-index: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
   </style>
 
   <!-- Google Fonts (Async) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Oswald:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 
-  <!-- External Styles (Async - FCP Fix) -->
+  <!-- External Styles (Standard Loading to Kill FOUC) -->
+  <link rel="stylesheet" href="style.css?v=20.2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'">
   
-  <link rel="stylesheet" href="style.css?v=20.0" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="booking-modal.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="ai-agent.css" media="print" onload="this.media='all'">
 
@@ -191,17 +180,16 @@
   <!-- LCP Optimization: Correct preloads already handled above with MatchMedia for zero-shift -->
 </head>
 
-<body id="home">
-  <!-- Cinematic Loader Shield -->
-  <div id="load-shield"></div>
+<body id="home" class="template-active">
+  <!-- Loader Annihilated (FCP/LCP Fix) -->
 
   <!-- TOP HEADER -->
   <header class="header">
     <div class="container header-container">
       <!-- Logo -->
       <a href="#home" class="logo">
-        <img src="assets/Logo/white.webp" class="logo-img logo-white" alt="Clipper Auto Detail" height="60">
-        <img src="assets/Logo/Lime%20Green.webp" class="logo-img logo-color" alt="Clipper Auto Detail" height="60">
+        <img src="assets/Logo/scuderia-logo-main.png" class="logo-img logo-white js-config-logo-white" alt="Company Logo" height="60">
+        <img src="assets/Logo/scuderia-logo-main.png" class="logo-img logo-color js-config-logo-color" alt="Company Logo" height="60">
       </a>
 
       <!-- Mobile Toggle -->
@@ -221,7 +209,7 @@
       <div class="header-right">
         <div class="contact-info">
           <i class="fa-solid fa-phone"></i>
-          <span>+1 333 333 3333</span>
+          <span class="js-config-phone">+1 333 333 3333</span>
         </div>
         <a href="#booking-section" class="btn btn-outline">BOOK NOW</a>
       </div>
@@ -233,11 +221,17 @@
     <canvas id="hero-canvas"></canvas>
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <div class="section-badge" data-aos="fade-down">PROFESSIONAL CAR DETAILING</div>
-      <h1 class="hero-title">
-        <span class="word"><span class="char" style="--i:1">M</span><span class="char" style="--i:2">A</span><span class="char" style="--i:3">K</span><span class="char" style="--i:4">E</span></span>
-        <span class="word"><span class="char" style="--i:5">T</span><span class="char" style="--i:6">H</span><span class="char" style="--i:7">E</span><span class="char" style="--i:8">M</span></span>
-        <span class="highlight word"><span class="char" style="--i:9">S</span><span class="char" style="--i:10">T</span><span class="char" style="--i:11">A</span><span class="char" style="--i:12">R</span><span class="char" style="--i:13">E</span><span class="char" style="--i:14">.</span></span>
+      <div class="section-badge js-config-hero-badge" data-aos="fade-down">ITALIAN ESSENCE</div>
+      <h1 class="hero-title js-config-hero-title">
+        <span class="word">
+          <span class="char" style="--i:1">P</span><span class="char" style="--i:2">R</span><span class="char" style="--i:3">E</span><span class="char" style="--i:4">S</span><span class="char" style="--i:5">E</span><span class="char" style="--i:6">R</span><span class="char" style="--i:7">V</span><span class="char" style="--i:8">I</span><span class="char" style="--i:9">N</span><span class="char" style="--i:10">G</span>
+        </span>
+        <span class="word">
+          <span class="char" style="--i:11">Y</span><span class="char" style="--i:12">O</span><span class="char" style="--i:13">U</span><span class="char" style="--i:14">R</span>
+        </span>
+        <span class="word highlight">
+          <span class="char" style="--i:15">P</span><span class="char" style="--i:16">R</span><span class="char" style="--i:17">E</span><span class="char" style="--i:18">S</span><span class="char" style="--i:19">T</span><span class="char" style="--i:20">I</span><span class="char" style="--i:21">G</span><span class="char" style="--i:22">E</span><span class="char" style="--i:23">.</span>
+        </span>
       </h1>
       <a href="https://maps.google.com" target="_blank" class="glass-reviews-badge hero-reviews-badge" data-aos="fade-up" data-aos-delay="200">
         <div class="avatar-stack">
@@ -247,7 +241,7 @@
         </div>
         <span class="reviews-text">RATED 4.9 <i class="fa-solid fa-star" style="color: #ffcc00; margin: 0 2px;"></i> ON GOOGLE</span>
       </a>
-      <p class="hero-desc">Your car deserves better. Book in 60 seconds.</p>
+      <p class="hero-desc js-config-hero-subtitle">Your car deserves better. Book in 60 seconds.</p>
       <div class="hero-btns">
         <a href="#booking-section" class="btn btn-primary magnetic-btn">BOOK YOUR DETAIL NOW</a>
         <a href="#estimator" class="hero-text-link">↓ See Pricing ↓</a>
@@ -286,83 +280,33 @@
   <section id="services" class="services section-padding bg-dark text-white">
     <div class="container">
       <div class="text-center section-header">
-        <div class="section-badge" data-aos="fade-down">DETAILING SERVICES</div>
+        <div class="section-badge js-config-services-badge" data-aos="fade-down">DETAILING SERVICES</div>
         <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Professional <span class="accent-line">Car Care</span></span></span></h2>
-        <p class="section-desc text-light mx-auto" style="max-width: 650px;" data-aos="fade-up" data-aos-delay="100">
+        <p class="section-desc text-light mx-auto js-config-services-desc" style="max-width: 650px;" data-aos="fade-up" data-aos-delay="100">
           Our expert detailers specialize in paint correction, interior restoration, and ceramic protection for all
           vehicle types.
         </p>
       </div>
 
       <div class="services-grid collapsed" id="main-services-grid">
-        <!-- Item 1 -->
-        <div class="service-card" data-aos="fade-up">
-          <div class="service-card-img">
-            <img src="assets/Detailing%20Services/Super-Shine-Package-730x411.webp" alt="Exterior Wash & Shine" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">01</span>
-            <h3 class="sc-title">Exterior Wash & Shine</h3>
-            <p class="sc-desc">Thorough hand wash and drying followed by a high-grade wax application to protect your
-              paint and provide a deep, mirror-like gloss.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
+        <!-- Skeleton Cards (Zero-Shift Protection) -->
+        <div class="skeleton-card">
+          <div class="skeleton-img skeleton"></div>
+          <div class="skeleton-text-lg skeleton"></div>
+          <div class="skeleton-text-md skeleton"></div>
+          <div class="skeleton-text-sm skeleton"></div>
         </div>
-
-        <!-- Item 2 -->
-        <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="service-card-img">
-            <img src="assets/Detailing%20Services/Interior-Deluxe-730x411.webp" alt="Interior Deluxe" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">02</span>
-            <h3 class="sc-title">Interior Deluxe</h3>
-            <p class="sc-desc">Comprehensive cabin cleaning including vacuuming, steam sanitization of all surfaces, and
-              leather conditioning for a fresh, new-car feel.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
+        <div class="skeleton-card">
+          <div class="skeleton-img skeleton"></div>
+          <div class="skeleton-text-lg skeleton"></div>
+          <div class="skeleton-text-md skeleton"></div>
+          <div class="skeleton-text-sm skeleton"></div>
         </div>
-
-        <!-- Item 3 -->
-        <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="service-card-img">
-            <img src="assets/Detailing%20Services/Ultimate-Package-730x411.webp" alt="Full Detail Package" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">03</span>
-            <h3 class="sc-title">Full Detail Package</h3>
-            <p class="sc-desc">The ultimate treatment combining exterior correction and interior restoration to bring
-              your entire vehicle back to showroom condition.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
-
-        <!-- Item 4 -->
-        <div class="service-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="service-card-img">
-            <img src="assets/Detailing%20Services/Ceramic-Coating-Service-730x411.webp" alt="Ceramic Coating" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">04</span>
-            <h3 class="sc-title">Ceramic Coating</h3>
-            <p class="sc-desc">Long-term paint protection with a hydrophobic ceramic layer that repels dirt, water, and
-              contaminants for years of effortless maintenance.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
-
-        <!-- Item 5 -->
-        <div class="service-card" data-aos="fade-up" data-aos-delay="400">
-          <div class="service-card-img">
-            <img src="assets/Detailing%20Services/Showroom-Car-730x411.webp" alt="Showroom Maintenance" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">05</span>
-            <h3 class="sc-title">Showroom Maintenance</h3>
-            <p class="sc-desc">Regular scheduled detailing designed to preserve your vehicle's pristine condition and
-              maintain its long-term resale value.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
+        <div class="skeleton-card">
+          <div class="skeleton-img skeleton"></div>
+          <div class="skeleton-text-lg skeleton"></div>
+          <div class="skeleton-text-md skeleton"></div>
+          <div class="skeleton-text-sm skeleton"></div>
         </div>
       </div>
       <div class="services-toggle-wrap" data-aos="fade-up">
@@ -385,89 +329,7 @@
       </div>
 
       <div class="services-grid collapsed" id="extra-services-grid">
-        <!-- Item 1 -->
-        <div class="service-card" data-aos="fade-up">
-          <div class="service-card-img">
-            <img src="assets/Extra%20Services/Headlight-Restoration-840x473.webp" alt="Headlight Restoration" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">01</span>
-            <h3 class="sc-title">Headlight Restoration</h3>
-            <p class="sc-desc">Crystal clear restoration of oxidized, yellowed headlights to improve night-time
-              visibility and dramatically enhance your car's front-end appeal.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
-
-        <!-- Item 2 (FEATURED) -->
-        <div class="service-card featured" data-aos="fade-up" data-aos-delay="100">
-          <div class="service-card-img">
-            <img src="assets/Extra%20Services/Engine-Cleaning-840x473.webp" alt="Engine Bay Detailing" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">02</span>
-            <h3 class="sc-title">Engine Bay Detailing</h3>
-            <p class="sc-desc">Meticulous cleaning and dressing of the engine compartment to remove grease and grime,
-              leaving it looking brand new and easier to maintain.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
-
-        <!-- Item 3 -->
-        <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="service-card-img">
-            <img src="assets/Extra%20Services/Steam-Cleaning-840x473.webp" alt="Steam Cleaning" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">03</span>
-            <h3 class="sc-title">Steam Cleaning</h3>
-            <p class="sc-desc">Deep sanitization using high-temperature steam to eliminate bacteria, odors, and stubborn
-              stains from upholstery and hard-to-reach crevices.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
-
-        <!-- Item 4 -->
-        <div class="service-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="service-card-img">
-            <img src="assets/Extra%20Services/Ozone-Treatment-840x473.webp" alt="Odor Removal" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">04</span>
-            <h3 class="sc-title">Odor Removal</h3>
-            <p class="sc-desc">Advanced ozone treatment and deep cleaning techniques to permanently neutralize tough
-              smells like smoke, pets, or food from the interior.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
-
-        <!-- Item 5 -->
-        <div class="service-card" data-aos="fade-up" data-aos-delay="400">
-          <div class="service-card-img">
-            <img src="assets/Extra%20Services/Pest-Control-840x473.webp" alt="Trim Restoration" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">05</span>
-            <h3 class="sc-title">Trim Restoration</h3>
-            <p class="sc-desc">Specialized restoration of faded plastic and rubber trim to its original dark luster,
-              providing a sharp contrast and finishing touch to your vehicle.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
-
-        <!-- Item 6 -->
-        <div class="service-card" data-aos="fade-up" data-aos-delay="500">
-          <div class="service-card-img">
-            <img src="assets/Extra%20Services/Pet-Hair-Removal-840x473.webp" alt="Pet Hair Removal" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">06</span>
-            <h3 class="sc-title">Pet Hair Removal</h3>
-            <p class="sc-desc">Dedicated labor-intensive removal of embedded pet hair from carpets and seats using
-              specialized tools to restore a clean, allergen-free interior.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
+        <!-- Dynamic Extra Services Injected Here -->
       </div>
       <div class="services-toggle-wrap" data-aos="fade-up">
         <button class="btn btn-outline btn-toggle-services" data-target="extra-services-grid">
@@ -491,34 +353,7 @@
 
       <div class="gallery-track-wrapper bg-black">
         <div class="gallery-grid" id="gallery-container">
-          <!-- Using data-category for filtering tabs functionality -->
-          <div class="gallery-item" data-category="exterior">
-            <img src="assets/gallery/car-wash-detailing-station.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
-          </div>
-          <div class="gallery-item" data-category="interior">
-            <img src="assets/gallery/pexels-tima-miroshnichenko-6873176.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
-          </div>
-          <div class="gallery-item" data-category="ceramic">
-            <img src="assets/gallery/man-wrapping-car-inside-full-shot.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
-          </div>
-          <div class="gallery-item" data-category="interior">
-            <img src="assets/gallery/pexels-bylukemiller-14231701.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
-          </div>
-          <div class="gallery-item" data-category="exterior">
-            <img src="assets/gallery/a-person-in-yellow-gloves-is-painting-the-front-of-a-blue-car-free-photo.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
-          </div>
-          <div class="gallery-item" data-category="exterior">
-            <img src="assets/gallery/car-wash-detailing-station (1).webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
-          </div>
-          <div class="gallery-item" data-category="exterior">
-            <img src="assets/gallery/pexels-wavyvisuals-377312923-20051461.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
-          </div>
-          <div class="gallery-item" data-category="exterior">
-            <img src="assets/gallery/pexels-wavyvisuals-377312923-20051462.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
-          </div>
-          <div class="gallery-item" data-category="exterior">
-            <img src="assets/gallery/pexels-bulat843-1243575272-29504457.webp" loading="lazy" alt="Detailing Gallery" decoding="async" class="gallery-image">
-          </div>
+          <!-- Dynamic Gallery Injected Here -->
         </div>
         <p class="gallery-scroll-msg mt-4" data-aos="fade-up">&larr; SCROLL TO EXPLORE &rarr;</p>
       </div>
@@ -548,23 +383,23 @@
             <div class="choices-list" id="service-choices">
               <div class="choice-item active" data-service="deep-clean">
                 <span>Deep Clean</span>
-                <span class="choice-price">From $120</span>
+                <span class="choice-price">From £120</span>
               </div>
               <div class="choice-item" data-service="signature-deep-clean">
                 <span>Signature Deep Clean</span>
-                <span class="choice-price">From $175</span>
+                <span class="choice-price">From £175</span>
               </div>
               <div class="choice-item" data-service="enhancement-polish">
                 <span>Enhancement Polish</span>
-                <span class="choice-price">From $180</span>
+                <span class="choice-price">From £180</span>
               </div>
               <div class="choice-item" data-service="paint-correction">
                 <span>Paint Correction</span>
-                <span class="choice-price">From $300</span>
+                <span class="choice-price">From £300</span>
               </div>
               <div class="choice-item" data-service="ceramic-coating">
                 <span>Ceramic Coating</span>
-                <span class="choice-price">From $250</span>
+                <span class="choice-price">From £250</span>
               </div>
             </div>
           </div>
@@ -607,15 +442,15 @@
         <!-- Price Dashboard -->
         <div class="price-dashboard">
           <div class="price-header">GUIDE PRICE</div>
-          <div class="price-value" id="total-price">$120</div>
+          <div class="price-value" id="total-price">£120</div>
           <div class="price-meta" id="price-summary">Deep Clean - Small vehicle</div>
           <p class="price-notice">
             Guide price only based on our standard process. Heavily defected paintwork or
             excessive pet hair will be quoted higher after inspection.
           </p>
           <div class="estimator-btns">
-            <a href="#booking-section" class="btn btn-lime">GET AN EXACT QUOTE</a>
-            <a href="tel:3333333333" class="btn btn-dark-outline"><i class="fa-solid fa-phone"></i> +1 333 333 3333</a>
+            <a href="#contact" class="btn btn-lime">GET AN EXACT QUOTE</a>
+            <a href="tel:+447308742727" class="btn btn-dark-outline js-config-phone-link"><i class="fa-solid fa-phone"></i> <span class="js-config-phone">+44 7308 742727</span></a>
           </div>
         </div>
       </div>
@@ -634,37 +469,7 @@
       </div>
 
       <div class="team-grid">
-        <!-- Team Member 1 -->
-        <div class="team-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="team-card-img-wrap">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face" 
-                 alt="James Warner" loading="lazy" decoding="async">
-            <div class="team-phone-badge">
-              <i class="fa-solid fa-phone"></i>
-              <span>+1 333 333 3333</span>
-            </div>
-          </div>
-          <div class="team-card-info">
-            <h3 class="team-name">James</h3>
-            <span class="team-role">CO-OWNER</span>
-          </div>
-        </div>
-
-        <!-- Team Member 2 -->
-        <div class="team-card" data-aos="fade-up" data-aos-delay="220">
-          <div class="team-card-img-wrap">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&crop=face" 
-                 alt="Spencer" loading="lazy" decoding="async">
-            <div class="team-phone-badge">
-              <i class="fa-solid fa-phone"></i>
-              <span>+1 333 333 3333</span>
-            </div>
-          </div>
-          <div class="team-card-info">
-            <h3 class="team-name">Spencer</h3>
-            <span class="team-role">CO-OWNER</span>
-          </div>
-        </div>
+        <!-- Team members injected from config.js -->
       </div>
     </div>
   </section>
@@ -930,7 +735,7 @@
     <!-- Symmetrical 'See More' Badge Footer -->
     <div class="container text-center">
       <div class="reviews-footer" data-aos="fade-up" data-aos-delay="300">
-        <a href="https://maps.google.com" target="_blank" class="glass-reviews-badge testimonial-google-badge">
+        <a href="https://maps.google.com" target="_blank" class="glass-reviews-badge testimonial-google-badge js-config-maps-link">
           <div class="avatar-stack">
             <img src="https://i.pravatar.cc/100?u=10" alt="Client">
             <img src="https://i.pravatar.cc/100?u=11" alt="Client">
@@ -960,28 +765,28 @@
               <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
               <div class="c-text">
                 <span>PHONE</span>
-                <a href="tel:3333333333">+1 333 333 3333</a>
+                <a href="tel:3333333333" class="js-config-phone-link js-config-phone">+1 333 333 3333</a>
               </div>
             </div>
             <div class="contact-card">
               <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
               <div class="c-text">
                 <span>EMAIL</span>
-                <a href="mailto:info@warnerandspencer.com">info@warnerandspencer.com</a>
+                <a href="mailto:info@warnerandspencer.com" class="js-config-email-link js-config-email">info@warnerandspencer.com</a>
               </div>
             </div>
             <div class="contact-card">
               <div class="c-icon"><i class="fa-solid fa-brands fa-whatsapp"></i></div>
               <div class="c-text">
                 <span>WHATSAPP</span>
-                <a href="https://wa.me/13333333333" target="_blank">Message us on WhatsApp</a>
+                <a href="https://wa.me/13333333333" target="_blank" class="js-config-whatsapp-link">Message us on WhatsApp</a>
               </div>
             </div>
             <div class="contact-card">
               <div class="c-icon"><i class="fa-solid fa-location-dot"></i></div>
               <div class="c-text">
                 <span>SERVICE AREA</span>
-                <p>Bluff Dale, Stephenville & Granbury, TX</p>
+                <p class="js-config-location">Bluff Dale, Stephenville & Granbury, TX</p>
               </div>
             </div>
           </div>
@@ -1048,8 +853,8 @@
 
       <!-- Brand -->
       <div class="footer-brand">
-        <img src="assets/Logo/white.webp" class="footer-logo" alt="Warner &amp; Spencer Auto Detailing">
-        <p class="footer-brand-desc">Providing premium car detailing with fast booking and high-quality results. Professional care for your vehicle.</p>
+        <img src="assets/Logo/white.webp" class="footer-logo js-config-logo-white" alt="Company Logo">
+        <p class="footer-brand-desc js-config-footer-desc">Providing premium car detailing with fast booking and high-quality results. Professional care for your vehicle.</p>
       </div>
 
       <!-- Quick Links + Head Office wrapped for 2-col on mobile -->
@@ -1066,16 +871,16 @@
         </div>
         <div class="footer-col">
           <h4 class="footer-heading">HEAD OFFICE</h4>
-          <p class="footer-address">Bluff Dale, Texas<br>United States</p>
-          <p class="footer-address"><a href="tel:3333333333">+1 333 333 3333</a></p>
-          <p class="footer-address"><a href="mailto:info@warnerandspencer.com">info@warnerandspencer.com</a></p>
+          <p class="footer-address js-config-location">Lincoln, England<br>(15-Mile Mobile Range)</p>
+          <p class="footer-address"><a href="tel:+447308742727" class="js-config-phone-link js-config-phone">+44 7308 742727</a></p>
+          <p class="footer-address"><a href="mailto:info@warnerandspencer.com" class="js-config-email-link js-config-email">info@warnerandspencer.com</a></p>
         </div>
       </div>
 
 
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 Warner &amp; Spencer Auto Detailing. All Rights Reserved.</p>
+      <p>&copy; <span class="js-config-year">2026</span> <span class="js-config-business-name">Warner & Spencer</span> Auto Detailing. All Rights Reserved.</p>
     </div>
   </footer>
 
@@ -1088,16 +893,7 @@
   <script defer src="script.js?v=19.0"></script>
   <!-- Booking Modal Logic -->
   <script defer src="booking-modal.js"></script>
-  <!-- Third-Party Widgets: Deferred to interaction-based loader in script.js for FCP 90+ Score -->
-  <!-- 
-  <script defer src="https://widgets.leadconnectorhq.com/loader.js" 
-          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
-          data-widget-id="69de59fb2676eaf85eb99f86"
-          data-hide-launcher="true">
-  </script>
-  <script defer src="knowledge-base.js"></script>
-  <script defer src="ai-agent.js"></script>
-  -->
+  <!-- Third-Party Widgets: Dynamically loaded via interaction-based injector in script.js -->
 </body>
 
 

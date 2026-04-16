@@ -4,10 +4,10 @@
 */
 
 :root {
-    --agent-primary: #D0FF3A;
+    --agent-primary: #c81017;
     --agent-dark: #000000;
     --agent-glass: rgba(10, 10, 10, 0.95);
-    --agent-border: rgba(208, 255, 58, 0.2);
+    --agent-border: rgba(200, 16, 23, 0.2);
     --agent-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     --agent-red: #ff3a3a;
 }
@@ -68,7 +68,7 @@
 }
 
 .ai-fab:hover i {
-    color: var(--agent-dark);
+    color: #ffffff;
 }
 
 /* Options Switcher */
@@ -109,13 +109,13 @@
 
 .ai-option:hover {
     background: var(--agent-primary);
-    color: var(--agent-dark);
+    color: #ffffff;
     border-color: var(--agent-primary);
     transform: translateX(-10px);
 }
 
 .ai-option i { color: var(--agent-primary); transition: inherit; }
-.ai-option:hover i { color: var(--agent-dark); }
+.ai-option:hover i { color: #ffffff; }
 
 /* Chat Window */
 .ai-chat-window {
@@ -168,7 +168,7 @@
     align-items: center;
     justify-content: center;
     font-weight: 900;
-    color: var(--agent-dark);
+    color: #ffffff;
     font-size: 18px;
 }
 
@@ -206,7 +206,7 @@
 
 .ai-msg.user {
     background: var(--agent-primary);
-    color: var(--agent-dark);
+    color: #ffffff;
     align-self: flex-end;
     border-bottom-right-radius: 4px;
     font-weight: 500;
@@ -244,11 +244,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--agent-dark);
+    color: #ffffff;
     transition: 0.3s;
 }
 
-.ai-send-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(208, 255, 58, 0.3); }
+.ai-send-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(200, 16, 23, 0.3); }
 
 /* Call Overlay - UPGRADED UI */
 .ai-voice-overlay {
@@ -358,9 +358,9 @@
     align-items: center;
     justify-content: center;
     font-size: 40px;
-    color: var(--agent-dark);
+    color: #ffffff;
     z-index: 5;
-    box-shadow: 0 0 80px rgba(208, 255, 58, 0.4);
+    box-shadow: 0 0 80px rgba(200, 16, 23, 0.4);
 }
 
 .ai-call-controls {
@@ -389,7 +389,7 @@
 
 .ai-btn-mute.muted {
     background: white;
-    color: var(--agent-dark);
+    color: #c81017;
 }
 
 .ai-btn-hangup {

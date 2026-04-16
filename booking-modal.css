@@ -3,7 +3,7 @@
 :root {
     --modal-bg: rgba(10, 10, 10, 0.95);
     --modal-card-bg: rgba(20, 20, 20, 0.8);
-    --accent: #ccff00;
+    --accent: #c81017;
     --text-main: #ffffff;
     --text-dim: rgba(255, 255, 255, 0.6);
     --glass-border: rgba(255, 255, 255, 0.1);
@@ -161,7 +161,7 @@
 
 .service-select-card:hover {
     border-color: var(--accent);
-    background: rgba(204, 255, 0, 0.05);
+    background: rgba(200, 16, 23, 0.05);
 }
 
 .service-select-card.selected {
@@ -171,7 +171,7 @@
 
 .service-select-card.selected h4,
 .service-select-card.selected span {
-    color: #000000 !important; /* Force black when selected for contrast */
+    color: #ffffff !important; /* White on red for premium contrast */
     font-weight: 700;
 }
 
@@ -261,7 +261,7 @@
 }
 
 .cal-day:hover:not(.disabled) {
-    background: rgba(204, 255, 0, 0.1);
+    background: rgba(200, 16, 23, 0.1);
     border-color: var(--accent);
 }
 
@@ -272,7 +272,7 @@
 
 .cal-day.selected {
     background: var(--accent);
-    color: #000;
+    color: #ffffff;
     font-weight: 700;
 }
 
@@ -350,14 +350,14 @@
 
 .btn-next {
     background: var(--accent);
-    color: #000000 !important; /* Pure black on lime for maximum contrast */
+    color: #ffffff !important; /* Forced white text as per design mandate */
     border: none;
-    box-shadow: 0 10px 20px rgba(204, 255, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(200, 16, 23, 0.2);
 }
 
 .btn-next:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(204, 255, 0, 0.3);
+    box-shadow: 0 15px 30px rgba(200, 16, 23, 0.3);
 }
 
 .btn-next:disabled {
