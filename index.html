@@ -19,8 +19,131 @@
   <link rel="preload" as="image" href="assets/hero-desktop-seq/frame_000_delay-0.033s.webp" media="(min-width: 769px)">
   <link rel="preload" as="image" href="assets/hero-mobile-seq/frame_000_delay-0.041s.webp" media="(max-width: 768px)">
 
-  <!-- Zero-Flash GHL Stealth Guard -->
+  <!-- Critical Rendering Path (Inlined for 90+ FCP) -->
   <style>
+    :root {
+      --primary: #D0FF3A;
+      --dark: #000000;
+      --white: #ffffff;
+      --font-heading: 'Oswald', sans-serif;
+      --font-body: 'Mona Sans', sans-serif;
+    }
+
+    /* Meticulous Brand Lock (Zero-Flash) */
+    html {
+      background-color: #000 !important;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      font-family: var(--font-body);
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Critical Hero Layout (Fixed CLS & Paint) */
+    .hero {
+      position: relative;
+      background-color: #000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      /* Mobile dimension lock (Approved 75vh) */
+      min-height: 75vh;
+    }
+
+    @media (min-width: 769px) {
+      .hero {
+        min-height: 100vh;
+        aspect-ratio: 16/9;
+      }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 20px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Meticulous Header & Logo Lock (Prevents Layout Shuffling) */
+    .header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      padding: 30px 0;
+      z-index: 1000;
+      color: #fff;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      position: relative;
+      transform: translate(-10%, 5%);
+    }
+    .logo-img {
+      height: 60px;
+      width: auto;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.08); /* Approved Glass */
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    .bg-dark { background-color: #000 !important; }
+    
+    /* Cinematic Shield (Load Guard) */
+    #load-shield {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #000;
+      z-index: 999999;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+      pointer-events: none;
+    }
+    #load-shield.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* Stealth Guard for GHL Widgets (Prevents layout shifts if initialized) */
     chat-widget, lc-chat-widget, ghl-chat-widget, #chat-widget-container, 
     iframe[src*="leadconnector"], iframe[src*="widgets.leadconnectorhq.com"] {
       display: block !important;
@@ -31,46 +154,18 @@
       left: -9999px !important;
       pointer-events: none !important;
     }
-
-    /* Cinematic Page Reveal Guard (Branded Dark) */
-    html {
-      background-color: #000 !important;
-    }
-    #load-shield {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #000;
-      z-index: 999999;
-      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-    #load-shield.fade-out {
-      opacity: 0;
-      visibility: hidden;
-    }
   </style>
 
-  <!-- Fonts (Async) -->
+  <!-- Google Fonts (Async) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Oswald:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 
-  <!-- Icons (Async) -->
+  <!-- External Styles (Async - FCP Fix) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-
-  <!-- AOS Animation CSS (Async) -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" media="print" onload="this.media='all'">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css?v=19.0">
-  <!-- Booking Modal Styles -->
-  <link rel="stylesheet" href="booking-modal.css">
-  <!-- AI Agent Styles -->
-  <link rel="stylesheet" href="ai-agent.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'">
+  
+  <link rel="stylesheet" href="style.css?v=20.0" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="booking-modal.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="ai-agent.css" media="print" onload="this.media='all'">
 
 
   <!-- LCP Optimization: Correct preloads already handled above with MatchMedia for zero-shift -->

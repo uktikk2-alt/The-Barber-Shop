@@ -719,14 +719,24 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Cinematic Reveal: Fade out the black shield overlay once layout has settled
-  // We wait 150ms to ensure AOS/GSAP have calculated their initial positions
-  setTimeout(() => {
+  // We use requestAnimationFrame to ensure we aren't blocking a paint frame
+  const dismissLoader = () => {
     const shield = document.getElementById("load-shield");
-    if (shield) shield.classList.add("fade-out");
-  }, 150);
+    if (shield) {
+      shield.classList.add("fade-out");
+      // Delayed cleanup to remove from DOM after transition
+      setTimeout(() => shield.remove(), 800);
+    }
+    initHeroDeferred();
+  };
 
-  // Execution Delay: Start Hero animations as the shield fades away
-  setTimeout(initHeroDeferred, 350);
+  // Immediate dismissal trigger: 
+  // We wait slightly to ensure CSS-OM is hydrated for the critical block
+  if (document.readyState === 'complete') {
+    setTimeout(dismissLoader, 100);
+  } else {
+    window.addEventListener('load', () => setTimeout(dismissLoader, 100));
+  }
 
   // 2. Magnetic Buttons
   const magneticBtns = document.querySelectorAll('.magnetic-btn');
