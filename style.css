@@ -1316,6 +1316,11 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  /* Elite hardware acceleration to eliminate mobile jitter */
+  transform: translateZ(0); 
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity, contents;
 }
 
 .hero { 
