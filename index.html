@@ -92,12 +92,12 @@
       position: relative;
     }
 
-    .accent-anchor {
+    .accent-anchor-active {
       position: relative;
       display: inline-block;
       isolation: isolate;
     }
-    
+
     .accent-line-svg {
       position: absolute;
       left: 0; 
@@ -109,14 +109,15 @@
       background-repeat: no-repeat;
       transform: rotate(-1deg);
       pointer-events: none;
-      display: none; /* Physical removal from layout until 3s delay */
-      opacity: 0;
-      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      display: none; /* Physically hidden until 3s delay */
+      opacity: 1; /* Keep opacity fully visible as we use wipe effect */
+      clip-path: inset(0 100% 0 0); /* Start fully wiped out to the right */
+      transition: clip-path 1.5s cubic-bezier(0.65, 0, 0.35, 1);
     }
     
     .accent-line-svg.active {
       display: block;
-      opacity: 1;
+      clip-path: inset(0 0 0 0); /* Wipe in from left to right */
     }
 
     @media (max-width: 768px) {
@@ -329,7 +330,7 @@
         <span class="word">
           <span class="char" style="--i:11">Y</span><span class="char" style="--i:12">O</span><span class="char" style="--i:13">U</span><span class="char" style="--i:14">R</span>
         </span>
-        <span class="word highlight">
+        <span class="word accent-anchor-active">
           <span class="char" style="--i:15">P</span><span class="char" style="--i:16">R</span><span class="char" style="--i:17">E</span><span class="char" style="--i:18">S</span><span class="char" style="--i:19">T</span><span class="char" style="--i:20">I</span><span class="char" style="--i:21">G</span><span class="char" style="--i:22">E</span><span class="char" style="--i:23">.</span>
         </span>
       </h1>

@@ -99,10 +99,10 @@ document.addEventListener("DOMContentLoaded", () => {
         this.config.hero.titleWords.forEach(word => {
           const wordSpan = document.createElement('span');
           wordSpan.className = 'word';
-          // Fix: Atomic anchor for the red underline
+          // Final Flicker-Kill Logic: Unique anchor for delayed reveal
           const isHighlight = word.toUpperCase().includes(this.config.hero.highlightWord.toUpperCase());
           if (isHighlight) {
-            wordSpan.classList.add('accent-anchor');
+            wordSpan.classList.add('accent-anchor-active');
           }
           
           word.split('').forEach(char => {
