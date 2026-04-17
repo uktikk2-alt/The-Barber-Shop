@@ -99,7 +99,11 @@ document.addEventListener("DOMContentLoaded", () => {
         this.config.hero.titleWords.forEach(word => {
           const wordSpan = document.createElement('span');
           wordSpan.className = 'word';
-          if (word === this.config.hero.highlightWord) wordSpan.classList.add('highlight');
+          // Fix: Atomic anchor for the red underline
+          const isHighlight = word.toUpperCase().includes(this.config.hero.highlightWord.toUpperCase());
+          if (isHighlight) {
+            wordSpan.classList.add('accent-anchor');
+          }
           
           word.split('').forEach(char => {
             const charSpan = document.createElement('span');
@@ -108,10 +112,26 @@ document.addEventListener("DOMContentLoaded", () => {
             charSpan.textContent = char;
             wordSpan.appendChild(charSpan);
           });
+
+          // Definitive Fix: Inject REAL element for the underline to prevent flicker/hiding
+          if (isHighlight) {
+            const underline = document.createElement('span');
+            underline.className = 'accent-line-svg';
+            wordSpan.appendChild(underline);
+          }
           
           titleContainer.appendChild(wordSpan);
           titleContainer.appendChild(document.createTextNode(' '));
         });
+
+        // 3.0s Delay: Fade in the red underline after UI stabilizes
+        setTimeout(() => {
+          const underlines = document.querySelectorAll('.accent-line-svg');
+          underlines.forEach(u => {
+            u.style.display = 'block'; // Force layout first
+            setTimeout(() => u.classList.add('active'), 10); // Trigger transition next frame
+          });
+        }, 3000);
       }
     }
 
@@ -538,12 +558,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const heroTl = gsap.timeline();
-    const targets = ['.js-config-hero-badge', '.hero-title .char', '.hero-desc', '.hero-btns'];
+    const targets = ['.js-config-hero-badge', '.hero-title .char', '.hero-reviews-badge', '.hero-desc', '.hero-btns'];
     gsap.set(targets, { visibility: 'visible', opacity: 0 });
     heroTl.fromTo('.hero-title .char', 
       { opacity: 0, y: 30, filter: 'blur(8px)' },
       { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, stagger: 0.03, ease: "power3.out" }
-    ).fromTo(['.js-config-hero-badge', '.hero-desc', '.hero-btns'], 
+    ).fromTo(['.js-config-hero-badge', '.hero-reviews-badge', '.hero-desc', '.hero-btns'], 
       { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.2 }, "-=0.6"
     );
   }
