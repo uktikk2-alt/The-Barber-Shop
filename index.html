@@ -16,7 +16,7 @@
   <script src="config.js?v=20.0"></script>
   <script>
     // Critical Sync: Lock theme and structure before first paint
-    (function() {
+    (function () {
       const config = window.SITE_CONFIG;
       if (config && config.branding && config.branding.colors) {
         const root = document.documentElement;
@@ -27,12 +27,14 @@
   </script>
 
   <!-- Instant First Frame Preload (MatchMedia) -->
-  <link rel="preload" as="image" href="assets/hero-desktop-seq/frame_000_delay-0.033s.webp" media="(min-width: 769px)" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/hero-mobile-seq/frame_000_delay-0.033s.jpg" media="(max-width: 768px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/hero-desktop-seq/frame_000_delay-0.033s.webp" media="(min-width: 769px)"
+    fetchpriority="high">
+  <link rel="preload" as="image" href="assets/hero-mobile-seq/frame_000_delay-0.033s.jpg" media="(max-width: 768px)"
+    fetchpriority="high">
 
   <!-- Nuclear Force: Zero-Flash Killswitch (FCP Fix) -->
   <script>
-    (function() {
+    (function () {
       const observer = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
           for (const node of mutation.addedNodes) {
@@ -61,8 +63,12 @@
     }
 
     /* NUCLEAR HIDE: Force GHL off-screen immediately on paint */
-    lc-chat-widget, ghl-chat-widget, chat-widget, #chat-widget-container, 
-    iframe[src*="leadconnector"], iframe[src*="widgets.leadconnectorhq.com"] {
+    lc-chat-widget,
+    ghl-chat-widget,
+    chat-widget,
+    #chat-widget-container,
+    iframe[src*="leadconnector"],
+    iframe[src*="widgets.leadconnectorhq.com"] {
       display: block !important;
       visibility: visible !important;
       opacity: 0 !important;
@@ -74,7 +80,10 @@
     }
 
     /* HERO STABILIZATION: Hide content until GSAP is ready */
-    .hero-title .char, .hero-desc, .hero-btns, .js-config-hero-badge {
+    .hero-title .char,
+    .hero-desc,
+    .hero-btns,
+    .js-config-hero-badge {
       opacity: 0;
       visibility: hidden;
     }
@@ -88,9 +97,9 @@
       position: relative;
     }
 
-    .word { 
-      display: inline-block; 
-      white-space: nowrap; 
+    .word {
+      display: inline-block;
+      white-space: nowrap;
       /* Precisely move ONLY the letters down by 30px */
       transform: translateY(30px);
     }
@@ -103,9 +112,10 @@
 
     .accent-line-svg {
       position: absolute;
-      left: 0; 
-      width: 100%; 
-      bottom: -4px; /* Back to base */
+      left: 0;
+      width: 100%;
+      bottom: -4px;
+      /* Back to base */
       height: 14px;
       background-image: url("data:image/svg+xml,%3Csvg width='300' height='30' viewBox='0 0 300 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 20C50 15 150 15 295 25' stroke='%23c81017' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M10 24C60 20 160 20 290 28' stroke='%23c81017' stroke-width='2' stroke-linecap='round' opacity='0.5'/%3E%3C/svg%3E");
       background-size: 100% 100%;
@@ -113,22 +123,27 @@
       /* FORCED UPWARD SHIFT: Match the text's distance */
       transform: rotate(-1deg) translateY(-30px);
       pointer-events: none;
-      display: none; /* Physically hidden until 3s delay */
-      opacity: 1; /* Keep opacity fully visible as we use wipe effect */
-      clip-path: inset(0 100% 0 0); /* Start fully wiped out to the right */
+      display: none;
+      /* Physically hidden until 3s delay */
+      opacity: 1;
+      /* Keep opacity fully visible as we use wipe effect */
+      clip-path: inset(0 100% 0 0);
+      /* Start fully wiped out to the right */
       transition: clip-path 1.5s cubic-bezier(0.65, 0, 0.35, 1);
     }
-    
+
     .accent-line-svg.active {
       display: block;
-      clip-path: inset(0 0 0 0); /* Wipe in from left to right */
+      clip-path: inset(0 0 0 0);
+      /* Wipe in from left to right */
     }
 
     @media (max-width: 768px) {
-      .accent-line-svg { 
-        bottom: -3px; 
-        height: 10px; 
-        transform: rotate(-1deg) translateY(-30px); /* Sync mobile */
+      .accent-line-svg {
+        bottom: -3px;
+        height: 10px;
+        transform: rotate(-1deg) translateY(-30px);
+        /* Sync mobile */
       }
     }
 
@@ -136,21 +151,36 @@
     .glass-reviews-badge {
       display: inline-flex;
       align-items: center;
-      gap: 12px; padding: 6px 16px 6px 8px; border-radius: 50px;
-      background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.15); font-family: var(--font-heading);
-      font-size: 11px; color: #fff; text-decoration: none;
+      gap: 12px;
+      padding: 6px 16px 6px 8px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-family: var(--font-heading);
+      font-size: 11px;
+      color: #fff;
+      text-decoration: none;
     }
+
     .hero-reviews-badge {
-      margin-top: 15px; margin-bottom: 30px; position: relative;
-      opacity: 0; visibility: hidden; /* Synced with Hero Reveal */
+      margin-top: 15px;
+      margin-bottom: 30px;
+      position: relative;
+      opacity: 0;
+      visibility: hidden;
+      /* Synced with Hero Reveal */
     }
-    .hero-btns { margin-top: 20px; }
+
+    .hero-btns {
+      margin-top: 20px;
+    }
 
     /* Meticulous Brand Lock (Zero-Flash) */
     html {
       background-color: #000 !important;
     }
+
     body {
       margin: 0;
       padding: 0;
@@ -159,6 +189,7 @@
       color: #fff;
       -webkit-font-smoothing: antialiased;
     }
+
     a {
       text-decoration: none;
       color: inherit;
@@ -218,7 +249,9 @@
     /* CINEMATIC NAVIGATION ENTRY (GSAP CONTROLLED) */
     #main-header {
       position: fixed;
-      top: 0; left: 0; width: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
       padding: 10px 0;
       z-index: 1000;
       color: #fff;
@@ -226,6 +259,7 @@
       opacity: 0;
       pointer-events: none;
     }
+
     .header-container {
       display: flex;
       justify-content: space-between;
@@ -234,12 +268,14 @@
       margin: 0 auto;
       padding: 0 20px;
     }
+
     .logo {
       display: flex;
       align-items: center;
       position: relative;
       transform: translate(-10%, 5%);
     }
+
     .logo-img {
       height: 60px;
       width: auto;
@@ -251,7 +287,8 @@
       gap: 10px;
       padding: 8px 18px;
       border-radius: 50px;
-      background: rgba(255, 255, 255, 0.08); /* Approved Glass */
+      background: rgba(255, 255, 255, 0.08);
+      /* Approved Glass */
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -264,13 +301,17 @@
       margin-bottom: 15px;
     }
 
-    .bg-dark { background-color: #000 !important; }
-    
+    .bg-dark {
+      background-color: #000 !important;
+    }
+
     /* Hero Canvas Positioning */
     #hero-canvas {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       z-index: 0;
       opacity: 0;
@@ -279,13 +320,16 @@
   </style>
 
   <!-- Google Fonts (Async) -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Oswald:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Oswald:wght@400;500;600;700&display=swap"
+    media="print" onload="this.media='all'">
 
   <!-- External Styles (Standard Loading to Kill FOUC) -->
   <link rel="stylesheet" href="style.css?v=20.2">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print"
+    onload="this.media='all'">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'">
-  
+
   <link rel="stylesheet" href="booking-modal.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="ai-agent.css" media="print" onload="this.media='all'">
 
@@ -301,8 +345,10 @@
     <div class="container header-container">
       <!-- Logo -->
       <a href="#home" class="logo">
-        <img src="assets/Logo/scuderia-logo-main.png" class="logo-img logo-white js-config-logo-white" alt="Company Logo" height="60">
-        <img src="assets/Logo/scuderia-logo-main.png" class="logo-img logo-color js-config-logo-color" alt="Company Logo" height="60">
+        <img src="assets/Logo/scuderia-logo-main.png" class="logo-img logo-white js-config-logo-white"
+          alt="Company Logo" height="60">
+        <img src="assets/Logo/scuderia-logo-main.png" class="logo-img logo-color js-config-logo-color"
+          alt="Company Logo" height="60">
       </a>
 
       <!-- Mobile Toggle -->
@@ -337,22 +383,32 @@
       <div class="section-badge js-config-hero-badge" data-aos="fade-down">ITALIAN ESSENCE</div>
       <h1 class="hero-title js-config-hero-title">
         <span class="word">
-          <span class="char" style="--i:1">P</span><span class="char" style="--i:2">R</span><span class="char" style="--i:3">E</span><span class="char" style="--i:4">S</span><span class="char" style="--i:5">E</span><span class="char" style="--i:6">R</span><span class="char" style="--i:7">V</span><span class="char" style="--i:8">I</span><span class="char" style="--i:9">N</span><span class="char" style="--i:10">G</span>
+          <span class="char" style="--i:1">P</span><span class="char" style="--i:2">R</span><span class="char"
+            style="--i:3">E</span><span class="char" style="--i:4">S</span><span class="char"
+            style="--i:5">E</span><span class="char" style="--i:6">R</span><span class="char"
+            style="--i:7">V</span><span class="char" style="--i:8">I</span><span class="char"
+            style="--i:9">N</span><span class="char" style="--i:10">G</span>
         </span>
         <span class="word">
-          <span class="char" style="--i:11">Y</span><span class="char" style="--i:12">O</span><span class="char" style="--i:13">U</span><span class="char" style="--i:14">R</span>
+          <span class="char" style="--i:11">Y</span><span class="char" style="--i:12">O</span><span class="char"
+            style="--i:13">U</span><span class="char" style="--i:14">R</span>
         </span>
         <span class="word accent-anchor-active">
-          <span class="char" style="--i:15">P</span><span class="char" style="--i:16">R</span><span class="char" style="--i:17">E</span><span class="char" style="--i:18">S</span><span class="char" style="--i:19">T</span><span class="char" style="--i:20">I</span><span class="char" style="--i:21">G</span><span class="char" style="--i:22">E</span><span class="char" style="--i:23">.</span>
+          <span class="char" style="--i:15">P</span><span class="char" style="--i:16">R</span><span class="char"
+            style="--i:17">E</span><span class="char" style="--i:18">S</span><span class="char"
+            style="--i:19">T</span><span class="char" style="--i:20">I</span><span class="char"
+            style="--i:21">G</span><span class="char" style="--i:22">E</span><span class="char" style="--i:23">.</span>
         </span>
       </h1>
-      <a href="https://maps.google.com" target="_blank" class="glass-reviews-badge hero-reviews-badge" data-aos="fade-up" data-aos-delay="200">
+      <a href="https://maps.google.com" target="_blank" class="glass-reviews-badge hero-reviews-badge"
+        data-aos="fade-up" data-aos-delay="200">
         <div class="avatar-stack">
           <img src="https://i.pravatar.cc/100?u=4" alt="Client 1">
           <img src="https://i.pravatar.cc/100?u=5" alt="Client 2">
           <img src="https://i.pravatar.cc/100?u=6" alt="Client 3">
         </div>
-        <span class="reviews-text">RATED 4.9 <i class="fa-solid fa-star" style="color: #ffcc00; margin: 0 2px;"></i> ON GOOGLE</span>
+        <span class="reviews-text">RATED 4.9 <i class="fa-solid fa-star" style="color: #ffcc00; margin: 0 2px;"></i> ON
+          GOOGLE</span>
       </a>
       <p class="hero-desc js-config-hero-subtitle">Your car deserves better. Book in 60 seconds.</p>
       <div class="hero-btns">
@@ -368,21 +424,21 @@
       <div class="stat-item" data-aos="fade-up" data-aos-duration="1000">
         <div class="stat-icon-box"><i class="fa-solid fa-user-group"></i></div>
         <div class="stat-info">
-          <h2 class="counter" data-target="6">0</h2>
-          <p>EXPERTS</p>
+          <h2 class="counter" data-target="1">0</h2>
+          <p>EXPERT</p>
         </div>
       </div>
       <div class="stat-item" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
         <div class="stat-icon-box"><i class="fa-solid fa-calendar-check"></i></div>
         <div class="stat-info">
-          <h2 class="counter" data-target="8">0</h2>
+          <h2 class="counter" data-target="7">0</h2>
           <p>YEARS EXP</p>
         </div>
       </div>
       <div class="stat-item" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
         <div class="stat-icon-box"><i class="fa-solid fa-spray-can-sparkles"></i></div>
         <div class="stat-info">
-          <h2 class="counter" data-target="800">0</h2>
+          <h2 class="counter" data-target="400">0</h2>
           <p>JOBS COMPLETED</p>
         </div>
       </div>
@@ -394,8 +450,10 @@
     <div class="container">
       <div class="text-center section-header">
         <div class="section-badge js-config-services-badge" data-aos="fade-down">DETAILING SERVICES</div>
-        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Professional <span class="accent-line">Car Care</span></span></span></h2>
-        <p class="section-desc text-light mx-auto js-config-services-desc" style="max-width: 650px;" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Professional <span
+                class="accent-line">Car Care</span></span></span></h2>
+        <p class="section-desc text-light mx-auto js-config-services-desc" style="max-width: 650px;" data-aos="fade-up"
+          data-aos-delay="100">
           Our expert detailers specialize in paint correction, interior restoration, and ceramic protection for all
           vehicle types.
         </p>
@@ -404,7 +462,8 @@
       <div class="services-grid" id="main-services-grid">
         <!-- Pre-rendered for Instant Load & Zero-Shift -->
         <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="service-card-img"><img src="assets/gallery/scuderia-p1.webp" alt="Intera Premio" loading="eager" decoding="async"></div>
+          <div class="service-card-img"><img src="assets/gallery/scuderia-p1.webp" alt="Intera Premio" loading="eager"
+              decoding="async"></div>
           <div class="service-card-content">
             <span class="sc-number">01</span>
             <h3 class="sc-title">Intera Premio</h3>
@@ -413,7 +472,8 @@
           </div>
         </div>
         <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="service-card-img"><img src="assets/gallery/scuderia-p2.webp" alt="Intera Base Extra" loading="eager" decoding="async"></div>
+          <div class="service-card-img"><img src="assets/gallery/scuderia-p2.webp" alt="Intera Base Extra"
+              loading="eager" decoding="async"></div>
           <div class="service-card-content">
             <span class="sc-number">02</span>
             <h3 class="sc-title">Intera Base Extra</h3>
@@ -435,9 +495,11 @@
     <div class="container">
       <div class="section-header text-center" data-aos="fade-up">
         <div class="section-badge" style="background: rgba(255,255,255,0.05);">BEYOND THE BASICS</div>
-        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Extra <span class="accent-line">Services</span>, <span class="accent-line">Extra Care</span></span></span></h2>
+        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Extra <span
+                class="accent-line">Services</span>, <span class="accent-line">Extra Care</span></span></span></h2>
         <p class="section-desc text-light mx-auto" style="max-width: 700px;">
-          Your car deserves more than just a wash. Our specialty add-ons truly bring back that fresh, flawless feel inside and out with expert care and attention to every little detail possible.
+          Your car deserves more than just a wash. Our specialty add-ons truly bring back that fresh, flawless feel
+          inside and out with expert care and attention to every little detail possible.
         </p>
       </div>
       <div class="services-grid collapsed" id="extra-services-grid">
@@ -456,7 +518,8 @@
     <div class="container text-center">
       <div class="section-header">
         <div class="section-badge" data-aos="fade-down">PORTFOLIO</div>
-        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Our <span class="accent-line">Gallery</span></span></span></h2>
+        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Our <span
+                class="accent-line">Gallery</span></span></span></h2>
         <p class="section-desc text-light mx-auto" style="max-width: 700px;" data-aos="fade-up" data-aos-delay="100">
           "A selection of real results from real vehicles. Every finish achieved by hand, every detail obsessed over."
         </p>
@@ -477,9 +540,10 @@
     <div class="container" style="max-width: 1000px;">
       <div class="text-center section-header">
         <div class="section-badge" data-aos="fade-down">QUICK QUOTE</div>
-        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Get an <span class="accent-line">Estimate</span></span></span></h2>
+        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Get an <span
+                class="accent-line">Estimate</span></span></span></h2>
         <p class="section-desc text-light mx-auto" style="max-width: 700px;" data-aos="fade-up" data-aos-delay="100">
-          Select a service and vehicle size for a guide price. All prices are starting points 
+          Select a service and vehicle size for a guide price. All prices are starting points
           &mdash; final cost depends on the condition and current state of your vehicle.
         </p>
       </div>
@@ -562,7 +626,8 @@
           </p>
           <div class="estimator-btns">
             <a href="#contact" class="btn btn-lime">GET AN EXACT QUOTE</a>
-            <a href="tel:+447308742727" class="btn btn-dark-outline js-config-phone-link"><i class="fa-solid fa-phone"></i> <span class="js-config-phone">+44 7308 742727</span></a>
+            <a href="tel:+447308742727" class="btn btn-dark-outline js-config-phone-link"><i
+                class="fa-solid fa-phone"></i> <span class="js-config-phone">+44 7308 742727</span></a>
           </div>
         </div>
       </div>
@@ -574,9 +639,11 @@
     <div class="container text-center">
       <div class="section-header" data-aos="fade-up">
         <div class="section-badge">THE EXPERTS</div>
-        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Meet <span class="accent-line">The Team</span></span></span></h2>
+        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Meet <span
+                class="accent-line">The Team</span></span></span></h2>
         <p class="section-desc text-light mx-auto" style="max-width: 560px;">
-          The dedicated professionals behind every spotless finish. Years of experience, obsessive attention to detail, and a genuine love for cars.
+          The dedicated professionals behind every spotless finish. Years of experience, obsessive attention to detail,
+          and a genuine love for cars.
         </p>
       </div>
 
@@ -604,269 +671,273 @@
     <div class="container text-center">
       <div class="section-header">
         <div class="section-badge" data-aos="fade-down">TESTIMONIALS</div>
-        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Why Our Customers <span class="accent-line">Love Us</span></span></span></h2>
+        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Why Our Customers
+              <span class="accent-line">Love Us</span></span></span></h2>
         <p class="section-desc text-light" data-aos="fade-up" data-aos-delay="100">Our system ensures every inquiry is
-          responded to quickly and every booking is handled smoothly - so you never miss a chance to serve a customer.</p>
+          responded to quickly and every booking is handled smoothly - so you never miss a chance to serve a customer.
+        </p>
       </div>
     </div>
-    
+
     <div class="ticker-wrapper">
       <div class="ticker-track track-1">
-          <!-- Slide 1-5 -->
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Booked online and got a response instantly. Super smooth experience."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=gabrielle" alt="Reviewer">
-              <div class="meta-text">
-                <h5>Gabrielle Williams</h5>
-                <span>Car Enthusiast</span>
-              </div>
-            </div>
-          </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Car looked brand new - and booking was so easy."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=samantha" alt="Reviewer">
-              <div class="meta-text">
-                <h5>Samantha Johnson</h5>
-                <span>Luxury Driver</span>
-              </div>
-            </div>
-          </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Didn't have to wait or call, everything was handled fast."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=isabella" alt="Reviewer">
-              <div class="meta-text">
-                <h5>Isabella Rodriguez</h5>
-                <span>Business Professional</span>
-              </div>
-            </div>
-          </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Professional, fast, and the online system is simply the best."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=natalie" alt="Reviewer">
-              <div class="meta-text">
-                <h5>Natalie Martinez</h5>
-                <span>Daily Commuter</span>
-              </div>
-            </div>
-          </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"I never miss an appointment now. The reminders and setup are elite."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=victoria" alt="Reviewer">
-              <div class="meta-text">
-                <h5>Victoria Thompson</h5>
-                <span>Vehicle Owner</span>
-              </div>
-            </div>
-          </div>
-          <!-- Duplicate Slides for Seamless Loop -->
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Creative geniuses who listen, understand, and craft captivating visuals - an agency that truly
-              understands our needs."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=gabrielle" alt="Gabrielle">
-              <div class="meta-text">
-                <h5>Gabrielle Williams</h5>
-                <span>Creative Director, ABC Company</span>
-              </div>
-            </div>
-          </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Exceeded our expectations with innovative designs that brought our vision to life - a truly remarkable
-              creative partner."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=samantha" alt="Samantha">
-              <div class="meta-text">
-                <h5>Samantha Johnson</h5>
-                <span>CEO & Co-founder, TechBloom</span>
-              </div>
-            </div>
-          </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Their ability to capture our brand essence in every project is unparalleled - an invaluable creative
-              collaborator."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=isabella" alt="Isabella">
-              <div class="meta-text">
-                <h5>Isabella Rodriguez</h5>
-                <span>Brand Manager, Elite Hair</span>
-              </div>
-            </div>
-          </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"From concept to execution, their creativity knows no bounds - a game-changer for our brand's success."
-            </p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=natalie" alt="Natalie">
-              <div class="meta-text">
-                <h5>Natalie Martinez</h5>
-                <span>Founder, StyleLab</span>
-              </div>
-            </div>
-          </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"A refreshing and imaginative agency that consistently delivers exceptional results - highly recommended
-              for any project."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=victoria" alt="Victoria">
-              <div class="meta-text">
-                <h5>Victoria Thompson</h5>
-                <span>Style Consultant</span>
-              </div>
+        <!-- Slide 1-5 -->
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Booked online and got a response instantly. Super smooth experience."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=gabrielle" alt="Reviewer">
+            <div class="meta-text">
+              <h5>Gabrielle Williams</h5>
+              <span>Car Enthusiast</span>
             </div>
           </div>
         </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Car looked brand new - and booking was so easy."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=samantha" alt="Reviewer">
+            <div class="meta-text">
+              <h5>Samantha Johnson</h5>
+              <span>Luxury Driver</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Didn't have to wait or call, everything was handled fast."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=isabella" alt="Reviewer">
+            <div class="meta-text">
+              <h5>Isabella Rodriguez</h5>
+              <span>Business Professional</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Professional, fast, and the online system is simply the best."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=natalie" alt="Reviewer">
+            <div class="meta-text">
+              <h5>Natalie Martinez</h5>
+              <span>Daily Commuter</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"I never miss an appointment now. The reminders and setup are elite."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=victoria" alt="Reviewer">
+            <div class="meta-text">
+              <h5>Victoria Thompson</h5>
+              <span>Vehicle Owner</span>
+            </div>
+          </div>
+        </div>
+        <!-- Duplicate Slides for Seamless Loop -->
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Creative geniuses who listen, understand, and craft captivating visuals - an agency that truly
+            understands our needs."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=gabrielle" alt="Gabrielle">
+            <div class="meta-text">
+              <h5>Gabrielle Williams</h5>
+              <span>Creative Director, ABC Company</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Exceeded our expectations with innovative designs that brought our vision to life - a truly remarkable
+            creative partner."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=samantha" alt="Samantha">
+            <div class="meta-text">
+              <h5>Samantha Johnson</h5>
+              <span>CEO & Co-founder, TechBloom</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Their ability to capture our brand essence in every project is unparalleled - an invaluable creative
+            collaborator."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=isabella" alt="Isabella">
+            <div class="meta-text">
+              <h5>Isabella Rodriguez</h5>
+              <span>Brand Manager, Elite Hair</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"From concept to execution, their creativity knows no bounds - a game-changer for our brand's success."
+          </p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=natalie" alt="Natalie">
+            <div class="meta-text">
+              <h5>Natalie Martinez</h5>
+              <span>Founder, StyleLab</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"A refreshing and imaginative agency that consistently delivers exceptional results - highly recommended
+            for any project."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=victoria" alt="Victoria">
+            <div class="meta-text">
+              <h5>Victoria Thompson</h5>
+              <span>Style Consultant</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div class="ticker-track track-2">
-          <!-- Slide 6-10 -->
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Their team's artistic flair and strategic approach resulted in remarkable campaigns - a reliable
-              creative partner."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=john" alt="John">
-              <div class="meta-text">
-                <h5>John Peter</h5>
-                <span>Marketing Lead, Grooming Co.</span>
-              </div>
+      <div class="ticker-track track-2">
+        <!-- Slide 6-10 -->
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Their team's artistic flair and strategic approach resulted in remarkable campaigns - a reliable
+            creative partner."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=john" alt="John">
+            <div class="meta-text">
+              <h5>John Peter</h5>
+              <span>Marketing Lead, Grooming Co.</span>
             </div>
           </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Exceptional attention to detail. They transformed our space with a design that truly reflects our luxury
-              brand."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=michael" alt="Michael">
-              <div class="meta-text">
-                <h5>Michael Chen</h5>
-                <span>Design Director, Visuals Inc</span>
-              </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Exceptional attention to detail. They transformed our space with a design that truly reflects our luxury
+            brand."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=michael" alt="Michael">
+            <div class="meta-text">
+              <h5>Michael Chen</h5>
+              <span>Design Director, Visuals Inc</span>
             </div>
           </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Professional, creative, and highly responsive. One of the best brand experiences we have had in years."
-            </p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=sarah" alt="Sarah">
-              <div class="meta-text">
-                <h5>Sarah Parker</h5>
-                <span>Editor, Grooming Mag</span>
-              </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Professional, creative, and highly responsive. One of the best brand experiences we have had in years."
+          </p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=sarah" alt="Sarah">
+            <div class="meta-text">
+              <h5>Sarah Parker</h5>
+              <span>Editor, Grooming Mag</span>
             </div>
           </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"They don't just design; they build stories. Our customers love the new identity. Truly top-tier work."
-            </p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=david" alt="David">
-              <div class="meta-text">
-                <h5>David Wilson</h5>
-                <span>Entrepreneur</span>
-              </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"They don't just design; they build stories. Our customers love the new identity. Truly top-tier work."
+          </p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=david" alt="David">
+            <div class="meta-text">
+              <h5>David Wilson</h5>
+              <span>Entrepreneur</span>
             </div>
           </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"The visual capture of our products was breathtaking. A team that knows exactly how to make a brand pop."
-            </p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=emily" alt="Emily">
-              <div class="meta-text">
-                <h5>Emily Davis</h5>
-                <span>Fashion Photographer</span>
-              </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"The visual capture of our products was breathtaking. A team that knows exactly how to make a brand pop."
+          </p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=emily" alt="Emily">
+            <div class="meta-text">
+              <h5>Emily Davis</h5>
+              <span>Fashion Photographer</span>
             </div>
           </div>
-          <!-- Duplicate Slides for Seamless Loop -->
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Their team's artistic flair and strategic approach resulted in remarkable campaigns - a reliable
-              creative partner."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=john" alt="John">
-              <div class="meta-text">
-                <h5>John Peter</h5>
-                <span>Marketing Lead, Grooming Co.</span>
-              </div>
+        </div>
+        <!-- Duplicate Slides for Seamless Loop -->
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Their team's artistic flair and strategic approach resulted in remarkable campaigns - a reliable
+            creative partner."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=john" alt="John">
+            <div class="meta-text">
+              <h5>John Peter</h5>
+              <span>Marketing Lead, Grooming Co.</span>
             </div>
           </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Exceptional attention to detail. They transformed our space with a design that truly reflects our luxury
-              brand."</p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=michael" alt="Michael">
-              <div class="meta-text">
-                <h5>Michael Chen</h5>
-                <span>Design Director, Visuals Inc</span>
-              </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Exceptional attention to detail. They transformed our space with a design that truly reflects our luxury
+            brand."</p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=michael" alt="Michael">
+            <div class="meta-text">
+              <h5>Michael Chen</h5>
+              <span>Design Director, Visuals Inc</span>
             </div>
           </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"Professional, creative, and highly responsive. One of the best brand experiences we have had in years."
-            </p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=sarah" alt="Sarah">
-              <div class="meta-text">
-                <h5>Sarah Parker</h5>
-                <span>Editor, Grooming Mag</span>
-              </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Professional, creative, and highly responsive. One of the best brand experiences we have had in years."
+          </p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=sarah" alt="Sarah">
+            <div class="meta-text">
+              <h5>Sarah Parker</h5>
+              <span>Editor, Grooming Mag</span>
             </div>
           </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"They don't just design; they build stories. Our customers love the new identity. Truly top-tier work."
-            </p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=david" alt="David">
-              <div class="meta-text">
-                <h5>David Wilson</h5>
-                <span>Entrepreneur</span>
-              </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"They don't just design; they build stories. Our customers love the new identity. Truly top-tier work."
+          </p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=david" alt="David">
+            <div class="meta-text">
+              <h5>David Wilson</h5>
+              <span>Entrepreneur</span>
             </div>
           </div>
-          <div class="review-card-clean">
-            <i class="fa-solid fa-quote-left quote-icon"></i>
-            <p>"The visual capture of our products was breathtaking. A team that knows exactly how to make a brand pop."
-            </p>
-            <div class="reviewer-meta">
-              <img src="https://i.pravatar.cc/150?u=emily" alt="Emily">
-              <div class="meta-text">
-                <h5>Emily Davis</h5>
-                <span>Fashion Photographer</span>
-              </div>
+        </div>
+        <div class="review-card-clean">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"The visual capture of our products was breathtaking. A team that knows exactly how to make a brand pop."
+          </p>
+          <div class="reviewer-meta">
+            <img src="https://i.pravatar.cc/150?u=emily" alt="Emily">
+            <div class="meta-text">
+              <h5>Emily Davis</h5>
+              <span>Fashion Photographer</span>
             </div>
           </div>
+        </div>
       </div>
     </div>
 
     <!-- Symmetrical 'See More' Badge Footer -->
     <div class="container text-center">
       <div class="reviews-footer" data-aos="fade-up" data-aos-delay="300">
-        <a href="https://maps.google.com" target="_blank" class="glass-reviews-badge testimonial-google-badge js-config-maps-link">
+        <a href="https://maps.google.com" target="_blank"
+          class="glass-reviews-badge testimonial-google-badge js-config-maps-link">
           <div class="avatar-stack">
             <img src="https://i.pravatar.cc/100?u=10" alt="Client">
             <img src="https://i.pravatar.cc/100?u=11" alt="Client">
             <img src="https://i.pravatar.cc/100?u=12" alt="Client">
           </div>
-          <span class="reviews-text">SEE ALL REVIEWS ON GOOGLE <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left: 5px; font-size: 10px; opacity: 0.7;"></i></span>
+          <span class="reviews-text">SEE ALL REVIEWS ON GOOGLE <i class="fa-solid fa-arrow-up-right-from-square"
+              style="margin-left: 5px; font-size: 10px; opacity: 0.7;"></i></span>
         </a>
       </div>
     </div>
@@ -876,11 +947,12 @@
   <section id="booking-section" class="booking-section section-padding bg-black text-white">
     <div class="container booking-container" data-aos="fade-up">
       <div class="booking-layout">
-        
+
         <!-- Left: Contact Details -->
         <div class="booking-info">
           <div class="section-badge badge-dark-bg">GET IN TOUCH</div>
-          <h2 class="booking-title"><span class="reveal-wrapper"><span class="reveal-inner">BOOK YOUR <span class="primary-text">DETAIL</span></span></span></h2>
+          <h2 class="booking-title"><span class="reveal-wrapper"><span class="reveal-inner">BOOK YOUR <span
+                  class="primary-text">DETAIL</span></span></span></h2>
           <p class="booking-subtitle">
             Ready to transform your car? Fill in the form and Michele will be in touch to confirm your booking.
           </p>
@@ -897,14 +969,16 @@
               <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
               <div class="c-text">
                 <span>EMAIL</span>
-                <a href="mailto:info@scuderiaautodetailing.co.uk" class="js-config-email-link js-config-email">info@scuderiaautodetailing.co.uk</a>
+                <a href="mailto:info@scuderiaautodetailing.co.uk"
+                  class="js-config-email-link js-config-email">info@scuderiaautodetailing.co.uk</a>
               </div>
             </div>
             <div class="contact-card">
               <div class="c-icon"><i class="fa-solid fa-brands fa-whatsapp"></i></div>
               <div class="c-text">
                 <span>WHATSAPP</span>
-                <a href="https://wa.me/13333333333" target="_blank" class="js-config-whatsapp-link">Message us on WhatsApp</a>
+                <a href="https://wa.me/13333333333" target="_blank" class="js-config-whatsapp-link">Message us on
+                  WhatsApp</a>
               </div>
             </div>
             <div class="contact-card">
@@ -960,7 +1034,8 @@
 
             <div class="form-group">
               <label>MESSAGE</label>
-              <textarea placeholder="Tell us more about your vehicle's condition or specific needs..." rows="4"></textarea>
+              <textarea placeholder="Tell us more about your vehicle's condition or specific needs..."
+                rows="4"></textarea>
             </div>
 
             <button type="submit" class="btn btn-lime btn-full mt-3">SUBMIT</button>
@@ -997,15 +1072,18 @@
         <div class="footer-col">
           <h4 class="footer-heading">HEAD OFFICE</h4>
           <p class="footer-address js-config-location">Lincoln, England<br>(15-Mile Mobile Range)</p>
-          <p class="footer-address"><a href="tel:+447308742727" class="js-config-phone-link js-config-phone">+44 7308 742727</a></p>
-          <p class="footer-address"><a href="mailto:info@scuderiaautodetailing.co.uk" class="js-config-email-link js-config-email">info@scuderiaautodetailing.co.uk</a></p>
+          <p class="footer-address"><a href="tel:+447308742727" class="js-config-phone-link js-config-phone">+44 7308
+              742727</a></p>
+          <p class="footer-address"><a href="mailto:info@scuderiaautodetailing.co.uk"
+              class="js-config-email-link js-config-email">info@scuderiaautodetailing.co.uk</a></p>
         </div>
       </div>
 
 
     </div>
     <div class="footer-bottom">
-      <p>&copy; <span class="js-config-year">2026</span> <span class="js-config-business-name">Scuderia</span> Auto Detailing. All Rights Reserved.</p>
+      <p>&copy; <span class="js-config-year">2026</span> <span class="js-config-business-name">Scuderia</span> Auto
+        Detailing. All Rights Reserved.</p>
     </div>
   </footer>
 
@@ -1014,7 +1092,7 @@
   <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  
+
   <!-- Injection Engine (MUST BE AFTER DEPS) -->
   <script defer src="script.js?v=20.5"></script>
   <!-- Booking Modal Logic -->

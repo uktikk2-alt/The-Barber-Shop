@@ -606,7 +606,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 15. Magnetic Buttons
+  // 15. Stat Counters
+  document.querySelectorAll('.counter').forEach(counter => {
+    gsap.to(counter, {
+      innerHTML: counter.getAttribute('data-target'),
+      duration: 2.0,
+      snap: { innerHTML: 1 },
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: counter,
+        start: "top 90%"
+      }
+    });
+  });
+
+  // 16. Magnetic Buttons
   document.querySelectorAll('.magnetic-btn').forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
       const pos = btn.getBoundingClientRect();
