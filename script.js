@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }, 3000);
 
-        // Header Reveal Delay: 4.5s GSAP Cinematic Drop
+        // Header Reveal Delay: 5.0s GSAP Cinematic Drop
         setTimeout(() => {
           gsap.fromTo('#main-header', 
             { opacity: 0, y: -20 },
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             }
           );
-        }, 4500);
+        }, 5000);
       }
     }
 
@@ -580,10 +580,18 @@ document.addEventListener("DOMContentLoaded", () => {
       { opacity: 0, y: 30, filter: 'blur(8px)' },
       { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, stagger: 0.03, ease: "power3.out" },
       "+=1.6"
-    ).fromTo(['.hero-reviews-badge', '.js-config-hero-badge', '.hero-desc', '.hero-btns'],
-      { opacity: 0, y: 20 }, 
-      { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power2.out" },
-      3.5 // Synchronized entry for all remaining elements at 3.5s
+    ).fromTo('.js-config-hero-badge',
+      { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+      3.6 // 3.6s: Italian Essence Badge
+    ).fromTo('.hero-reviews-badge',
+      { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+      3.6 // 3.6s: Google Reviews
+    ).fromTo('.hero-desc',
+      { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+      4.5 // 4.5s: Subtext
+    ).fromTo('.hero-btns',
+      { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+      5.0 // 5.0s: Buttons
     );
   }
 
