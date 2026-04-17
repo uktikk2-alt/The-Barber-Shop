@@ -79,17 +79,20 @@
       visibility: hidden;
     }
 
-    .word { display: inline-block; white-space: nowrap; }
-    .char { display: inline-block; min-width: 0.3em; text-align: center; }
-
-    /* LAYOUT FREEZE: Reserve space for the hero title to prevent 4s pop */
     .hero-title {
-      min-height: 2.2em; /* Reserves space for two lines on mobile */
+      min-height: 2.2em;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 0.25em;
       position: relative;
+    }
+
+    .word { 
+      display: inline-block; 
+      white-space: nowrap; 
+      /* Precisely move ONLY the letters down by 30px */
+      transform: translateY(30px);
     }
 
     .accent-anchor-active {
@@ -102,12 +105,13 @@
       position: absolute;
       left: 0; 
       width: 100%; 
-      bottom: -4px; 
+      bottom: -4px; /* Back to base */
       height: 14px;
       background-image: url("data:image/svg+xml,%3Csvg width='300' height='30' viewBox='0 0 300 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 20C50 15 150 15 295 25' stroke='%23c81017' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M10 24C60 20 160 20 290 28' stroke='%23c81017' stroke-width='2' stroke-linecap='round' opacity='0.5'/%3E%3C/svg%3E");
       background-size: 100% 100%;
       background-repeat: no-repeat;
-      transform: rotate(-1deg);
+      /* FORCED UPWARD SHIFT: Match the text's distance */
+      transform: rotate(-1deg) translateY(-30px);
       pointer-events: none;
       display: none; /* Physically hidden until 3s delay */
       opacity: 1; /* Keep opacity fully visible as we use wipe effect */
@@ -121,7 +125,11 @@
     }
 
     @media (max-width: 768px) {
-      .accent-line-svg { bottom: -3px; height: 10px; }
+      .accent-line-svg { 
+        bottom: -3px; 
+        height: 10px; 
+        transform: rotate(-1deg) translateY(-30px); /* Sync mobile */
+      }
     }
 
     /* REVIEWS BADGE STABILIZATION: Prevent Coordinate Jumps */
@@ -207,12 +215,16 @@
     }
 
     /* Meticulous Header & Logo Lock (Prevents Layout Shuffling) */
-    .header {
+    /* CINEMATIC NAVIGATION ENTRY (GSAP CONTROLLED) */
+    #main-header {
       position: fixed;
       top: 0; left: 0; width: 100%;
       padding: 30px 0;
       z-index: 1000;
       color: #fff;
+      /* Only set initial invisible state; GSAP handles the rest */
+      opacity: 0;
+      pointer-events: none;
     }
     .header-container {
       display: flex;
@@ -284,8 +296,8 @@
 <body id="home" class="template-active">
   <!-- Loader Annihilated (FCP/LCP Fix) -->
 
-  <!-- TOP HEADER -->
-  <header class="header">
+  <!-- TOP HEADER (Cinematic Entrance) -->
+  <header class="header" id="main-header">
     <div class="container header-container">
       <!-- Logo -->
       <a href="#home" class="logo">

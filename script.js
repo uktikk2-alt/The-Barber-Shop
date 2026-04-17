@@ -132,6 +132,22 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => u.classList.add('active'), 10); // Trigger transition next frame
           });
         }, 3000);
+
+        // Header Reveal Delay: 4.5s GSAP Cinematic Drop
+        setTimeout(() => {
+          gsap.fromTo('#main-header', 
+            { opacity: 0, y: -20 },
+            { 
+              opacity: 1, 
+              y: 0, 
+              duration: 1, 
+              ease: 'power2.out',
+              onComplete: () => {
+                document.querySelector('#main-header').style.pointerEvents = 'auto';
+              }
+            }
+          );
+        }, 4500);
       }
     }
 
@@ -445,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
         this.canvas.style.opacity = '1';
         this.setupObserver();
         this.loadRemaining(10);
-      }, 2000);
+      }, 2600); // Increased start delay to 2.6s
     }
 
     async loadBuffer(count) {
@@ -563,9 +579,11 @@ document.addEventListener("DOMContentLoaded", () => {
     heroTl.fromTo('.hero-title .char', 
       { opacity: 0, y: 30, filter: 'blur(8px)' },
       { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, stagger: 0.03, ease: "power3.out" },
-      "+=1.2" // Dedicated delay before text reveal starts
-    ).fromTo(['.js-config-hero-badge', '.hero-reviews-badge', '.hero-desc', '.hero-btns'], 
-      { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.2 }, "-=0.6"
+      "+=1.6"
+    ).fromTo(['.hero-reviews-badge', '.js-config-hero-badge', '.hero-desc', '.hero-btns'],
+      { opacity: 0, y: 20 }, 
+      { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power2.out" },
+      3.5 // Synchronized entry for all remaining elements at 3.5s
     );
   }
 
