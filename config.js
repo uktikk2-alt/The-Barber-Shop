@@ -7,8 +7,8 @@ window.SITE_CONFIG = {
     businessName: "Scuderia Auto Detailing",
     tagline: "Preserving Prestige",
     metaDescription: "Welcome to Scuderia Auto Detailing in Lincoln, England. Premium auto care services restoring your vehicle's showroom glory with Italian motorsports passion.",
-    logoWhite: "assets/Logo/scuderia-logo-main.webp", 
-    logoColor: "assets/Logo/scuderia-logo-main.webp",
+    logoWhite: "assets/Logo/scuderia-logo-main.png", 
+    logoColor: "assets/Logo/scuderia-logo-main.png",
     colors: {
       primary: "#c81017", // Scuderia Red
       dark: "#000000",
