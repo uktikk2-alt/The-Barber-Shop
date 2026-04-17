@@ -124,16 +124,16 @@ document.addEventListener("DOMContentLoaded", () => {
           titleContainer.appendChild(document.createTextNode(' '));
         });
 
-        // 3.0s Delay: Fade in the red underline after UI stabilizes
+        // 2.4s Delay: Fade in the red underline after UI stabilizes
         setTimeout(() => {
           const underlines = document.querySelectorAll('.accent-line-svg');
           underlines.forEach(u => {
             u.style.display = 'block'; // Force layout first
             setTimeout(() => u.classList.add('active'), 10); // Trigger transition next frame
           });
-        }, 3000);
+        }, 2400);
 
-        // Header Reveal Delay: 5.0s GSAP Cinematic Drop
+        // Header Reveal Delay: 5.2s GSAP Cinematic Drop
         setTimeout(() => {
           gsap.fromTo('#main-header', 
             { opacity: 0, y: -20 },
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             }
           );
-        }, 5000);
+        }, 5200);
       }
     }
 
@@ -461,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
         this.canvas.style.opacity = '1';
         this.setupObserver();
         this.loadRemaining(10);
-      }, 2600); // Increased start delay to 2.6s
+      }, 3200); // Start delay to 3.2s
     }
 
     async loadBuffer(count) {
@@ -582,16 +582,16 @@ document.addEventListener("DOMContentLoaded", () => {
       "+=1.6"
     ).fromTo('.js-config-hero-badge',
       { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-      3.6 // 3.6s: Italian Essence Badge
+      4.1 // 4.1s: Italian Essence Badge
     ).fromTo('.hero-reviews-badge',
       { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-      3.6 // 3.6s: Google Reviews
+      3.8 // 3.8s: Google Reviews
     ).fromTo('.hero-desc',
       { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-      4.5 // 4.5s: Subtext
+      4.6 // 4.6s: Subtext
     ).fromTo('.hero-btns',
       { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-      5.0 // 5.0s: Buttons
+      5.2 // 5.2s: Buttons
     );
   }
 
