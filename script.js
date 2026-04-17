@@ -562,7 +562,8 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.set(targets, { visibility: 'visible', opacity: 0 });
     heroTl.fromTo('.hero-title .char', 
       { opacity: 0, y: 30, filter: 'blur(8px)' },
-      { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, stagger: 0.03, ease: "power3.out" }
+      { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, stagger: 0.03, ease: "power3.out" },
+      "+=1.2" // Dedicated delay before text reveal starts
     ).fromTo(['.js-config-hero-badge', '.hero-reviews-badge', '.hero-desc', '.hero-btns'], 
       { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.2 }, "-=0.6"
     );
