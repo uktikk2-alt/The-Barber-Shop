@@ -2,11 +2,11 @@
   --primary: #c81017; /* Scuderia Red Accent */
   --primary-hover: #a30d13;
   --primary-glass: rgba(200, 16, 23, 0.25);
-  --dark: #000000;
-  --darker: #050505;
+  --dark: #0A0A0A;
+  --darker: #0A0A0A;
   --light: #f4f4f4;
   --white: #ffffff;
-  --text-main: #000000;
+  --text-main: #0A0A0A;
   --text-light: #666666;
   
   --font-heading: 'Oswald', sans-serif;
@@ -95,7 +95,7 @@ ul { list-style: none; }
 .bg-white { background-color: var(--white); }
 .bg-dark { background-color: var(--dark); color: var(--white); }
 .bg-darker { background-color: var(--darker); color: var(--white); }
-.bg-black { background-color: #000000; color: var(--white); }
+.bg-black { background-color: #0A0A0A; color: var(--white); }
 .bg-primary { background: rgba(200, 16, 23, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(200, 16, 23, 0.5); border-bottom: 1px solid rgba(200, 16, 23, 0.5); box-shadow: 0 10px 30px rgba(200, 16, 23, 0.2); }
 
 /* Skeleton System (CLS Protection) */
@@ -156,9 +156,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .badge-dark-solid {
-  background: #000 !important;
+  background: #0A0A0A !important;
   color: #fff !important;
-  border-color: #000 !important;
+  border-color: #0A0A0A !important;
   font-weight: 700 !important;
 }
 
@@ -499,7 +499,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 0 !important;
     width: 100% !important; 
     height: 100vh !important;
-    background-color: rgba(0, 0, 0, 0.85) !important;
+    background-color: rgba(10, 10, 10, 0.85) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     z-index: 9999 !important;
@@ -668,7 +668,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Scroll Active State for Individual Cards */
-.feature-card.is-black { background: #000000 !important; border-color: var(--primary) !important; color: var(--white) !important; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.feature-card.is-black { background: #0A0A0A !important; border-color: var(--primary) !important; color: var(--white) !important; box-shadow: 0 20px 40px rgba(10,10,10,0.4); }
 .feature-card.is-black .f-icon-wrap { background: var(--primary); color: var(--white); }
 .feature-card.is-black .f-content p { color: rgba(255,255,255,0.7); }
 
@@ -702,30 +702,177 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%; 
     aspect-ratio: 1 / 1; 
     object-fit: cover; 
+}/* ==========================================================================
+   SIGNATURE MENU: EXPANDABLE ACCORDION
+   ========================================================================== */
+.accordion-container {
+  max-width: 1000px;
+  margin: 40px auto 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* NEW SERVICES ACCORDION */
-.btn-badge { border: 1px solid var(--text-light); border-radius: 30px; display: inline-block; padding: 5px 20px; font-size: 12px; font-family: var(--font-heading); letter-spacing: 2px; color: var(--text-light); margin-bottom: 30px; }
-.services-interactive-wrapper { display: flex; gap: 80px; align-items: center; text-align: left; margin-top: 60px; }
-.services-list { flex: 1; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 30px; }
-.service-accordion-item { padding: 30px 0; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: var(--transition); }
-.service-accordion-item:last-child { border-bottom: none; }
-.sa-header { display: flex; align-items: center; gap: 25px; transition: var(--transition); }
-.sa-number { width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 18px; color: var(--white); transition: var(--transition); }
-.sa-title { font-size: 28px; color: var(--white); transition: var(--transition); text-transform: none; font-weight: 500; font-family: var(--font-body); }
-.sa-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; margin-left: 75px; will-change: max-height, opacity; }
-.sa-content p { color: var(--text-light); font-size: 15px; margin-top: 15px; line-height: 1.8; }
+.accordion-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
 
-/* Active States for Accordion */
-.service-accordion-item.active .sa-number { background-color: var(--primary-glass); backdrop-filter: blur(5px); border-color: rgba(200, 16, 23, 0.5); color: var(--white); font-weight: 600; box-shadow: 0 4px 15px rgba(200, 16, 23, 0.3); }
-.service-accordion-item.active .sa-title { color: var(--white); font-weight: 600; }
-.service-accordion-item.active .sa-content { max-height: 200px; opacity: 1; }
-.service-accordion-item:hover:not(.active) .sa-title { color: var(--primary); }
+/* Header Logic */
+.accordion-header {
+  display: grid;
+  grid-template-columns: 80px 1fr 40px;
+  align-items: center;
+  padding: 30px 0;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
 
-.services-image-preview { flex: 1; position: relative; height: 600px; padding: 20px; }
-.preview-corners { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 4px solid var(--primary); opacity: 0.5; z-index: 1; pointer-events: none; clip-path: polygon(0 0, 20% 0, 20% 4px, 4px 4px, 4px 20%, 0 20%, 0 100%, 20% 100%, 20% calc(100% - 4px), 4px calc(100% - 4px), 4px 80%, 0 80%, 100% 0, 100% 20%, calc(100% - 4px) 20%, calc(100% - 4px) 4px, 80% 4px, 80% 0, 100% 100%, 80% 100%, 80% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 80%, 100% 80%); }
-#service-preview-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: opacity 0.4s ease; transform: translate(15px, -15px); }
-.preview-corners { clip-path: polygon(0 0, 100px 0, 100px 10px, 10px 10px, 10px 100px, 0 100px, 0 calc(100% - 100px), 10px calc(100% - 100px), 10px calc(100% - 10px), 100px calc(100% - 10px), 100px 100%, 0 100%, calc(100% - 100px) 0, 100% 0, 100% 100px, calc(100% - 10px) 100px, calc(100% - 10px) 10px, calc(100% - 100px) 10px, 100% calc(100% - 100px), 100% 100%, calc(100% - 100px) 100%, calc(100% - 100px) calc(100% - 10px), calc(100% - 10px) calc(100% - 10px), calc(100% - 10px) calc(100% - 100px));  } /* Custom corner bracket effect */
+.accordion-item.active .accordion-header {
+  padding-bottom: 15px;
+}
+
+.accordion-indicator {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  color: var(--primary);
+  opacity: 1;
+  font-weight: 700;
+}
+
+.accordion-indicator .slash {
+  margin-top: 2px;
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.accordion-title {
+  font-family: var(--font-heading);
+  font-size: clamp(24px, 4vw, 42px);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.accordion-item:hover .accordion-title {
+  color: var(--primary);
+}
+
+.accordion-toggle {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-item.active .accordion-toggle {
+  transform: rotate(45deg);
+  color: var(--primary);
+}
+
+/* Grid Transition Logic (Lightweight & Smooth) */
+.accordion-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-item.active .accordion-body {
+  grid-template-rows: 1fr;
+}
+
+.accordion-content-outer {
+  overflow: hidden;
+}
+
+.accordion-content {
+  padding-left: 80px;
+  padding-right: 20px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.accordion-desc {
+  max-width: 650px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.accordion-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--primary);
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: gap 0.3s ease;
+  width: fit-content;
+}
+
+.accordion-link:hover {
+  gap: 15px;
+}
+
+.accordion-media {
+  width: 100%;
+  aspect-ratio: 16/7;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.accordion-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1);
+  transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.accordion-item.active .accordion-media img {
+  transform: scale(1);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .accordion-header {
+    grid-template-columns: 50px 1fr 30px;
+    padding: 25px 0;
+  }
+  
+  .accordion-content {
+    padding-left: 0;
+    padding-bottom: 40px;
+  }
+  
+  .accordion-indicator {
+    font-size: 12px;
+  }
+  
+  .accordion-title {
+    font-size: 22px;
+    letter-spacing: 0.5px;
+  }
+  
+  .accordion-media {
+    aspect-ratio: 16/9;
+  }
+}
+/
 
 /* Experience */
 .experience-container { display: flex; align-items: center; gap: var(--container-gap); }
@@ -775,7 +922,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ============================================
    MEET THE TEAM SECTION
    ============================================ */
-.team-section { background: #050505; }
+.team-section { background: #0A0A0A; }
 
 .team-grid {
   display: flex;

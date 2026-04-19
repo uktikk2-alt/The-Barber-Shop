@@ -11,7 +11,7 @@ window.SITE_CONFIG = {
     logoColor: "assets/Logo/scuderia-logo-main.png",
     colors: {
       primary: "#c81017", // Scuderia Red
-      dark: "#000000",
+      dark: "#0A0A0A",
       white: "#ffffff"
     }
   },
@@ -40,55 +40,52 @@ window.SITE_CONFIG = {
 
   services: [
     {
-      id: "intera-premio",
-      title: "Intera Premio",
+      id: "the-scuderia-signature",
+      title: "THE SCUDERIA SIGNATURE",
       price: "From £130",
-      description: "The Full Premium Package. Includes Atom Mac Brake Protector, Full Decontamination (Tar/Glue/Clay), Sealant Application, and UV Interior Protection. Perfect for supercars and vintage maintenance.",
+      description: "Our flagship automotive preservation. Includes Atom Mac Brake Protector, full chemical decontamination, precision sealant, and UV interior shielding. Perfect for high-performance vehicles.",
       image: "assets/gallery/scuderia-p1.webp"
     },
     {
-      id: "intera-base-extra",
-      title: "Intera Base Extra",
+      id: "the-precision-plus",
+      title: "THE PRECISION PLUS",
       price: "From £110",
-      description: "The Full Basic Extra. Includes Partial Decontamination, Booth/Door Seal cleaning, and deep air vent detailing. Ideal for vehicles needing restoration without full ceramic protection.",
+      description: "Engineered for excellence. Includes partial decontamination, booth/door seal detailing, and deep vent extraction. Ideal for deep restoration without full ceramic commitment.",
       image: "assets/gallery/scuderia-p2.webp"
     },
     {
-      id: "intera-base",
-      title: "Intera Base",
+      id: "the-heritage-revival",
+      title: "THE HERITAGE REVIVAL",
       price: "From £90",
-      description: "Full Basic Package. Near-showroom standard for previously valeted vehicles. Includes wheel fallout removal, pH neutral wash, and leather conditioning.",
+      description: "Restoring the soul of your vehicle. Near-showroom standard including wheel fallout removal, pH-neutral delicate wash, and premium leather conditioning.",
       image: "assets/gallery/scuderia-p3.webp"
     },
     {
-      id: "intera-maintenance",
-      title: "Intera Maintenance",
+      id: "the-chrono-care",
+      title: "THE CHRONO CARE",
       price: "From £55",
-      description: "Fortnightly (£55+) or Monthly (£75+) upkeep. Only available to vehicles that have had a Full Premium Package within the last 4 weeks. Soft detailing brushes and pH neutral care.",
+      description: "Precision upkeep for the dedicated owner. Available for vehicles maintained by us within the last 4 weeks. Features pH-neutral care and artisan detailing brushes.",
       image: "assets/gallery/scuderia-p4.webp"
-    }
-  ],
-
-  extraServices: [
+    },
     {
-      id: "fuori",
-      title: "Fuori Exterior",
+      id: "exterior-opulence",
+      title: "EXTERIOR OPULENCE",
       price: "£40 - £60",
-      description: "Pure Exterior Valet. Wheel fallout removal, pH neutral pre-wash, glass cleaning, and exhaust polishing. Upcharge available for ceramic sealant (+£15).",
+      description: "Pure external aesthetic mastery. Full chemical decontamination, pH-neutral pre-wash, glass clarity treatment, and precision exhaust tip polishing.",
       image: "assets/gallery/scuderia-p5.webp"
     },
     {
-      id: "dentro",
-      title: "Dentro Interior",
+      id: "interior-sanctuary",
+      title: "INTERIOR SANCTUARY",
       price: "£60 - £80",
-      description: "Pure Interior Valet. Steamer on stains, compressor deep-clean, leather conditioning. UV protectant upcharge available (+£15).",
+      description: "Transform your driving environment. High-pressure steam extraction, compressor deep-clean, and premium leather enrichment for a factory-fresh feel.",
       image: "assets/gallery/scuderia-p6.webp"
     },
     {
-      id: "motore",
-      title: "Motore Engine Bay",
+      id: "cubatura-detail",
+      title: "CUBATURA DETAIL",
       price: "£40",
-      description: "Full Engine Bay Detail. Leaves/dust blown out, APC cleaning, underside of bonnet polished, and plastic trims dressed.",
+      description: "A mechanical masterpiece deserves a clean stage. Full engine bay detail including debris extraction, APC precision cleaning, and bonnet polish.",
       image: "assets/gallery/scuderia-p7.webp"
     }
   ],

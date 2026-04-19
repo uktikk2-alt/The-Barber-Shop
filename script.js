@@ -152,50 +152,58 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     injectServices() {
-      const grid = document.getElementById('main-services-grid');
-      if (!grid) return;
+      const accordion = document.getElementById('services-accordion');
+      if (!accordion) return;
 
-      grid.innerHTML = this.config.services.map((service, index) => `
-        <div class="service-card" data-aos="fade-up" data-aos-delay="${index * 100}">
-          <div class="service-card-img">
-            <img src="${service.image}" alt="${service.title}" loading="lazy" decoding="async">
+      accordion.innerHTML = this.config.services.map((service, index) => `
+        <div class="accordion-item ${index === 0 ? 'active' : ''}" data-service-id="${service.id}">
+          <div class="accordion-header">
+            <div class="accordion-indicator">
+              <span>${(index + 1).toString().padStart(2, '0')}</span>
+              <span class="slash">/</span>
+            </div>
+            <h3 class="accordion-title">${service.title}</h3>
+            <div class="accordion-toggle">
+              <i class="fa-solid fa-plus"></i>
+            </div>
           </div>
-          <div class="service-card-content">
-            <span class="sc-number">${(index + 1).toString().padStart(2, '0')}</span>
-            <h3 class="sc-title">${service.title}</h3>
-            <p class="sc-desc">${service.description}</p>
-            <a href="${this.config.contact.bookingUrl}" class="sc-btn">BOOK NOW</a>
+          <div class="accordion-body">
+            <div class="accordion-content-outer">
+              <div class="accordion-content">
+                <p class="accordion-desc">${service.description} <span style="color:white; font-weight:bold;">${service.price}</span></p>
+                <a href="${this.config.contact.bookingUrl}" class="accordion-link">BOOK THIS SERVICE &rarr;</a>
+                <div class="accordion-media">
+                  <img src="${service.image}" alt="${service.title}" loading="lazy">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       `).join('');
 
-      // Handle Toggle Visibility
-      if (this.config.options.showServicesToggle) {
-        grid.classList.add('collapsed');
-      } else {
-        grid.classList.remove('collapsed');
-        const toggleWrap = grid.parentElement.querySelector('.services-toggle-wrap');
-        if (toggleWrap) toggleWrap.style.display = 'none';
-      }
+      // Accordion Click Logic
+      const items = accordion.querySelectorAll('.accordion-item');
+      items.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        header.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          
+          // Close all
+          items.forEach(i => i.classList.remove('active'));
+          
+          // Toggle current
+          if (!isActive) {
+            item.classList.add('active');
+          }
+          
+          // Re-trigger AOS if needed
+          if (window.AOS) AOS.refresh();
+        });
+      });
     }
 
     injectExtraServices() {
-      const grid = document.getElementById('extra-services-grid');
-      if (!grid || !this.config.extraServices) return;
-
-      grid.innerHTML = this.config.extraServices.map((service, index) => `
-        <div class="service-card ${index === 1 ? 'featured' : ''}" data-aos="fade-up" data-aos-delay="${index * 100}">
-          <div class="service-card-img">
-            <img src="${service.image}" alt="${service.title}" loading="lazy" decoding="async">
-          </div>
-          <div class="service-card-content">
-            <span class="sc-number">${(index + 1).toString().padStart(2, '0')}</span>
-            <h3 class="sc-title">${service.title}</h3>
-            <p class="sc-desc">${service.description}</p>
-            <a href="${this.config.contact.bookingUrl}" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
-      `).join('');
+      // Logic moved to injectServices accordion
     }
 
     injectGallery() {

@@ -56,7 +56,8 @@
   <style>
     :root {
       --primary: #c81017;
-      --dark: #000000;
+      --dark: #0A0A0A;
+      --darker: #0A0A0A;
       --white: #ffffff;
       --font-heading: 'Oswald', sans-serif;
       --font-body: 'Mona Sans', sans-serif;
@@ -178,13 +179,13 @@
 
     /* Meticulous Brand Lock (Zero-Flash) */
     html {
-      background-color: #000 !important;
+      background-color: #0A0A0A !important;
     }
 
     body {
       margin: 0;
       padding: 0;
-      background-color: #000;
+      background-color: #0A0A0A;
       font-family: var(--font-body);
       color: #fff;
       -webkit-font-smoothing: antialiased;
@@ -198,7 +199,7 @@
     /* Critical Hero Layout (Fixed CLS & Paint) */
     .hero {
       position: relative;
-      background-color: #000;
+      background-color: #0A0A0A;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -302,7 +303,11 @@
     }
 
     .bg-dark {
-      background-color: #000 !important;
+      background-color: var(--dark) !important;
+    }
+
+    .bg-darker {
+      background-color: var(--darker) !important;
     }
 
     /* Hero Canvas Positioning */
@@ -443,72 +448,24 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- 3. SECTION 1: DETAILING SERVICES (GRID) -->
+  </section>  <!-- 3. SIGNATURE MENU: ACCORDION SERVICES -->
   <section id="services" class="services section-padding bg-dark text-white">
     <div class="container">
       <div class="text-center section-header">
-        <div class="section-badge js-config-services-badge" data-aos="fade-down">DETAILING SERVICES</div>
-        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Professional <span
-                class="accent-line">Car Care</span></span></span></h2>
+        <div class="section-badge js-config-services-badge" data-aos="fade-down">THE SIGNATURE MENU</div>
+        <h2 class="section-title text-white">
+          <span class="reveal-wrapper">
+            <span class="reveal-inner">Exceptional <span class="accent-line">Car Care</span></span>
+          </span>
+        </h2>
         <p class="section-desc text-light mx-auto js-config-services-desc" style="max-width: 650px;" data-aos="fade-up"
           data-aos-delay="100">
-          Our expert detailers specialize in paint correction, interior restoration, and ceramic protection for all
-          vehicle types.
+          Our curated collection of premium detailing services, meticulously designed to restore and preserve your vehicle's legacy.
         </p>
       </div>
 
-      <div class="services-grid" id="main-services-grid">
-        <!-- Pre-rendered for Instant Load & Zero-Shift -->
-        <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="service-card-img"><img src="assets/gallery/scuderia-p1.webp" alt="Intera Premio" loading="eager"
-              decoding="async"></div>
-          <div class="service-card-content">
-            <span class="sc-number">01</span>
-            <h3 class="sc-title">Intera Premio</h3>
-            <p class="sc-desc">The Full Premium Package. Includes Decontamination, Sealant, and UV Protection.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
-        <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="service-card-img"><img src="assets/gallery/scuderia-p2.webp" alt="Intera Base Extra"
-              loading="eager" decoding="async"></div>
-          <div class="service-card-content">
-            <span class="sc-number">02</span>
-            <h3 class="sc-title">Intera Base Extra</h3>
-            <p class="sc-desc">The Full Basic Extra. Includes Partial Decontamination and deep air vent detailing.</p>
-            <a href="#booking-section" class="sc-btn">BOOK NOW</a>
-          </div>
-        </div>
-      </div>
-      <div class="services-toggle-wrap" data-aos="fade-up">
-        <button class="btn btn-outline btn-toggle-services" data-target="main-services-grid">
-          See all services <i class="fa-solid fa-chevron-down"></i>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. SECTION 2: EXTRA SERVICES (PREMIUM SPLIT GRID) -->
-  <section id="extra-services" class="services section-padding bg-black text-white">
-    <div class="container">
-      <div class="section-header text-center" data-aos="fade-up">
-        <div class="section-badge" style="background: rgba(255,255,255,0.05);">BEYOND THE BASICS</div>
-        <h2 class="section-title text-white"><span class="reveal-wrapper"><span class="reveal-inner">Extra <span
-                class="accent-line">Services</span>, <span class="accent-line">Extra Care</span></span></span></h2>
-        <p class="section-desc text-light mx-auto" style="max-width: 700px;">
-          Your car deserves more than just a wash. Our specialty add-ons truly bring back that fresh, flawless feel
-          inside and out with expert care and attention to every little detail possible.
-        </p>
-      </div>
-      <div class="services-grid collapsed" id="extra-services-grid">
-        <!-- Dynamic Extra Services Injected Here -->
-      </div>
-      <div class="services-toggle-wrap" data-aos="fade-up">
-        <button class="btn btn-outline btn-toggle-services" data-target="extra-services-grid">
-          See all services <i class="fa-solid fa-chevron-down"></i>
-        </button>
+      <div class="accordion-container" id="services-accordion" data-aos="fade-up">
+        <!-- Accordion Items Injected via JavaScript -->
       </div>
     </div>
   </section>
@@ -557,25 +514,25 @@
               <h3>Choose Your Service</h3>
             </div>
             <div class="choices-list" id="service-choices">
-              <div class="choice-item active" data-service="deep-clean">
-                <span>Deep Clean</span>
-                <span class="choice-price">From £120</span>
+              <div class="choice-item active" data-service="the-scuderia-signature">
+                <span>The Scuderia Signature</span>
+                <span class="choice-price">From £130</span>
               </div>
-              <div class="choice-item" data-service="signature-deep-clean">
-                <span>Signature Deep Clean</span>
-                <span class="choice-price">From £175</span>
+              <div class="choice-item" data-service="the-heritage-revival">
+                <span>The Heritage Revival</span>
+                <span class="choice-price">From £90</span>
               </div>
-              <div class="choice-item" data-service="enhancement-polish">
-                <span>Enhancement Polish</span>
-                <span class="choice-price">From £180</span>
+              <div class="choice-item" data-service="exterior-opulence">
+                <span>Exterior Opulence</span>
+                <span class="choice-price">From £40</span>
               </div>
-              <div class="choice-item" data-service="paint-correction">
-                <span>Paint Correction</span>
-                <span class="choice-price">From £300</span>
+              <div class="choice-item" data-service="interior-sanctuary">
+                <span>Interior Sanctuary</span>
+                <span class="choice-price">From £60</span>
               </div>
-              <div class="choice-item" data-service="ceramic-coating">
-                <span>Ceramic Coating</span>
-                <span class="choice-price">From £250</span>
+              <div class="choice-item" data-service="the-precision-plus">
+                <span>The Precision Plus</span>
+                <span class="choice-price">From £110</span>
               </div>
             </div>
           </div>
